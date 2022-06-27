@@ -1,0 +1,45 @@
+<c-sidebar
+  #sidebar="cSidebar"
+  class="d-print-none sidebar sidebar-fixed"
+  id="sidebar"
+  visible
+>
+  <c-sidebar-brand
+    [brandFull]="{
+      src: 'assets/img/brand/relaxgym-base.png',
+      width: 200,
+      height: 46,
+      alt: 'CoreUI Logo'
+    }"
+    [brandNarrow]="{
+      src: 'assets/img/brand/relaxgym-signet-white.png',
+      width: 60,
+      height: 60,
+      alt: 'CoreUI Logo'
+    }"
+    routerLink="./"
+  >
+  </c-sidebar-brand>
+    <perfect-scrollbar [config]="perfectScrollbarConfig">
+  <c-sidebar-nav
+    [navItems]="navItems"
+  >
+  </c-sidebar-nav>
+    </perfect-scrollbar>
+  <c-sidebar-toggler
+    *ngIf="!sidebar.narrow"
+    toggle="unfoldable"
+    cSidebarToggle="sidebar"
+  ></c-sidebar-toggler>
+</c-sidebar>
+
+<div class="wrapper d-flex flex-column min-vh-100 bg-light dark:bg-transparent">
+  <app-header class="mb-4 d-print-none header header-sticky" position="sticky" sidebarId="sidebar"></app-header>
+  <div class="body flex-grow-1 px-3">
+    <c-container breakpoint="lg" class="h-auto">
+      <alert></alert>
+      <router-outlet></router-outlet>
+    </c-container>
+  </div>
+  <app-footer></app-footer>
+</div>

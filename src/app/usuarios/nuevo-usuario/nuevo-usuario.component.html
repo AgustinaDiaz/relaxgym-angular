@@ -1,0 +1,63 @@
+
+<c-card [cBorder]="{top: {color: 'dark', width: 3}}" [textColor]="'secondary'" class="mb-3">
+    <c-card-header>
+        <strong>Creando Nuevo Usuario</strong>
+    </c-card-header>
+        <c-card-body>
+            <form cForm #nuevoUsuarioForm="ngForm" class="row g-3 needs-validation" (ngSubmit)="createUsuario(nuevoUsuarioForm)" [validated]="tooltipValidated">
+            <c-col class="position-relative mb-3" md="6">
+                <label cLabel for="nombre"><strong>Nombre</strong></label>
+                <input cFormControl id="nombre" type="text" [(ngModel)]="usuario.nombre" name="nombre" required />
+                <c-form-feedback [valid]="false" tooltip>Debe ingresar un nombre</c-form-feedback>
+            </c-col>
+            <c-col class="position-relative mb-3" md="6">
+                <label cLabel for="apellido"><strong>Apellido</strong></label>
+                <input cFormControl id="apellido" type="text" [(ngModel)]="usuario.apellido" name="apellido" required />
+                <c-form-feedback [valid]="false" tooltip>Debe ingresar un apellido</c-form-feedback>
+            </c-col>
+            <c-col class="position-relative mb-3" md="4">
+                <label cLabel for="email"><strong>Email</strong></label>
+                <input cFormControl id="email" type="email" [(ngModel)]="usuario.email" name="email" required />
+                <c-form-feedback [valid]="false" tooltip>Debe ingresar un email</c-form-feedback>
+            </c-col>
+                <c-col class="position-relative mb-4" md="4">
+                <label cLabel for="telefono"><strong>Telefono</strong></label>
+                <input cFormControl id="telefono" type="number" [(ngModel)]="usuario.telefono" name="telefono" required />
+                <c-form-feedback [valid]="false" tooltip>Debe ingresar un email</c-form-feedback>
+            </c-col>
+            <c-col class="position-relative mb-4" md="4">
+                <label cLabel for="estadoUsuario"><strong>Estado Usuario</strong></label>
+                <select cSelect id="estadoUsuario" name="estadoUsuario" [(ngModel)]="usuario.estadoUsuario.id" required>
+                    <option [ngValue]="0" disabled>Seleccione un estado</option>
+                    <option *ngFor="let estadoUsuario of estadosUsuario" [ngValue]="estadoUsuario.id">{{ estadoUsuario.descripcion }}</option>
+                </select>
+                <c-form-feedback [valid]="false" tooltip>Debe ingresar un estado</c-form-feedback>
+            </c-col>
+            <c-col class="position-relative mb-4" md="4">
+                <label cLabel for="nombreUsuario"><strong>Usuario</strong></label>
+                <input cFormControl id="nombreUsuario" type="text" [(ngModel)]="usuario.nombreUsuario" name="nombreUsuario" required />
+                <c-form-feedback [valid]="false" tooltip>Debe ingresar un usuario</c-form-feedback>
+            </c-col>
+            <c-col class="position-relative mb-4" md="4">
+                <label cLabel for="claveUsuario"><strong>Password</strong></label>
+                <input cFormControl id="claveUsuario" type="password" [(ngModel)]="usuario.claveUsuario" name="claveUsuario" required />
+                <c-form-feedback [valid]="false" tooltip>Debe ingresar una clave</c-form-feedback>
+            </c-col>
+            <c-col class="position-relative mb-4" md="4">
+                <label cLabel for="rol"><strong>Rol</strong></label>
+                <select cSelect id="rol" name="rol" [(ngModel)]="usuario.rol.id" required>
+                    <option [ngValue]="0" disabled>Seleccione un rol</option>
+                    <option *ngFor="let rol of roles" [ngValue]="rol.id">{{ rol.descripcion }}</option>
+                </select>
+                <c-form-feedback [valid]="false" tooltip>Debe ingresar un estado</c-form-feedback>
+                <c-form-feedback [valid]="false" tooltip>Debe ingresar una clave</c-form-feedback>
+            </c-col>
+            <c-col xs="12">
+                <c-button-group aria-label="Basic example" role="group">
+                    <button cButton color="primary" type="submit">Confirmar</button>
+                    <button cButton (click)="onBack()" color="secondary" type="reset">Atras</button>
+                    </c-button-group>
+            </c-col>
+            </form>
+        </c-card-body>
+    </c-card>

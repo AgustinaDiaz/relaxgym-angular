@@ -1,0 +1,72 @@
+<c-modal #verticallyCenteredModal alignment="center" id="verticallyCenteredModal">
+  <c-modal-header>
+    <h5 cModalTitle>Eliminar Usuario</h5>
+    <button [cModalToggle]="verticallyCenteredModal.id" cButtonClose></button>
+  </c-modal-header>
+  <c-modal-body>
+    ¿Está seguro que desea eliminar el usuario?
+  </c-modal-body>
+  <c-modal-footer>
+    <c-button-group aria-label="Basic example" role="group">
+        <button [cModalToggle]="verticallyCenteredModal.id" cButton color="primary" (click)="deleteUsuario()">Confirmar</button>
+        <button [cModalToggle]="verticallyCenteredModal.id" cButton color="secondary">Cancelar</button>
+    </c-button-group>
+  </c-modal-footer>
+</c-modal>
+<table responsive cAlign="middle" cTable hover>
+    <thead>
+        <tr cTableColor="dark" class="text-center">
+            <th class="w-20" scope="col">Nombre</th>
+            <th class="w-20" scope="col">Apellido</th>
+            <th class="w-20" scope="col">Email</th>
+            <th class="w-20" scope="col">Telefono</th>
+            <th class="w-20" scope="col">Usuario</th>
+            <th class="w-20" scope="col">Contraseña</th>
+            <th class="w-20" scope="col">Rol</th>
+            <th class="w-20" scope="col">Estado</th>
+            <th class="w-20" scope="col">Acciones</th>
+        </tr>
+    </thead>
+    <tbody *ngIf="!loading && usuarios.length == 0">
+        <tr class="text-center">
+            <td colSpan="9"b><cite>No existen registros para mostrar.</cite></td>
+        </tr>
+    </tbody>
+    <tbody *ngIf="loading">
+        <tr class="text-center">
+            <td colSpan="9"b>
+                <c-spinner color="dark"></c-spinner>
+            </td>
+        </tr>
+    </tbody>
+    <tbody *ngIf="!loading && usuarios.length !== 0">
+        <tr *ngFor="let usuario of usuarios" class="text-center">
+            <td>{{usuario.nombre}}</td>
+            <td>{{usuario.apellido}}</td>
+            <td>{{usuario.email}}</td>
+            <td>{{usuario.telefono}}</td>
+            <td>{{usuario.nombreUsuario}}</td>
+            <td [ngClass]="{'hidetext': mostrarClave === false}" class="hidetext" (click)="showPassword()">{{usuario.claveUsuario}}</td>
+            <td>
+                <strong>{{usuario.rol.descripcion}}</strong>
+            </td>
+            <td>
+                <c-badge *ngIf="usuario.estadoUsuario.id === 1" color="success">{{usuario.estadoUsuario.descripcion}}</c-badge>
+                <c-badge *ngIf="usuario.estadoUsuario.id === 2" color="danger">{{usuario.estadoUsuario.descripcion}}</c-badge>
+            </td>
+            <td>
+                <button cButton color="primary" variant="ghost" cTooltip="Editar Usuario" cTooltipPlacement="top" class="me-1" (click)="updateUsuario(usuario)">
+                    <svg cIcon name="cilPencil" size="lg" title="Editar Usuario"></svg>
+                </button>
+                <button [cModalToggle]="verticallyCenteredModal.id" cButton color="secondary" variant="ghost" cTooltip="Eliminar Usuario" cTooltipPlacement="top" class="me-1" (click)="setDeleteUser(usuario.id)">
+                    <svg cIcon name="cilTrash" size="lg" title="Eliminar Usuario"></svg>
+                </button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+    <button cButton color="primary" cTooltip="Editar Usuario" class="mb-2" (click)="createUsuario()">
+        <svg cIcon name="cilPlus" size="lg" title="Editar Usuario"></svg> Nuevo Usuario
+    </button>
+</div>

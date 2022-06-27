@@ -1,0 +1,51 @@
+<div class="bg-light min-vh-100 d-flex flex-row align-items-center clearfix">
+    <c-container>
+      <c-row class="justify-content-center">
+        <c-col md="4">
+          <c-card-group>
+            <c-card class="p-4">
+              <c-card-body>
+                <div class="text-center">
+                  <img cImg src="assets/img/brand/relaxgym-login.png" width="300" height="100"/>
+                </div>
+                <form cForm #loginForm="ngForm" class="row g-3 needs-validation" (ngSubmit)="login(loginForm)" [validated]="tooltipValidated">
+                  <div class="text-center">
+                    <p class="text-medium-emphasis">Ingrese usuario y contraseña</p>
+                  </div>
+                  <c-input-group class="mb-3">
+                    <span cInputGroupText>
+                      <svg cIcon name="cilUser"></svg>
+                    </span>
+                    <input cFormControl id="usuario" type="text" [(ngModel)]="loginData.usuario" name="nombre" autoComplete="usuario" placeholder="Usuario" required />
+                    <c-form-feedback [valid]="false" tooltip>Debe ingresar un usuario</c-form-feedback>
+                  </c-input-group>
+                  <c-input-group class="mb-5">
+                    <span cInputGroupText>
+                      <svg cIcon name="cilLockLocked"></svg>
+                    </span>
+                    <input cFormControl id="claveUsuario" type="password" [(ngModel)]="loginData.password" name="password" autoComplete="current-password" placeholder="Password" required />
+                    <c-form-feedback [valid]="false" tooltip>Debe ingresar un password</c-form-feedback>
+                  </c-input-group>
+                  <c-row *ngIf="!loading">
+                    <c-col>
+                      <button cButton color="primary" type="submit">
+                        Ingresar
+                      </button>
+                    </c-col>
+                  </c-row>
+                  <c-row *ngIf="loading">
+                    <c-col>
+                      <button cButton color="primary" disabled>
+                        <c-spinner aria-hidden="true" size="sm"></c-spinner> Cargando...
+                      </button>
+                    </c-col>
+                  </c-row>
+                </form>
+              </c-card-body>
+            </c-card>
+          </c-card-group>
+          <alert></alert>
+        </c-col>
+      </c-row>
+    </c-container>
+  </div>
