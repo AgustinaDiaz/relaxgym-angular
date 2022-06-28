@@ -10,6 +10,7 @@ export class Usuario {
     telefono!: number;
     nombreUsuario!: string;
     claveUsuario!: string;
+    fechaAlta!: Date;
     idEstadoUsuario!: number;
     estadoUsuario!: EstadoUsuario;
     idRol!: number;

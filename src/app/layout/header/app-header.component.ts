@@ -1,8 +1,8 @@
 import { Component, Input } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { ClassToggleService, HeaderComponent } from '@coreui/angular';
+import { Claim } from 'src/app/models/claim';
 
 @Component({
   selector: 'app-header',
@@ -25,5 +25,22 @@ export class AppHeaderComponent extends HeaderComponent {
   {
     localStorage.removeItem('tokenUsuario');
     this.router.navigateByUrl("/login");
+  }
+
+  detalleUsuario()
+  {
+    var token = localStorage.getItem("tokenUsuario") as string;
+    var decodedToken = this.getDecodedAccessToken(token);
+    var claims = new Claim();
+    claims = JSON.parse(decodedToken);
+    this.router.navigateByUrl(`main/detalle-usuario/${claims.primarysid}`);
+  }
+
+  private getDecodedAccessToken(token: string): any {
+    try {
+      return atob(token.split('.')[1]);
+    } catch(Error) {
+      return null;
+    }
   }
 }

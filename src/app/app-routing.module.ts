@@ -5,6 +5,7 @@ import { LayoutComponent } from './layout';
 import { LoginComponent } from './login/login.component';
 import { AdministratorGuard } from './services/administrator.guard';
 import { AuthenticateGuard } from './services/authenticate.guard';
+import { DetalleUsuarioComponent } from './usuarios/detalle-usuario/detalle-usuario.component';
 import { ModificarUsuarioComponent } from './usuarios/modificar-usuario/modificar-usuario.component';
 import { NuevoUsuarioComponent } from './usuarios/nuevo-usuario/nuevo-usuario.component';
 import { UsuarioResolver } from './usuarios/usuario.resolver';
@@ -61,7 +62,18 @@ const routes: Routes = [
         resolve: {
           usuario: UsuarioResolver
         }
-      }  
+      }, 
+      {
+        path: 'detalle-usuario/:id', 
+        component: DetalleUsuarioComponent,
+        canActivate: [AuthenticateGuard],
+        data: {
+          title: 'Perfil'
+        },
+        resolve: {
+          usuario: UsuarioResolver
+        }
+      }
     ]
   },
   { path: '**', redirectTo: 'home' }

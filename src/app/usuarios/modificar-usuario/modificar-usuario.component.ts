@@ -8,11 +8,27 @@ import { EstadoUsuario } from 'src/app/models/estado-usuario';
 import { Rol } from 'src/app/models/rol';
 import { RolService } from 'src/app/services/rol.service';
 import { AlertService } from 'src/app/services/alert.service';
+import { animate, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-modificar-usuario',
   templateUrl: './modificar-usuario.component.html',
-  styleUrls: ['./modificar-usuario.component.scss']
+  styleUrls: ['./modificar-usuario.component.scss'],
+  animations: [
+    trigger('inOut', [
+      transition('void => *', [ 
+        style({ opacity: 0 }),          
+        animate('500ms',
+          style({ opacity: 1 }) 
+        )
+      ]),
+      transition('* => void', [
+        animate('500ms', 
+          style({ opacity: 0 })
+        ) 
+      ])
+    ]) 
+  ]
 })
 export class ModificarUsuarioComponent implements OnInit {
 

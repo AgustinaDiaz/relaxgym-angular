@@ -1,0 +1,29 @@
+<c-col xs="12" @inOut>
+    <c-row>
+        <c-col sm="3">
+        </c-col>
+        <c-col sm="6">
+            <c-card [cBorder]="{top: {color: 'dark', width: 3}}" [textColor]="'primary'" class="text-center mb-3">
+                <c-card-header><strong>Perfil</strong></c-card-header>
+                <c-card-body>
+                  <ng-container *ngTemplateOutlet="cardBodyTemplate"></ng-container>
+                </c-card-body>
+                <c-card-footer class="text-medium-emphasis">
+                    <c-badge *ngIf="usuario.rol.id === 1" color="warning">{{usuario.rol.descripcion}}</c-badge>
+                    <c-badge *ngIf="usuario.rol.id === 2" color="success">{{usuario.rol.descripcion}}</c-badge>
+                    <c-badge *ngIf="usuario.rol.id === 3" color="primary">{{usuario.rol.descripcion}}</c-badge>
+                </c-card-footer>
+            </c-card>
+        </c-col>
+        <c-col sm="3">
+        </c-col>
+    </c-row>
+</c-col>
+<ng-template #cardBodyTemplate>
+    <h5 cCardTitle>{{usuario.apellido}}, {{usuario.nombre}}</h5>
+    <p cCardText></p>
+    <p cCardText>Usuario: {{usuario.nombreUsuario}}</p>
+    <p cCardText>Email: {{usuario.email}}</p>
+    <p cCardText>Telefono: {{usuario.telefono}}</p>
+    <p cCardText>Password: <span [ngClass]="{'hidetext': mostrarClave === false}" class="hidetext" (click)="showPassword()">{{usuario.claveUsuario}}</span></p>
+</ng-template>

@@ -1,3 +1,4 @@
+import { animate, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -12,7 +13,22 @@ import { UsuarioService } from 'src/app/services/usuario.service';
 @Component({
   selector: 'app-nuevo-usuario',
   templateUrl: './nuevo-usuario.component.html',
-  styleUrls: ['./nuevo-usuario.component.scss']
+  styleUrls: ['./nuevo-usuario.component.scss'],
+  animations: [
+    trigger('inOut', [
+      transition('void => *', [ 
+        style({ opacity: 0 }),          
+        animate('500ms',
+          style({ opacity: 1 }) 
+        )
+      ]),
+      transition('* => void', [
+        animate('500ms', 
+          style({ opacity: 0 })
+        ) 
+      ])
+    ]) 
+  ]
 })
 export class NuevoUsuarioComponent implements OnInit {
 

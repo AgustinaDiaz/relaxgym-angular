@@ -41,10 +41,12 @@ import {
   TabsModule,
   TooltipModule,
   SpinnerModule,
+  WidgetModule,
   UtilitiesModule
   
 } from '@coreui/angular';
 
+import { ChartjsModule } from '@coreui/angular-chartjs';
 import { IconModule, IconSetService } from '@coreui/icons-angular';
 import { LayoutComponent } from './layout/layout.component';
 import { AppFooterComponent } from './layout/footer/app-footer.component';
@@ -55,6 +57,7 @@ import { ModificarUsuarioComponent } from './usuarios/modificar-usuario/modifica
 import { HeaderInterceptor } from './services/header.interceptor';
 import { AlertComponent } from './alert/alert.component';
 import { NuevoUsuarioComponent } from './usuarios/nuevo-usuario/nuevo-usuario.component';
+import { DetalleUsuarioComponent } from './usuarios/detalle-usuario/detalle-usuario.component';
 
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
@@ -72,7 +75,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     InicioComponent,
     ModificarUsuarioComponent,
     AlertComponent,
-    NuevoUsuarioComponent
+    NuevoUsuarioComponent,
+    DetalleUsuarioComponent
   ],
   imports: [
     AlertModule,
@@ -107,7 +111,9 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     TableModule,
     TooltipModule,
     SpinnerModule,
-    HttpClientModule
+    WidgetModule,
+    HttpClientModule,
+    ChartjsModule
   ],
   
   providers: [

@@ -1,1 +1,61 @@
-<p>inicio works!</p>
+<c-card-group class="mb-4" @inOut>
+  <c-widget-stat-c [title]="'Total Alumnos Activos'" [value]="totalAlumnosActivos">
+    <ng-template cTemplateId="widgetIconTemplate">
+      <svg cIcon height="36" name="cilPeople"></svg>
+    </ng-template>
+    <ng-template cTemplateId="widgetProgressTemplate">
+      <c-progress class="mt-3 mb-0" thin>
+        <c-progress-bar [value]="100" color="primary"></c-progress-bar>
+      </c-progress>
+    </ng-template>
+  </c-widget-stat-c>
+  <c-widget-stat-c [title]="'Total Entrenadores Activos'" [value]="totalEntrenadoresActivos">
+    <ng-template cTemplateId="widgetIconTemplate">
+      <svg cIcon height="36" name="cilPeople"></svg>
+    </ng-template>
+    <ng-template cTemplateId="widgetProgressTemplate">
+      <c-progress class="mt-3 mb-0" thin>
+        <c-progress-bar [value]="100" color="success"></c-progress-bar>
+      </c-progress>
+    </ng-template>
+  </c-widget-stat-c>
+  <c-widget-stat-c [title]="'Total Administradores Activos'" [value]="totalAdministradoresActivos">
+    <ng-template cTemplateId="widgetIconTemplate">
+      <svg cIcon height="36" name="cilPeople"></svg>
+    </ng-template>
+    <ng-template cTemplateId="widgetProgressTemplate">
+      <c-progress class="mt-3 mb-0" thin>
+        <c-progress-bar [value]="100" color="warning"></c-progress-bar>
+      </c-progress>
+    </ng-template>
+  </c-widget-stat-c>
+  <c-widget-stat-c [title]="'Total Usuarios Inactivos'" [value]="totalUsuariosInactivos">
+    <ng-template cTemplateId="widgetIconTemplate">
+      <svg cIcon height="36" name="cilPeople"></svg>
+    </ng-template>
+    <ng-template cTemplateId="widgetProgressTemplate">
+      <c-progress class="mt-3 mb-0" thin>
+        <c-progress-bar [value]="100" color="danger"></c-progress-bar>
+      </c-progress>
+    </ng-template>
+  </c-widget-stat-c>
+</c-card-group>
+<c-card class="mb-4" @inOut>
+  <c-card-body>
+    <c-row>
+      <c-col sm="5">
+        <h4 class="card-title mb-0" id="traffic">
+          Altas de Usuarios
+        </h4>
+        <div class="small text-medium-emphasis">Desde Enero - Hasta Diciembre - 2022</div>
+      </c-col>
+    </c-row>
+    <c-chart [data]="mainChart.data"
+             [height]="300"
+             [ngStyle]="{'marginTop.px': 40}"
+             [options]="mainChart.options"
+             [type]="mainChart.type">
+      Main chart
+    </c-chart>
+  </c-card-body>
+</c-card>

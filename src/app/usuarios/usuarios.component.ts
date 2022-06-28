@@ -1,3 +1,4 @@
+import { animate, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ModalService } from '@coreui/angular';
@@ -8,7 +9,22 @@ import { UsuarioService } from '../services/usuario.service';
 @Component({
   selector: 'app-usuarios',
   templateUrl: './usuarios.component.html',
-  styleUrls: ['./usuarios.component.scss']
+  styleUrls: ['./usuarios.component.scss'],
+  animations: [
+    trigger('inOut', [
+      transition('void => *', [ 
+        style({ opacity: 0 }),          
+        animate('500ms',
+          style({ opacity: 1 }) 
+        )
+      ]),
+      transition('* => void', [
+        animate('500ms', 
+          style({ opacity: 0 })
+        ) 
+      ])
+    ]) 
+  ]
 })
 export class UsuariosComponent implements OnInit {
 

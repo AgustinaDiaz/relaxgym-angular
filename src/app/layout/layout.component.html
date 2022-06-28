@@ -20,11 +20,8 @@
     routerLink="./"
   >
   </c-sidebar-brand>
-    <perfect-scrollbar [config]="perfectScrollbarConfig">
-  <c-sidebar-nav
-    [navItems]="navItems"
-  >
-  </c-sidebar-nav>
+  <perfect-scrollbar [config]="perfectScrollbarConfig">
+  <c-sidebar-nav [navItems]="navItems"></c-sidebar-nav>
     </perfect-scrollbar>
   <c-sidebar-toggler
     *ngIf="!sidebar.narrow"
