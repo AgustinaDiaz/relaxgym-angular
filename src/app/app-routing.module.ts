@@ -1,8 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { InicioComponent } from './inicio/inicio.component';
+import { InicioResolver } from './inicio/inicio.resolver';
 import { LayoutComponent } from './layout';
 import { LoginComponent } from './login/login.component';
+import { ResetPasswordConfirmComponent } from './login/reset-password-confirm/reset-password-confirm.component';
+import { ResetPasswordResolver } from './login/reset-password-confirm/reset-password.resolver';
+import { ResetPasswordMailComponent } from './login/reset-password-mail/reset-password-mail.component';
 import { AdministratorGuard } from './services/administrator.guard';
 import { AuthenticateGuard } from './services/authenticate.guard';
 import { DetalleUsuarioComponent } from './usuarios/detalle-usuario/detalle-usuario.component';
@@ -17,6 +21,23 @@ const routes: Routes = [
     component: LoginComponent,
     data: {
       title: 'Login Page'
+    }
+  },
+  {
+    path: 'reset-password-mail',
+    component: ResetPasswordMailComponent,
+    data: {
+      title: 'Reset Password Mail Page'
+    }
+  },
+  {
+    path: 'reset-password-confirm/:id',
+    component: ResetPasswordConfirmComponent,
+    data: {
+      title: 'Confirm Reset Password Mail Page'
+    },
+    resolve: {
+      solicitud: ResetPasswordResolver
     }
   },
   { path: '', redirectTo: 'main', pathMatch: 'full' },
@@ -34,6 +55,9 @@ const routes: Routes = [
       canActivate: [AuthenticateGuard],
       data: {
         title: 'Inicio'
+      },
+      resolve: {
+        usuarios: InicioResolver
       }
       },
       {

@@ -69,4 +69,8 @@ export class LoginComponent implements OnInit {
     }
   }
 
+  resetPasswordMail(){
+    this.router.navigateByUrl('reset-password-mail');
+  }
+
 }

@@ -28,15 +28,14 @@ import { UsuarioService } from '../services/usuario.service';
 })
 export class UsuariosComponent implements OnInit {
 
-  idDeleteUsuario: number = 0;
+  deletedUsuario: Usuario = new Usuario();
   usuarios: Array<Usuario> = [];
   mostrarClave: boolean = false;
   loading: boolean = false;
 
   constructor(private usuarioService:UsuarioService,
               private router: Router,
-              private alertService: AlertService,
-              private modalService:ModalService) { }
+              private alertService: AlertService) { }
 
   ngOnInit(): void {
     this.getUsuarios();
@@ -68,7 +67,7 @@ export class UsuariosComponent implements OnInit {
   
   deleteUsuario()
   {
-    this.usuarioService.deleteUsuarioById(this.idDeleteUsuario)
+    this.usuarioService.deleteUsuarioById(this.deletedUsuario.id)
         .subscribe(response => {
           this.alertService.success('Se ha eliminado correctamente el usuario.', { autoClose: true, keepAfterRouteChange: true, symbolAlert: 'check-circle-fill' });
           this.getUsuarios();
@@ -79,8 +78,8 @@ export class UsuariosComponent implements OnInit {
         });
   }
 
-  setDeleteUser(idUsuario:number) {
-    this.idDeleteUsuario = idUsuario;
+  setDeleteUser(usuario:Usuario) {
+    this.deletedUsuario = usuario;
   }
 
   showPassword()

@@ -4,7 +4,7 @@
     <button [cModalToggle]="verticallyCenteredModal.id" cButtonClose></button>
   </c-modal-header>
   <c-modal-body>
-    ¿Está seguro que desea eliminar el usuario?
+    ¿Está seguro que desea eliminar el usuario {{deletedUsuario.apellido}}, {{deletedUsuario.nombre}}?
   </c-modal-body>
   <c-modal-footer>
     <c-button-group aria-label="Basic example" role="group">
@@ -24,6 +24,7 @@
             <th class="w-20" scope="col">Contraseña</th>
             <th class="w-20" scope="col">Rol</th>
             <th class="w-20" scope="col">Estado</th>
+            <th class="w-20" scope="col">FechaAlta</th>
             <th class="w-20" scope="col">Acciones</th>
         </tr>
     </thead>
@@ -54,11 +55,12 @@
                 <c-badge *ngIf="usuario.estadoUsuario.id === 1" color="success">{{usuario.estadoUsuario.descripcion}}</c-badge>
                 <c-badge *ngIf="usuario.estadoUsuario.id === 2" color="danger">{{usuario.estadoUsuario.descripcion}}</c-badge>
             </td>
+            <td>{{usuario.fechaAlta | date : 'dd-MM-yyyy hh:mm:ss' }}</td>
             <td>
                 <button cButton color="primary" variant="ghost" cTooltip="Editar Usuario" cTooltipPlacement="top" class="me-1" (click)="updateUsuario(usuario)">
                     <svg cIcon name="cilPencil" size="lg" title="Editar Usuario"></svg>
                 </button>
-                <button [cModalToggle]="verticallyCenteredModal.id" cButton color="secondary" variant="ghost" cTooltip="Eliminar Usuario" cTooltipPlacement="top" class="me-1" (click)="setDeleteUser(usuario.id)">
+                <button [cModalToggle]="verticallyCenteredModal.id" cButton color="secondary" variant="ghost" cTooltip="Eliminar Usuario" cTooltipPlacement="top" class="me-1" (click)="setDeleteUser(usuario)">
                     <svg cIcon name="cilTrash" size="lg" title="Eliminar Usuario"></svg>
                 </button>
             </td>

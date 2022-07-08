@@ -58,6 +58,9 @@ import { HeaderInterceptor } from './services/header.interceptor';
 import { AlertComponent } from './alert/alert.component';
 import { NuevoUsuarioComponent } from './usuarios/nuevo-usuario/nuevo-usuario.component';
 import { DetalleUsuarioComponent } from './usuarios/detalle-usuario/detalle-usuario.component';
+import { ResetPasswordConfirmComponent } from './login/reset-password-confirm/reset-password-confirm.component';
+import { ResetPasswordMailComponent } from './login/reset-password-mail/reset-password-mail.component';
+import { RutinasComponent } from './rutinas/rutinas.component';
 
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
@@ -76,7 +79,10 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ModificarUsuarioComponent,
     AlertComponent,
     NuevoUsuarioComponent,
-    DetalleUsuarioComponent
+    DetalleUsuarioComponent,
+    ResetPasswordMailComponent,
+    ResetPasswordConfirmComponent,
+    RutinasComponent
   ],
   imports: [
     AlertModule,

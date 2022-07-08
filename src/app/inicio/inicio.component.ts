@@ -3,7 +3,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { AlertService } from '../services/alert.service';
 import { UsuarioService } from '../services/usuario.service';
-import { DashboardChartsData } from './dashboard-charts-data';
+import { getStyle, hexToRgba } from '@coreui/utils/src';
+import { ActivatedRoute } from '@angular/router';
+import { Usuario } from '../models/usuario';
 
 export interface IChartProps {
   data?: any;
@@ -44,18 +46,19 @@ export class InicioComponent implements OnInit {
   totalAdministradoresActivos: string = '0';
   totalUsuariosInactivos: string ='0';
   public mainChart: IChartProps = {};
-  public chart: Array<IChartProps> = [];
   public trafficRadioGroup = new FormGroup({
     trafficRadio: new FormControl('Month')
   });
 
-  constructor(private usuarioService: UsuarioService,
-              private alertService: AlertService,
-              private chartsData: DashboardChartsData) { }
+  constructor(private activatedroute:ActivatedRoute,
+              private usuarioService: UsuarioService,
+              private alertService: AlertService) { }
 
   ngOnInit(): void {
+    this.activatedroute.data.subscribe(data => {
+      this.initCharts(data['usuarios']);
+    })
     this.getUsuarios();
-    this.initCharts();
   }
 
   getUsuarios()
@@ -75,13 +78,102 @@ export class InicioComponent implements OnInit {
         });
   }
 
-  initCharts(): void {
-    this.mainChart = this.chartsData.mainChart;
-  }
+  initCharts(usuarios: Array<Usuario>): void {
+    const brandInfo = getStyle('--cui-info') ?? '#20a8d8';
+    const brandInfoBg = hexToRgba(getStyle('--cui-info'), 10) ?? '#20a8d8';
 
-  setTrafficPeriod(value: string): void {
-    this.trafficRadioGroup.setValue({ trafficRadio: value });
-    this.chartsData.initMainChart(value);
-    this.initCharts();
+    let labels: string[] = [
+      'Enero',
+      'Febrero',
+      'Marzo',
+      'Abril',
+      'Mayo',
+      'Junio',
+      'Julio',
+      'Agosto',
+      'Septiembre',
+      'Octube',
+      'Noviembre',
+      'Diciembre'
+    ];
+
+    this.mainChart['elements'] = 12;
+    this.mainChart['Usuarios'] = [];
+
+    for (let i = 0; i <= this.mainChart['elements']; i++) {
+      var usuariosForMonth = usuarios.filter(x => new Date(x.fechaAlta).getMonth() == i);
+      this.mainChart['Usuarios'].push(usuariosForMonth.length);
+    }
+    
+    const colors = [
+      {
+        backgroundColor: brandInfoBg,
+        borderColor: brandInfo,
+        pointHoverBackgroundColor: brandInfo,
+        borderWidth: 2,
+        fill: true
+      }
+    ];
+
+    const datasets = [
+      {
+        data: this.mainChart['Usuarios'],
+        label: 'Cantidad',
+        ...colors[0]
+      }
+    ];
+
+    const plugins = {
+      legend: {
+        display: false
+      },
+      tooltip: {
+        callbacks: {
+          labelColor: function(context: any) {
+            return {
+              backgroundColor: context.dataset.borderColor
+            };
+          }
+        }
+      }
+    };
+
+    const options = {
+      maintainAspectRatio: false,
+      plugins,
+      scales: {
+        x: {
+          grid: {
+            drawOnChartArea: false
+          }
+        },
+        y: {
+          beginAtZero: true,
+          max: 10,
+          ticks: {
+            maxTicksLimit: 5,
+            stepSize: Math.ceil(10 / 5)
+          }
+        }
+      },
+      elements: {
+        line: {
+          tension: 0.4
+        },
+        point: {
+          radius: 0,
+          hitRadius: 10,
+          hoverRadius: 4,
+          hoverBorderWidth: 3
+        }
+      }
+    };
+
+    this.mainChart.type = 'line';
+    this.mainChart.options = options;
+    this.mainChart.data = {
+      datasets,
+      labels
+    };
   }
 }

@@ -19,27 +19,28 @@
                     <input cFormControl id="usuario" type="text" [(ngModel)]="loginData.usuario" name="nombre" autoComplete="usuario" placeholder="Usuario" required />
                     <c-form-feedback [valid]="false" tooltip>Debe ingresar un usuario</c-form-feedback>
                   </c-input-group>
-                  <c-input-group class="mb-5">
+                  <c-input-group class="mb-3">
                     <span cInputGroupText>
                       <svg cIcon name="cilLockLocked"></svg>
                     </span>
                     <input cFormControl id="claveUsuario" type="password" [(ngModel)]="loginData.password" name="password" autoComplete="current-password" placeholder="Password" required />
                     <c-form-feedback [valid]="false" tooltip>Debe ingresar un password</c-form-feedback>
                   </c-input-group>
-                  <c-row *ngIf="!loading">
-                    <c-col>
-                      <button cButton color="primary" type="submit">
-                        Ingresar
-                      </button>
-                    </c-col>
-                  </c-row>
-                  <c-row *ngIf="loading">
-                    <c-col>
-                      <button cButton color="primary" disabled>
-                        <c-spinner aria-hidden="true" size="sm"></c-spinner> Cargando...
-                      </button>
-                    </c-col>
-                  </c-row>
+                  <c-col xs="4" *ngIf="!loading">
+                    <button cButton class="px-4" color="primary" type="submit">
+                      Ingresar
+                    </button>
+                  </c-col>
+                  <c-col class="text-right" xs="8">
+                    <button cButton color="link" (click)="resetPasswordMail()">
+                      ¿Olvidaste tu contraseña?
+                    </button>
+                  </c-col>
+                  <c-col *ngIf="loading">
+                    <button cButton color="primary" disabled>
+                      <c-spinner aria-hidden="true" size="sm"></c-spinner> Cargando...
+                    </button>
+                  </c-col>
                 </form>
               </c-card-body>
             </c-card>
