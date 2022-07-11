@@ -27,18 +27,18 @@
                     <c-form-feedback [valid]="false" tooltip>Debe ingresar un password</c-form-feedback>
                   </c-input-group>
                   <c-col xs="4" *ngIf="!loading">
-                    <button cButton class="px-4" color="primary" type="submit">
+                    <button cButton class="px-3" color="primary" type="submit">
                       Ingresar
+                    </button>
+                  </c-col>
+                  <c-col *ngIf="loading">
+                    <button cButton class="px-3" color="primary" disabled>
+                      <c-spinner aria-hidden="true" size="sm"></c-spinner>
                     </button>
                   </c-col>
                   <c-col class="text-right" xs="8">
                     <button cButton color="link" (click)="resetPasswordMail()">
                       ¿Olvidaste tu contraseña?
-                    </button>
-                  </c-col>
-                  <c-col *ngIf="loading">
-                    <button cButton color="primary" disabled>
-                      <c-spinner aria-hidden="true" size="sm"></c-spinner> Cargando...
                     </button>
                   </c-col>
                 </form>

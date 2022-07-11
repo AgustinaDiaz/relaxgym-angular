@@ -13,6 +13,11 @@
     </c-button-group>
   </c-modal-footer>
 </c-modal>
+<div class="d-grid gap-2">
+    <button cButton color="primary" class="mb-2" (click)="createUsuario()">
+        <svg cIcon name="cilUserPlus" size="lg" title="Nuevo Usuario"></svg> Nuevo Usuario
+    </button>
+</div>
 <table responsive cAlign="middle" cTable hover @inOut>
     <thead>
         <tr cTableColor="dark" class="text-center">
@@ -30,12 +35,12 @@
     </thead>
     <tbody *ngIf="!loading && usuarios.length == 0">
         <tr class="text-center">
-            <td colSpan="9"b><cite>No existen registros para mostrar.</cite></td>
+            <td colSpan="10"b><cite>No existen registros para mostrar.</cite></td>
         </tr>
     </tbody>
     <tbody *ngIf="loading">
         <tr class="text-center">
-            <td colSpan="9"b>
+            <td colSpan="10"b>
                 <c-spinner color="dark"></c-spinner>
             </td>
         </tr>
@@ -61,14 +66,9 @@
                     <svg cIcon name="cilPencil" size="lg" title="Editar Usuario"></svg>
                 </button>
                 <button [cModalToggle]="verticallyCenteredModal.id" cButton color="secondary" variant="ghost" cTooltip="Eliminar Usuario" cTooltipPlacement="top" class="me-1" (click)="setDeleteUser(usuario)">
-                    <svg cIcon name="cilTrash" size="lg" title="Eliminar Usuario"></svg>
+                    <svg cIcon name="cilXCircle" size="lg" title="Eliminar Usuario"></svg>
                 </button>
             </td>
         </tr>
     </tbody>
 </table>
-<div class="d-grid gap-2 d-md-flex justify-content-md-end">
-    <button cButton color="primary" cTooltip="Editar Usuario" class="mb-2" (click)="createUsuario()">
-        <svg cIcon name="cilPlus" size="lg" title="Editar Usuario"></svg> Nuevo Usuario
-    </button>
-</div>

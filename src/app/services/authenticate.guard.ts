@@ -16,8 +16,8 @@ export class AuthenticateGuard implements CanActivate {
     
     if (token == null)
     {
-      this.alertService.info('Expiró la sesion. Debe loguearse nuevamente.',{ autoClose: true, keepAfterRouteChange: true, symbolAlert: 'info-fill' })
       this.router.navigate(['/login']);
+      this.alertService.info('Expiró la sesion. Debe loguearse nuevamente.',{ autoClose: true, keepAfterRouteChange: true, symbolAlert: 'info-fill' })
     }
 
     token = token as string;
@@ -26,8 +26,8 @@ export class AuthenticateGuard implements CanActivate {
 
     if(isTokenExpired)
     {
-      this.alertService.info('Expiró la sesion. Debe loguearse nuevamente.', { autoClose: true, keepAfterRouteChange: true, symbolAlert: 'info-fill' })
       this.router.navigate(['/login']);
+      this.alertService.info('Expiró la sesion. Debe loguearse nuevamente.', { autoClose: true, keepAfterRouteChange: true, symbolAlert: 'info-fill' })
     }
     
     return true;

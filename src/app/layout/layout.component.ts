@@ -23,7 +23,8 @@ export class LayoutComponent {
     claims = JSON.parse(decodedToken);
 
     if(claims.role == '1' || claims.role == '2') {
-      this.navItems.push({ name: 'Gestion de Rutinas', url: 'gestion-rutinas', iconComponent: { name: 'cilWeightlifitng' }});
+      this.navItems.push({ name: 'Gestion de Ejercicios', url: 'gestion-ejercicios', iconComponent: { name: 'cilWeightlifitng' }});
+      this.navItems.push({ name: 'Gestion de Rutinas', url: 'gestion-rutinas', iconComponent: { name: 'cilClipboard' }});
     }
 
     if(claims.role == '1') {
@@ -31,8 +32,10 @@ export class LayoutComponent {
       this.navItems.push({ name: 'Gestion de Notificaciones', url: 'gestion-notificaciones', iconComponent: { name: 'cil-bell' }});
     }
 
-    this.navItems.push({ name: 'Rutinas', url: 'rutinas', iconComponent: { name: 'cilWeightlifitng' }});
-    this.navItems.push({ name: 'Mis Turnos', url: 'turnos', iconComponent: { name: 'cil-clipboard' }});
+    if(claims.role == '3') {
+      this.navItems.push({ name: 'Rutinas', url: 'rutinas', iconComponent: { name: 'cilFeaturedPlaylist' }});
+      this.navItems.push({ name: 'Mis Turnos', url: 'turnos', iconComponent: { name: 'cilCalendarCheck' }});
+    }
   }
 
   private getDecodedAccessToken(token: string): any {

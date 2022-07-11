@@ -1,4 +1,6 @@
 import {
+    cilAsteriskCircle,
+    cilCalendarCheck,
     cibCcAmex,
     cibCcApplePay,
     cibCcMastercard,
@@ -44,6 +46,7 @@ import {
     cilEnvelopeClosed,
     cilEnvelopeOpen,
     cilFile,
+    cilFeaturedPlaylist,
     cilHome,
     cilInbox,
     cilIndentDecrease,
@@ -53,6 +56,7 @@ import {
     cilLayers,
     cilList,
     cilListNumbered,
+    cilLibraryAdd,
     cilLocationPin,
     cilLockLocked,
     cilLoop,
@@ -86,6 +90,7 @@ import {
     cilTrash,
     cilUnderline,
     cilUser,
+    cilUserPlus,
     cilUserFemale,
     cilUserFollow,
     cilUserUnfollow,
@@ -93,10 +98,13 @@ import {
     cilClipboard,
     cilContact,
     cilWeightlifitng,
+    cilXCircle,
     cilPlus,
   } from '@coreui/icons';
   
   export const iconSubset = {
+    cilAsteriskCircle,
+    cilCalendarCheck,
     cibCcAmex,
     cibCcApplePay,
     cibCcMastercard,
@@ -141,6 +149,7 @@ import {
     cilDrop,
     cilEnvelopeClosed,
     cilEnvelopeOpen,
+    cilFeaturedPlaylist,
     cilFile,
     cilHome,
     cilInbox,
@@ -150,6 +159,7 @@ import {
     cilJustifyCenter,
     cilLayers,
     cilList,
+    cilLibraryAdd,
     cilListNumbered,
     cilLocationPin,
     cilLockLocked,
@@ -184,6 +194,7 @@ import {
     cilTrash,
     cilUnderline,
     cilUser,
+    cilUserPlus,
     cilUserFemale,
     cilUserFollow,
     cilUserUnfollow,
@@ -191,10 +202,13 @@ import {
     cilClipboard,
     cilContact,
     cilWeightlifitng,
+    cilXCircle,
     cilPlus
   };
   
   export enum IconSubset {
+    cilAsteriskCircle = 'cilAsteriskCircle',
+    cilCalendarCheck = 'cilCalendarCheck',
     cibCcAmex = 'cibCcAmex',
     cibCcApplePay = 'cibCcApplePay',
     cibCcMastercard = 'cibCcMastercard',
@@ -239,6 +253,7 @@ import {
     cilDrop = 'cilDrop',
     cilEnvelopeClosed = 'cilEnvelopeClosed',
     cilEnvelopeOpen = 'cilEnvelopeOpen',
+    cilFeaturedPlaylist = 'cilFeaturedPlaylist',
     cilFile = 'cilFile',
     cilHome = 'cilHome',
     cilInbox = 'cilInbox',
@@ -249,6 +264,7 @@ import {
     cilLayers = 'cilLayers',
     cilList = 'cilList',
     cilListNumbered = 'cilListNumbered',
+    cilLibraryAdd = 'cilLibraryAdd',
     cilLocationPin = 'cilLocationPin',
     cilLockLocked = 'cilLockLocked',
     cilLoop = 'cilLoop',
@@ -282,6 +298,7 @@ import {
     cilTrash = 'cilTrash',
     cilUnderline = 'cilUnderline',
     cilUser = 'cilUser',
+    cilUserPlus = 'cilUserPlus',
     cilUserFemale = 'cilUserFemale',
     cilUserFollow = 'cilUserFollow',
     cilUserUnfollow = 'cilUserUnfollow',
@@ -289,6 +306,7 @@ import {
     cilClipboard = 'cilClipboard',
     cilContact = 'cilContact',
     cilWeightlifitng = 'cilWeightlifitng',
+    cilXCircle = 'cilXCircle',
     cilPlus = 'cilPlus'
   }
   

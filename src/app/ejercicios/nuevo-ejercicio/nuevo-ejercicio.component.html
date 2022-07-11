@@ -1,0 +1,40 @@
+
+<c-card [cBorder]="{top: {color: 'dark', width: 3}}" [textColor]="'primary'" class="mb-3" @inOut>
+    <c-card-header class="text-center">
+        <strong>Creando Nuevo Ejercicio</strong>
+    </c-card-header>
+        <c-card-body>
+            <form cForm #nuevoEjercicioForm="ngForm" class="row g-3 needs-validation" (ngSubmit)="createEjercicio(nuevoEjercicioForm)" [validated]="tooltipValidated">
+                <c-col class="position-relative mb-3" md="6">
+                    <label cLabel for="nombre">Nombre</label>
+                    <input cFormControl id="nombre" type="text" [(ngModel)]="ejercicio.nombre" name="nombre" required />
+                    <c-form-feedback [valid]="false" tooltip>Debe ingresar un nombre</c-form-feedback>
+                </c-col>
+                <c-col class="position-relative mb-4" md="6 ">
+                    <label cLabel for="tipoEjercicio">Tipo Ejercicio</label>
+                    <select cSelect id="tipoEjercicio" name="tipoEjercicio" [(ngModel)]="ejercicio.tipoEjercicio.id" required>
+                        <option [ngValue]="0" disabled>Seleccione un tipo de ejercicio</option>
+                        <option *ngFor="let ejercicio of tiposEjercicio" [ngValue]="ejercicio.id">{{ ejercicio.descripcion }}</option>
+                    </select>
+                    <c-form-feedback [valid]="false" tooltip>Debe ingresar un tipo de ejercicio</c-form-feedback>
+                </c-col>
+                <c-col class="position-relative mb-3" md="6">
+                    <label cLabel for="descripcion">Descripcion</label>
+                    <textarea cFormControl id="descripcion" [(ngModel)]="ejercicio.descripcion" rows="4" name="descripcion" required>
+                    </textarea>
+                    <c-form-feedback [valid]="false" tooltip>Debe ingresar una descripcion</c-form-feedback>
+                </c-col>
+                <c-col class="position-relative mb-4" md="6">
+                    <label cLabel for="urlEjercicio">Url Ejercicio</label>
+                    <input cFormControl id="urlEjercicio" type="text" [(ngModel)]="ejercicio.urlEjercicio" name="urlEjercicio" required />
+                    <c-form-feedback [valid]="false" tooltip>Debe ingresar una url</c-form-feedback>
+                </c-col>
+                <c-col class="text-center" xs="12">
+                    <c-button-group aria-label="Basic example" role="group">
+                        <button cButton color="primary" type="submit">Confirmar</button>
+                        <button cButton (click)="onBack()" color="secondary" type="reset">Atras</button>
+                    </c-button-group>
+                </c-col>
+            </form>
+        </c-card-body>
+    </c-card>

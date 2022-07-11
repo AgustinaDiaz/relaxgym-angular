@@ -1,5 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { EjercicioResolver } from './ejercicios/ejercicio.resolver';
+import { EjerciciosComponent } from './ejercicios/ejercicios.component';
+import { ModificarEjercicioComponent } from './ejercicios/modificar-ejercicio/modificar-ejercicio.component';
+import { NuevoEjercicioComponent } from './ejercicios/nuevo-ejercicio/nuevo-ejercicio.component';
 import { InicioComponent } from './inicio/inicio.component';
 import { InicioResolver } from './inicio/inicio.resolver';
 import { LayoutComponent } from './layout';
@@ -7,6 +11,7 @@ import { LoginComponent } from './login/login.component';
 import { ResetPasswordConfirmComponent } from './login/reset-password-confirm/reset-password-confirm.component';
 import { ResetPasswordResolver } from './login/reset-password-confirm/reset-password.resolver';
 import { ResetPasswordMailComponent } from './login/reset-password-mail/reset-password-mail.component';
+import { RutinasComponent } from './rutinas/rutinas.component';
 import { AdministratorGuard } from './services/administrator.guard';
 import { AuthenticateGuard } from './services/authenticate.guard';
 import { DetalleUsuarioComponent } from './usuarios/detalle-usuario/detalle-usuario.component';
@@ -50,15 +55,23 @@ const routes: Routes = [
     },
     children:[
       {
-      path: 'home',
-      component: InicioComponent,
-      canActivate: [AuthenticateGuard],
-      data: {
-        title: 'Inicio'
+        path: 'home',
+        component: InicioComponent,
+        canActivate: [AuthenticateGuard],
+        data: {
+          title: 'Inicio'
+        },
+        resolve: {
+          usuarios: InicioResolver
+        }
       },
-      resolve: {
-        usuarios: InicioResolver
-      }
+      {
+        path: 'gestion-rutinas',
+        component: RutinasComponent,
+        canActivate: [AdministratorGuard],
+        data: {
+          title: 'Rutinas'
+        }
       },
       {
         path: 'gestion-usuarios',
@@ -96,6 +109,33 @@ const routes: Routes = [
         },
         resolve: {
           usuario: UsuarioResolver
+        }
+      },
+      {
+        path: 'gestion-ejercicios',
+        component: EjerciciosComponent,
+        canActivate: [AdministratorGuard],
+        data: {
+          title: 'Ejercicios'
+        }
+      },
+      {
+        path: 'nuevo-ejercicio', 
+        component: NuevoEjercicioComponent,
+        canActivate: [AdministratorGuard],
+        data: {
+          title: 'Ejercicios/Nuevo'
+        }
+      },  
+      {
+        path: 'modificar-ejercicio/:id', 
+        component: ModificarEjercicioComponent,
+        canActivate: [AuthenticateGuard],
+        data: {
+          title: 'Ejercicios/Modificar'
+        },
+        resolve: {
+          ejercicio: EjercicioResolver
         }
       }
     ]

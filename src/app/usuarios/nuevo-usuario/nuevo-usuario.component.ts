@@ -87,5 +87,4 @@ export class NuevoUsuarioComponent implements OnInit {
   onBack() {
     this.router.navigateByUrl("main/gestion-usuarios");
   }
-
 }

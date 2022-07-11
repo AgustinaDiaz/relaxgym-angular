@@ -1,0 +1,48 @@
+<c-modal #verticallyCenteredModal alignment="center" id="verticallyCenteredModal">
+    <c-modal-header>
+      <h5 cModalTitle>Eliminar Ejercicio</h5>
+      <button [cModalToggle]="verticallyCenteredModal.id" cButtonClose></button>
+    </c-modal-header>
+    <c-modal-body>
+      ¿Está seguro que desea eliminar el ejercicio {{deletedEjercicio.nombre}}?
+    </c-modal-body>
+    <c-modal-footer>
+      <c-button-group aria-label="Basic example" role="group">
+          <button [cModalToggle]="verticallyCenteredModal.id" cButton color="primary" (click)="deleteEjercicio()">Confirmar</button>
+          <button [cModalToggle]="verticallyCenteredModal.id" cButton color="secondary">Cancelar</button>
+      </c-button-group>
+    </c-modal-footer>
+  </c-modal>
+<div class="d-grid gap-2" @inOut>
+    <button cButton color="primary" class="mb-2" (click)="createEjercicio()">
+        <svg cIcon name="cilLibraryAdd" size="lg" title="Nuevo Rutina"></svg> Nuevo Ejercicio
+    </button>
+</div>
+<c-row *ngIf="!loading && ejercicios.length !== 0" [gutter]="4" class="mb-3" [md]="3" [xs]="1" @inOut>
+    <c-col *ngFor="let ejercicio of ejercicios; index as i;">
+        <c-card class="h-100">
+        <iframe [class.thumbnail]="'thumbnail'" [src]="safeSrc[i]" [height]="300" mozallowfullscreen allowfullscreen></iframe>
+        <c-card-body>
+            <h5 cCardTitle [cTextColor]="'primary'"><cite>{{ejercicio.nombre}}</cite></h5>
+            <p cCardText [cTextColor]="'secondary'">
+            {{ejercicio.descripcion}}
+            </p>
+        </c-card-body>
+        <c-card-footer>
+            <c-row>
+                <c-col [xs]=8 class="d-flex align-items-center">
+                    <small class="text-medium-emphasis"><cite>Tipo de Ejercicio: </cite><c-badge color="primary">{{ejercicio.tipoEjercicio.descripcion}}</c-badge></small>
+                </c-col>
+                <c-col [xs]=4 class="d-flex justify-content-end pe-0">
+                    <button cButton color="primary" variant="ghost" cTooltip="Editar Ejercicio" cTooltipPlacement="top" (click)="updateEjercicio(ejercicio)">
+                        <svg cIcon name="cilPencil" size="lg" title="Editar Usuario"></svg>
+                    </button>
+                    <button [cModalToggle]="verticallyCenteredModal.id" cButton color="secondary" variant="ghost" cTooltip="Eliminar Ejercicio" cTooltipPlacement="top" class="me-1" (click)="setDeleteEjercicio(ejercicio)">
+                        <svg cIcon name="cilXCircle" size="lg" title="Eliminar Ejercicio"></svg>
+                    </button>
+                </c-col>
+            </c-row>
+        </c-card-footer>
+        </c-card>
+    </c-col>
+</c-row>

@@ -20,6 +20,7 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 
 import {
+  AccordionModule,
   AlertModule,
   AvatarModule,
   BadgeModule,
@@ -61,6 +62,9 @@ import { DetalleUsuarioComponent } from './usuarios/detalle-usuario/detalle-usua
 import { ResetPasswordConfirmComponent } from './login/reset-password-confirm/reset-password-confirm.component';
 import { ResetPasswordMailComponent } from './login/reset-password-mail/reset-password-mail.component';
 import { RutinasComponent } from './rutinas/rutinas.component';
+import { EjerciciosComponent } from './ejercicios/ejercicios.component';
+import { ModificarEjercicioComponent } from './ejercicios/modificar-ejercicio/modificar-ejercicio.component';
+import { NuevoEjercicioComponent } from './ejercicios/nuevo-ejercicio/nuevo-ejercicio.component';
 
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
@@ -82,9 +86,13 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     DetalleUsuarioComponent,
     ResetPasswordMailComponent,
     ResetPasswordConfirmComponent,
-    RutinasComponent
+    RutinasComponent,
+    EjerciciosComponent,
+    ModificarEjercicioComponent,
+    NuevoEjercicioComponent
   ],
   imports: [
+    AccordionModule,
     AlertModule,
     BrowserModule,
     BrowserAnimationsModule,

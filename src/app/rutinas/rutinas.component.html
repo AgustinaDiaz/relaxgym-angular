@@ -1,1 +1,32 @@
-<p>rutinas works!</p>
+<c-accordion [alwaysOpen]="true">
+    <c-accordion-item #item0="cAccordionItem" [visible]="true" *ngFor="let rutina of rutinas; index as i;">
+      <ng-template cTemplateId="accordionHeaderTemplate">
+        <button (click)="item0.toggleItem()" [collapsed]="item0.visible" cAccordionButton [cTextColor]="'primary'">
+            <strong>{{i+1}} - {{rutina.nombre}}</strong> 
+        </button>
+      </ng-template>
+      <ng-template cTemplateId="accordionBodyTemplate">
+        <div class="accordion-body">
+          {{rutina.descripcion}}
+        </div>
+        <c-row>
+            <c-col xs>
+              <c-card>
+                <c-card-header class="text-center" [cTextColor]="'primary'"><cite>Ejercicios</cite></c-card-header>
+                <c-card-body>
+                    <c-row>
+                        <c-col sm="3" *ngFor="let ejercicio of rutina.ejercicios; index as i;">
+                            <div class="border-start border-start-4 border-start-primary py-1 px-3">
+                            <div class="text-medium-emphasis">{{ejercicio.ejercicio.nombre}}</div>
+                            <div class="text-medium-emphasis small">Series: {{ejercicio.series}}</div>
+                            <div class="text-medium-emphasis small">Repeticiones: {{ejercicio.cantidadRepeticiones}}</div>
+                            </div>
+                        </c-col>
+                    </c-row>
+                </c-card-body>
+              </c-card>
+            </c-col>
+          </c-row>
+      </ng-template>
+    </c-accordion-item>
+  </c-accordion>

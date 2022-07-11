@@ -41,8 +41,7 @@ export class UsuariosComponent implements OnInit {
     this.getUsuarios();
   }
 
-  getUsuarios()
-  {
+  getUsuarios() {
     this.loading = true;
     this.usuarioService.getUsuarios()
         .subscribe(response => {
@@ -55,18 +54,15 @@ export class UsuariosComponent implements OnInit {
         });
   }
 
-  createUsuario()
-  {
+  createUsuario() {
     this.router.navigateByUrl('main/nuevo-usuario');
   }
 
-  updateUsuario(usuario:Usuario)
-  {
+  updateUsuario(usuario:Usuario) {
     this.router.navigateByUrl(`main/modificar-usuario/${usuario.id}`, { state: { usuario: usuario } });
   }
   
-  deleteUsuario()
-  {
+  deleteUsuario() {
     this.usuarioService.deleteUsuarioById(this.deletedUsuario.id)
         .subscribe(response => {
           this.alertService.success('Se ha eliminado correctamente el usuario.', { autoClose: true, keepAfterRouteChange: true, symbolAlert: 'check-circle-fill' });
@@ -82,8 +78,7 @@ export class UsuariosComponent implements OnInit {
     this.deletedUsuario = usuario;
   }
 
-  showPassword()
-  {
+  showPassword() {
     return this.mostrarClave === true ? this.mostrarClave = false : this.mostrarClave = true 
   }
 }
