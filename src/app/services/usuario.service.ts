@@ -30,6 +30,10 @@ export class UsuarioService {
     return this.httpClient.get<Usuario>(`${this.url}/${id}`);
   }
 
+  getUsuariosByIdRolForRutina(idRol: number, idRutina: number): Observable<Array<Usuario>>{
+    return this.httpClient.get<Array<Usuario>>(`${this.url}/Rol/${idRol}/Rutina/${idRutina}`);
+  }
+
   updateUsuarioById(usuario:Usuario): Observable<any>{
     return this.httpClient.put<Usuario>(`${this.url}/${usuario.id}`, usuario);
   }

@@ -65,6 +65,10 @@ import { RutinasComponent } from './rutinas/rutinas.component';
 import { EjerciciosComponent } from './ejercicios/ejercicios.component';
 import { ModificarEjercicioComponent } from './ejercicios/modificar-ejercicio/modificar-ejercicio.component';
 import { NuevoEjercicioComponent } from './ejercicios/nuevo-ejercicio/nuevo-ejercicio.component';
+import { AsignarRutinaComponent } from './rutinas/asignar-rutina/asignar-rutina.component';
+import { NuevaRutinaComponent } from './rutinas/nueva-rutina/nueva-rutina.component';
+import { TurnosComponent } from './turnos/turnos.component';
+import { NotificacionesComponent } from './notificaciones/notificaciones.component';
 
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
@@ -89,7 +93,11 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     RutinasComponent,
     EjerciciosComponent,
     ModificarEjercicioComponent,
-    NuevoEjercicioComponent
+    NuevoEjercicioComponent,
+    AsignarRutinaComponent,
+    NuevaRutinaComponent,
+    TurnosComponent,
+    NotificacionesComponent
   ],
   imports: [
     AccordionModule,

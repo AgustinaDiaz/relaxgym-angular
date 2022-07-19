@@ -1,8 +1,8 @@
 import { Ejercicio } from "./ejercicio";
 
 export class EjercicioRutina {
-    series!: number;
     cantidadRepeticiones!: number;
+    series!: number;
     idEjercicio!: number;
     ejercicio!: Ejercicio;
 }

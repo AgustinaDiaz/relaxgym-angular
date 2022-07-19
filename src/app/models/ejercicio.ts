@@ -6,6 +6,9 @@ export class Ejercicio {
     nombre!: string;
     descripcion!: string;
     urlEjercicio!: string;
+    selected!: boolean;
+    cantidadRepeticiones!: number;
+    series!: number;
     idTipoEjercicio!: number;
     tipoEjercicio!: TipoEjercicio;
 }

@@ -1,7 +1,7 @@
 
 <c-card [cBorder]="{top: {color: 'dark', width: 3}}" [textColor]="'primary'" class="mb-3" @inOut>
 <c-card-header class="text-center">
-    <strong>Id: {{usuario.id}} - {{usuario.apellido}}, {{usuario.nombre}} - {{usuario.rol.descripcion}}</strong>
+    <strong>{{usuario.apellido}}, {{usuario.nombre}}</strong>
 </c-card-header>
     <c-card-body>
         <form cForm #modificarUsuarioForm="ngForm" class="row g-3 needs-validation" (ngSubmit)="updateUsuarioById(modificarUsuarioForm)" [validated]="tooltipValidated">

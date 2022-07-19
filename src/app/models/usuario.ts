@@ -13,6 +13,7 @@ export class Usuario {
     fechaAlta!: Date;
     idEstadoUsuario!: number;
     estadoUsuario!: EstadoUsuario;
+    selected!: boolean;
     idRol!: number;
     rol!: Rol;
 }

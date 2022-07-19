@@ -25,6 +25,7 @@ export class LayoutComponent {
     if(claims.role == '1' || claims.role == '2') {
       this.navItems.push({ name: 'Gestion de Ejercicios', url: 'gestion-ejercicios', iconComponent: { name: 'cilWeightlifitng' }});
       this.navItems.push({ name: 'Gestion de Rutinas', url: 'gestion-rutinas', iconComponent: { name: 'cilClipboard' }});
+      this.navItems.push({ name: 'Gestion de Turnos', url: 'gestion-turnos', iconComponent: { name: 'cilCalendarCheck' }});
     }
 
     if(claims.role == '1') {

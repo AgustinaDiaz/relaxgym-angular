@@ -1,7 +1,7 @@
 
 <c-card [cBorder]="{top: {color: 'dark', width: 3}}" [textColor]="'primary'" class="mb-3" @inOut>
     <c-card-header class="text-center">
-        <strong>Creando Nuevo Ejercicio</strong>
+        Nuevo Ejercicio
     </c-card-header>
         <c-card-body>
             <form cForm #nuevoEjercicioForm="ngForm" class="row g-3 needs-validation" (ngSubmit)="createEjercicio(nuevoEjercicioForm)" [validated]="tooltipValidated">

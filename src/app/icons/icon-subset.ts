@@ -1,5 +1,6 @@
 import {
     cilAsteriskCircle,
+    cilArrowThickFromLeft,
     cilCalendarCheck,
     cibCcAmex,
     cibCcApplePay,
@@ -72,6 +73,7 @@ import {
     cilPen,
     cilPencil,
     cilPeople,
+    cilPlaylistAdd,
     cilPrint,
     cilPuzzle,
     cilReportSlash,
@@ -104,6 +106,7 @@ import {
   
   export const iconSubset = {
     cilAsteriskCircle,
+    cilArrowThickFromLeft,
     cilCalendarCheck,
     cibCcAmex,
     cibCcApplePay,
@@ -176,6 +179,7 @@ import {
     cilPen,
     cilPencil,
     cilPeople,
+    cilPlaylistAdd,
     cilPrint,
     cilPuzzle,
     cilReportSlash,
@@ -208,6 +212,7 @@ import {
   
   export enum IconSubset {
     cilAsteriskCircle = 'cilAsteriskCircle',
+    cilArrowThickFromLeft = 'cilArrowThickFromLeft',
     cilCalendarCheck = 'cilCalendarCheck',
     cibCcAmex = 'cibCcAmex',
     cibCcApplePay = 'cibCcApplePay',
@@ -280,6 +285,7 @@ import {
     cilPen = 'cilPen',
     cilPencil = 'cilPencil',
     cilPeople = 'cilPeople',
+    cilPlaylistAdd = 'cilPlaylistAdd',
     cilPrint = 'cilPrint',
     cilPuzzle = 'cilPuzzle',
     cilReportSlash = 'cilReportSlash',

@@ -1,0 +1,56 @@
+
+<c-card [cBorder]="{top: {color: 'dark', width: 3}}" [textColor]="'primary'" class="mb-3" @inOut>
+    <c-card-header class="text-center">
+        <strong>{{rutina.nombre}}</strong>
+    </c-card-header>
+        <c-card-body>
+            <c-row>
+                <c-col>
+                    <div class="text-center">
+                        <p class="text-medium-emphasis">Seleccione los alumnos:</p>
+                    </div>
+                    <ul [flush]="true" *ngIf="this.alumnos.length == 0" class="mb-2" cListGroup>
+                        <li class="text-center" cListGroupItem>
+                            <cite>No existen alumnos para asignar a esta rutina.</cite>
+                        </li>
+                    </ul>
+                    <ul [flush]="true" *ngIf="this.alumnos.length != 0" class="mb-2" cListGroup>
+                        <li *ngFor="let alumno of this.alumnos" cListGroupItem>
+                            <c-form-check>
+                                <input cFormCheckInput type="checkbox" [value]="alumno.selected" (click)="setCheckSelected(alumno)">
+                                <label cFormCheckLabel>{{ alumno.apellido }}, {{ alumno.nombre }}</label>
+                            </c-form-check>
+                        </li>
+                        <textarea class="mt-3" cFormControl [(ngModel)]= "observacion" id="descripcion" rows="4" [placeholder]="'Ingrese una observacion...'"></textarea>
+                        <div class="d-grid gap-2">
+                            <c-button-group aria-label="Basic example" role="group">
+                                <button cButton color="primary" cTooltip="Asignar Alumno/s" cTooltipPlacement="bottom" class="mt-2" (click)="asignarAlumnos(rutina.id, this.alumnos, this.observacion)">
+                                    <svg cIcon name="cilArrowThickFromLeft" size="xs" title="Asignar Alumno/s"></svg>
+                                </button>
+                                <button cButton (click)="onBack()" color="secondary" class="mt-2" type="reset">Atras</button>
+                            </c-button-group>
+                        </div>
+                    </ul>
+                </c-col>
+                <c-col>
+                    <div class="text-center">
+                        <p class="text-medium-emphasis">Alumnos asignados:</p>
+                    </div>
+                    <ul [flush]="true" *ngIf="this.rutina.usuarios.length == 0" cListGroup>
+                        <li class="text-center" cListGroupItem>
+                            <cite>No existen alumnos asignados a esta rutina.</cite>
+                        </li>
+                    </ul>
+                    <ul [flush]="true" *ngIf="this.rutina.usuarios.length != 0" cListGroup>
+                        <li *ngFor="let alumno of this.rutina.usuarios" cListGroupItem>
+                            <svg cIcon name="cilCheck" size="xs" title="Asignar Rutina" class="text-success"></svg> 
+                            {{ alumno.usuario.apellido }}, {{ alumno.usuario.nombre }}
+                            <button cButton color="danger" variant="ghost" cTooltip="Desasignar Alumno" cTooltipPlacement="right" (click)="desasignarAlumno(rutina.id, alumno.usuario.id)">
+                                <svg cIcon name="cilXCircle" size="xs" title="Desasignar Alumno"></svg>
+                            </button>
+                        </li>
+                    </ul>
+                </c-col>
+            </c-row>
+        </c-card-body>
+    </c-card>

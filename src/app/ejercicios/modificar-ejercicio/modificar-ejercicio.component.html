@@ -1,7 +1,7 @@
 
 <c-card [cBorder]="{top: {color: 'dark', width: 3}}" [textColor]="'primary'" class="mb-3" @inOut>
     <c-card-header class="text-center">
-        <strong>Id: {{ejercicio.id}} - {{ejercicio.nombre}}</strong>
+        <strong>{{ejercicio.nombre}}</strong>
     </c-card-header>
         <c-card-body>
             <form cForm #modificarEjercicioForm="ngForm" class="row g-3 needs-validation" (ngSubmit)="updateEjercicioById(modificarEjercicioForm)" [validated]="tooltipValidated">

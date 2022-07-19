@@ -11,9 +11,14 @@ import { LoginComponent } from './login/login.component';
 import { ResetPasswordConfirmComponent } from './login/reset-password-confirm/reset-password-confirm.component';
 import { ResetPasswordResolver } from './login/reset-password-confirm/reset-password.resolver';
 import { ResetPasswordMailComponent } from './login/reset-password-mail/reset-password-mail.component';
+import { NotificacionesComponent } from './notificaciones/notificaciones.component';
+import { AsignarRutinaComponent } from './rutinas/asignar-rutina/asignar-rutina.component';
+import { NuevaRutinaComponent } from './rutinas/nueva-rutina/nueva-rutina.component';
+import { RutinaResolver } from './rutinas/rutina.resolver';
 import { RutinasComponent } from './rutinas/rutinas.component';
 import { AdministratorGuard } from './services/administrator.guard';
 import { AuthenticateGuard } from './services/authenticate.guard';
+import { TurnosComponent } from './turnos/turnos.component';
 import { DetalleUsuarioComponent } from './usuarios/detalle-usuario/detalle-usuario.component';
 import { ModificarUsuarioComponent } from './usuarios/modificar-usuario/modificar-usuario.component';
 import { NuevoUsuarioComponent } from './usuarios/nuevo-usuario/nuevo-usuario.component';
@@ -74,11 +79,46 @@ const routes: Routes = [
         }
       },
       {
+        path: 'nueva-rutina', 
+        component: NuevaRutinaComponent,
+        canActivate: [AdministratorGuard],
+        data: {
+          title: 'Rutinas/Nueva'
+        }
+      }, 
+      {
+        path: 'asignar-rutina/:id',
+        component: AsignarRutinaComponent,
+        canActivate: [AdministratorGuard],
+        data: {
+          title: 'Rutinas/Asignar'
+        },
+        resolve: {
+          rutina: RutinaResolver
+        }
+      },
+      {
         path: 'gestion-usuarios',
         component: UsuariosComponent,
         canActivate: [AdministratorGuard],
         data: {
           title: 'Usuarios'
+        }
+      },
+      {
+        path: 'gestion-turnos',
+        component: TurnosComponent,
+        canActivate: [AdministratorGuard],
+        data: {
+          title: 'Turnos'
+        }
+      },
+      {
+        path: 'gestion-notificaciones',
+        component: NotificacionesComponent,
+        canActivate: [AdministratorGuard],
+        data: {
+          title: 'Notificaciones'
         }
       },
       {
