@@ -34,7 +34,7 @@ export class AsignarRutinaComponent implements OnInit {
   alumnos: Array<Usuario> = [];
   observacion: string = '';
 
-  constructor(private activatedroute:ActivatedRoute,
+  constructor(private activatedRoute:ActivatedRoute,
               private router: Router,
               private usuarioService: UsuarioService,
               private rutinaService: RutinaService,
@@ -42,7 +42,7 @@ export class AsignarRutinaComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    this.activatedroute.data.subscribe(data => {
+    this.activatedRoute.data.subscribe(data => {
       this.rutina = data['rutina'];
 
       this.usuarioService.getUsuariosByIdRolForRutina(3, this.rutina.id).subscribe(response => {
@@ -56,7 +56,6 @@ export class AsignarRutinaComponent implements OnInit {
         this.alertService.error('Ocurrió un error al cargar los alumnos.', { autoClose: true, keepAfterRouteChange: true, symbolAlert: 'exclamation-triangle-fill' })
       });
     })
-
   }
 
   asignarAlumnos(idRutina: number, alumnos: Array<Usuario>, observacion: string) {

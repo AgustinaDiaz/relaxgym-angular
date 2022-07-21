@@ -1,0 +1,35 @@
+
+<c-row>
+    <c-col [sm]="3"></c-col>
+    <c-col [sm]="6">
+        <c-card [cBorder]="{top: {color: 'dark', width: 3}}" [textColor]="'primary'" class="mb-3" @inOut>
+            <c-card-header class="text-center">
+                <strong>Clase: {{turno.clase.nombre}} - Horario: {{turno.fechaHora | date : 'dd-MM-yyyy hh:mm:ss'}}</strong>
+            </c-card-header>
+            <c-card-body>
+                <c-row>
+                    <c-col>
+                        <div class="text-center">
+                            <p class="text-medium-emphasis">Alumnos asignados:</p>
+                        </div>
+                        <ul [flush]="true" *ngIf="this.turno.usuarios.length == 0" cListGroup>
+                            <li class="text-center" cListGroupItem>
+                                <cite>No existen alumnos asignados a este turno.</cite>
+                            </li>
+                        </ul>
+                        <ul [flush]="true" *ngIf="this.turno.usuarios.length != 0" cListGroup>
+                            <li *ngFor="let alumno of this.turno.usuarios" class="text-center" cListGroupItem>
+                                <svg cIcon name="cilCheck" size="xs" title="Alumnos Asignados" class="text-success"></svg> 
+                                {{ alumno.usuario.apellido }}, {{ alumno.usuario.nombre }}
+                                <button cButton color="danger" variant="ghost" cTooltip="Desasignar Alumno" cTooltipPlacement="right" (click)="desasignarTurno(turno.id, alumno.usuario.id)">
+                                    <svg cIcon name="cilXCircle" size="xs" title="Desasignar Alumno"></svg>
+                                </button>
+                            </li>
+                        </ul>
+                    </c-col>
+                </c-row>
+            </c-card-body>
+        </c-card>
+    </c-col>
+    <c-col [sm]="3"></c-col>
+</c-row>

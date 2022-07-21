@@ -19,6 +19,12 @@ import { AppComponent } from './app.component';
 
 import { LoginComponent } from './login/login.component';
 
+import { FullCalendarModule } from '@fullcalendar/angular';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import timeGridPlugin from '@fullcalendar/timegrid';
+import listPlugin from '@fullcalendar/list';
+import interactionPlugin from '@fullcalendar/interaction';
+
 import {
   AccordionModule,
   AlertModule,
@@ -69,11 +75,19 @@ import { AsignarRutinaComponent } from './rutinas/asignar-rutina/asignar-rutina.
 import { NuevaRutinaComponent } from './rutinas/nueva-rutina/nueva-rutina.component';
 import { TurnosComponent } from './turnos/turnos.component';
 import { NotificacionesComponent } from './notificaciones/notificaciones.component';
+import { DetalleTurnoComponent } from './turnos/detalle-turno/detalle-turno.component';
 
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
 };
+
+FullCalendarModule.registerPlugins([
+  dayGridPlugin,
+  timeGridPlugin,
+  listPlugin,
+  interactionPlugin
+]);
 
 @NgModule({
   declarations: [
@@ -97,7 +111,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     AsignarRutinaComponent,
     NuevaRutinaComponent,
     TurnosComponent,
-    NotificacionesComponent
+    NotificacionesComponent,
+    DetalleTurnoComponent
   ],
   imports: [
     AccordionModule,
@@ -110,6 +125,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     FooterModule,
     DropdownModule,
     GridModule,
+    FullCalendarModule,
     HeaderModule,
     SidebarModule,
     IconModule,

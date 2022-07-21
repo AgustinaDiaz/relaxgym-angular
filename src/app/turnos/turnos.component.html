@@ -1,1 +1,10 @@
-<p>turnos works!</p>
+<div class="d-grid gap-2" @inOut>
+    <button cButton color="primary" class="mb-2">
+        <svg cIcon name="cilNoteAdd" size="lg" title="Nuevo Turno"></svg> Nuevo Turno
+    </button>
+</div>
+<div class='calendar-app'>
+    <div class='calendar-app-main'>
+        <full-calendar #calendar [options]='calendarOptions'></full-calendar>
+    </div>
+</div>
