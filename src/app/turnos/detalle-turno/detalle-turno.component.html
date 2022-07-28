@@ -1,8 +1,10 @@
 
-<c-row>
+<c-row @inOut>
     <c-col [sm]="3"></c-col>
     <c-col [sm]="6">
-        <c-card [cBorder]="{top: {color: 'dark', width: 3}}" [textColor]="'primary'" class="mb-3" @inOut>
+        <c-widget-stat-b #widgetStatB1inv="cWidgetStatB" [title]="'Cupos Disponibles'" class="text-center mb-4" color="success" *ngIf="this.cuposDisponibles > 0" value="{{this.turno.usuarios.length}}/{{this.turno.cantidadAlumnos}}"></c-widget-stat-b>
+        <c-widget-stat-b #widgetStatB1inv="cWidgetStatB" [title]="'Cupos Disponibles'" class="text-center mb-4" color="danger" *ngIf="this.cuposDisponibles == 0" value="{{this.turno.usuarios.length}}/{{this.turno.cantidadAlumnos}}"></c-widget-stat-b>
+        <c-card [cBorder]="{top: {color: 'dark', width: 3}}" [textColor]="'primary'" class="mb-3">
             <c-card-header class="text-center">
                 <strong>Clase: {{turno.clase.nombre}} - Horario: {{turno.fechaHora | date : 'dd-MM-yyyy hh:mm:ss'}}</strong>
             </c-card-header>
@@ -26,6 +28,9 @@
                                 </button>
                             </li>
                         </ul>
+                        <div class="d-grid gap-2">
+                            <button cButton (click)="onBack()" color="secondary" class="text-center mt-2" type="reset">Atras</button>
+                        </div>
                     </c-col>
                 </c-row>
             </c-card-body>

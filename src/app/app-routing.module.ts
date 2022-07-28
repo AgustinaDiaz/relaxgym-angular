@@ -19,6 +19,7 @@ import { RutinasComponent } from './rutinas/rutinas.component';
 import { AdministratorGuard } from './services/administrator.guard';
 import { AuthenticateGuard } from './services/authenticate.guard';
 import { DetalleTurnoComponent } from './turnos/detalle-turno/detalle-turno.component';
+import { NuevoTurnoComponent } from './turnos/nuevo-turno/nuevo-turno.component';
 import { TurnoResolver } from './turnos/turno.resolver';
 import { TurnosComponent } from './turnos/turnos.component';
 import { DetalleUsuarioComponent } from './usuarios/detalle-usuario/detalle-usuario.component';
@@ -115,6 +116,14 @@ const routes: Routes = [
           title: 'Turnos'
         }
       },
+      {
+        path: 'nuevo-turno', 
+        component: NuevoTurnoComponent,
+        canActivate: [AdministratorGuard],
+        data: {
+          title: 'Turnos/Nuevo'
+        }
+      }, 
       {
         path: 'detalle-turno/:id',
         component: DetalleTurnoComponent,

@@ -1,0 +1,29 @@
+
+<c-card [cBorder]="{top: {color: 'dark', width: 3}}" [textColor]="'primary'" class="mb-3" @inOut>
+    <c-card-header class="text-center">
+        Nuevo Turno
+    </c-card-header>
+    <c-card-body>
+        <form cForm #nuevoTurnoForm="ngForm" class="row g-3 needs-validation" (ngSubmit)="createTurno(nuevoTurnoForm)" [validated]="tooltipValidated">
+            <c-col class="position-relative mb-4" md="6">
+                <label cLabel for="nombre">Cantidad de Alumnos</label>
+                <input cFormControl id="nombre" type="number" [(ngModel)]="turno.cantidadAlumnos" name="nombre" required />
+                <c-form-feedback [valid]="false" tooltip>Debe ingresar una cantidad</c-form-feedback>
+            </c-col>
+            <c-col class="position-relative mb-4" md="6">
+                <label cLabel for="rol">Clase</label>
+                <select cSelect id="rol" name="rol" [(ngModel)]="turno.clase.id" required>
+                    <option [ngValue]="0" disabled>Seleccione una clase</option>
+                    <option *ngFor="let clase of clases" [ngValue]="clase.id">{{ clase.nombre }}</option>
+                </select>
+                <c-form-feedback [valid]="false" tooltip>Debe ingresar una clase</c-form-feedback>
+            </c-col>
+            <c-col class="text-center" xs="12">
+                <c-button-group aria-label="Basic example" role="group">
+                    <button cButton color="primary" type="submit">Confirmar</button>
+                    <button cButton (click)="onBack()" color="secondary" type="reset">Atras</button>
+                    </c-button-group>
+            </c-col>
+        </form>
+    </c-card-body>
+</c-card>
