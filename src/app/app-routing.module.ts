@@ -12,6 +12,7 @@ import { ResetPasswordConfirmComponent } from './login/reset-password-confirm/re
 import { ResetPasswordResolver } from './login/reset-password-confirm/reset-password.resolver';
 import { ResetPasswordMailComponent } from './login/reset-password-mail/reset-password-mail.component';
 import { NotificacionesComponent } from './notificaciones/notificaciones.component';
+import { NuevaNotificacionComponent } from './notificaciones/nueva-notificacion/nueva-notificacion.component';
 import { AsignarRutinaComponent } from './rutinas/asignar-rutina/asignar-rutina.component';
 import { NuevaRutinaComponent } from './rutinas/nueva-rutina/nueva-rutina.component';
 import { RutinaResolver } from './rutinas/rutina.resolver';
@@ -143,6 +144,14 @@ const routes: Routes = [
           title: 'Notificaciones'
         }
       },
+      {
+        path: 'nueva-notificacion', 
+        component: NuevaNotificacionComponent,
+        canActivate: [AdministratorGuard],
+        data: {
+          title: 'Notificaciones/Nuevo'
+        }
+      }, 
       {
         path: 'nuevo-usuario', 
         component: NuevoUsuarioComponent,

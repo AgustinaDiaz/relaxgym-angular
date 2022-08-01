@@ -30,6 +30,10 @@ export class UsuarioService {
     return this.httpClient.get<Usuario>(`${this.url}/${id}`);
   }
 
+  getUsuariosByIdRol(idRol: number): Observable<Array<Usuario>>{
+    return this.httpClient.get<Array<Usuario>>(`${this.url}/Rol/${idRol}`);
+  }
+
   getUsuariosByIdRolForRutina(idRol: number, idRutina: number): Observable<Array<Usuario>>{
     return this.httpClient.get<Array<Usuario>>(`${this.url}/Rol/${idRol}/Rutina/${idRutina}`);
   }

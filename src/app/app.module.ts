@@ -77,6 +77,7 @@ import { TurnosComponent } from './turnos/turnos.component';
 import { NotificacionesComponent } from './notificaciones/notificaciones.component';
 import { DetalleTurnoComponent } from './turnos/detalle-turno/detalle-turno.component';
 import { NuevoTurnoComponent } from './turnos/nuevo-turno/nuevo-turno.component';
+import { NuevaNotificacionComponent } from './notificaciones/nueva-notificacion/nueva-notificacion.component';
 
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
@@ -114,7 +115,8 @@ FullCalendarModule.registerPlugins([
     TurnosComponent,
     NotificacionesComponent,
     DetalleTurnoComponent,
-    NuevoTurnoComponent
+    NuevoTurnoComponent,
+    NuevaNotificacionComponent
   ],
   imports: [
     AccordionModule,

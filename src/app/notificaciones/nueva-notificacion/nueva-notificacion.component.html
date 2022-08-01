@@ -1,0 +1,55 @@
+
+<c-card [cBorder]="{top: {color: 'dark', width: 3}}" [textColor]="'primary'" class="mb-3" @inOut>
+    <c-card-header class="text-center">
+        <strong>Nueva Notifiacion</strong>
+    </c-card-header>
+        <c-card-body>
+            <c-row>
+                <c-col>
+                    <div class="text-center">
+                        <p class="text-medium-emphasis">Seleccione los usuarios:</p>
+                    </div>
+                    <ul [flush]="true" *ngIf="this.usuarios.length == 0" class="mb-2" cListGroup>
+                        <li class="text-center" cListGroupItem>
+                            <cite>No existen usuarios para seleccionar.</cite>
+                        </li>
+                    </ul>
+                    <ul [flush]="true" *ngIf="this.usuarios.length != 0" class="mb-2" cListGroup>
+                        <li cListGroupItem>
+                            <c-form-check>
+                                <input cFormCheckInput type="checkbox" [checked]="allChecked" [value]="allChecked" (click)="setAllCheckSelected()">
+                                <label class="text-medium-emphasis" cFormCheckLabel><cite>Seleccionar todos</cite></label>
+                            </c-form-check>
+                        </li>
+                        <li *ngFor="let usuario of this.usuarios" [disabled]="notificacion.tipoNotificacion.id == 1" cListGroupItem>
+                            <c-form-check>
+                                <input cFormCheckInput type="checkbox" [checked]="usuario.selected" [value]="usuario.selected" (click)="setCheckSelected(usuario)">
+                                <label cFormCheckLabel>{{ usuario.apellido }}, {{ usuario.nombre }}</label>
+                            </c-form-check>
+                        </li>
+                    </ul>
+                </c-col>
+                <c-col>
+                    <form cForm #nuevaNotificacionForm="ngForm" class="row g-3 needs-validation" (ngSubmit)="createNotificacion(nuevaNotificacionForm)" [validated]="tooltipValidated">
+                        <c-col class="position-relative" md="12">
+                            <label cLabel for="titulo">Titulo</label>
+                            <input cFormControl id="titulo" type="text" [(ngModel)]="notificacion.titulo" name="titulo" required />
+                            <c-form-feedback [valid]="false" tooltip>Debe ingresar un titulo</c-form-feedback>
+                        </c-col>
+                        <c-col class="position-relative" md="12">
+                            <label cLabel for="descripcion">Descripcion</label>
+                            <textarea cFormControl id="descripcion" [(ngModel)]="notificacion.descripcion" rows="4" name="descripcion" required>
+                            </textarea>
+                            <c-form-feedback [valid]="false" tooltip>Debe ingresar una descripcion</c-form-feedback>
+                        </c-col>
+                        <c-col class="text-center" xs="12">
+                            <c-button-group aria-label="Basic example" role="group">
+                                <button cButton color="primary" type="submit">Confirmar</button>
+                                <button cButton (click)="onBack()" color="secondary" type="reset">Atras</button>
+                                </c-button-group>
+                        </c-col>
+                    </form>
+                </c-col>
+            </c-row>
+        </c-card-body>
+    </c-card>
