@@ -11,5 +11,6 @@ export class Notificacion {
     estadoNotificacion!: EstadoNotificacion;
     idTipoNotificacion!: number;
     tipoNotificacion!: TipoNotificacion;
+    idUsuarios!: Array<number>;
     usuarios!: Array<UsuarioNotificacion>;
 }

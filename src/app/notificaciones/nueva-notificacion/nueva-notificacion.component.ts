@@ -1,12 +1,12 @@
 import { animate, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { EstadoNotificacion } from 'src/app/models/estado-notificacion';
+import { Router } from '@angular/router';
 import { Notificacion } from 'src/app/models/notificacion';
 import { TipoNotificacion } from 'src/app/models/tipo-notificacion';
 import { Usuario } from 'src/app/models/usuario';
 import { AlertService } from 'src/app/services/alert.service';
+import { NotificacionService } from 'src/app/services/notificacion.service';
 import { TipoNotificacionService } from 'src/app/services/tipo-notificacion.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 
@@ -40,6 +40,7 @@ export class NuevaNotificacionComponent implements OnInit {
 
   constructor(private router: Router,
               private tipoNotificacionService: TipoNotificacionService,
+              private notificacionService: NotificacionService,
               private usuarioService: UsuarioService,
               private alertService: AlertService) {
                 this.notificacion.titulo = '';
@@ -68,18 +69,29 @@ export class NuevaNotificacionComponent implements OnInit {
     });
   }
 
-  createNotificacion(createNotificacionForm: NgForm)
+  createNotificacion(createNotificacionForm: NgForm, usuarios: Array<Usuario>)
   {
+    let usuariosSeleccionados = usuarios.filter(x => x.selected);
+
+    this.notificacion.idUsuarios = usuariosSeleccionados.map(x => x.id);
+
+    if(this.allChecked) {
+      this.notificacion.idTipoNotificacion = 1;
+    } else {
+      this.notificacion.idTipoNotificacion = 2;
+    }
+
+    console.log(this.notificacion);
+
     if(!createNotificacionForm.invalid){
-      this.notificacion.idTipoNotificacion = this.notificacion.tipoNotificacion.id;
-      // this.usuarioService.createNotificacion(this.notificacion)
-      //   .subscribe(response => {
-      //     this.alertService.success('Se ha creado correctamente el usuario.', { autoClose: true, keepAfterRouteChange: true, symbolAlert: 'check-circle-fill' });
-      //     this.onBack();
-      //   },
-      //   error => {
-      //     this.alertService.error('Ocurrió un error al crear el usuario.',{ autoClose: true, keepAfterRouteChange: true, symbolAlert: 'exclamation-triangle-fill' });
-      //   });
+      this.notificacionService.createNotificacion(this.notificacion)
+        .subscribe(response => {
+          this.alertService.success('Se ha creado correctamente la/s notificacion/es.', { autoClose: true, keepAfterRouteChange: true, symbolAlert: 'check-circle-fill' });
+          this.onBack();
+        },
+        error => {
+          this.alertService.error('Ocurrió un error al crear la/s notificacion/es.',{ autoClose: true, keepAfterRouteChange: true, symbolAlert: 'exclamation-triangle-fill' });
+        });
     }
     else{
       this.tooltipValidated = true;

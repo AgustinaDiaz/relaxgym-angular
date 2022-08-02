@@ -36,6 +36,7 @@ export class NotificacionesComponent implements OnInit {
               private alertService: AlertService) { }
 
   ngOnInit(): void {
+    this.getNotificaciones();
   }
 
   createNotificacion() {
@@ -46,6 +47,7 @@ export class NotificacionesComponent implements OnInit {
     this.loading = true;
     this.notificacionService.getNotificaciones()
         .subscribe(response => {
+          console.log(response);
           this.notificaciones = response;
           this.loading = false;
         },

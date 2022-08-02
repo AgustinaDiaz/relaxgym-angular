@@ -13,6 +13,10 @@ export class NotificacionService {
 
   constructor(private httpClient: HttpClient) { }
 
+  createNotificacion(notificacion: Notificacion): Observable<any>{
+    return this.httpClient.post<any>(this.url, notificacion);
+  }
+
   getNotificaciones(): Observable<Array<Notificacion>>{
     return this.httpClient.get<Array<Notificacion>>(this.url);
   }

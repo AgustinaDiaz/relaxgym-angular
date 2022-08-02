@@ -8,8 +8,9 @@
     <thead>
         <tr cTableColor="dark" class="text-center">
             <th class="w-20" scope="col">Titulo</th>
-            <th class="w-20" scope="col">Estado</th>
+            <th class="w-20" scope="col">Descripcion</th>
             <th class="w-20" scope="col">Tipo</th>
+            <th class="w-20" scope="col">Estado</th>
         </tr>
     </thead>
     <tbody *ngIf="!loading && notificaciones.length == 0">
@@ -27,12 +28,13 @@
     <tbody *ngIf="!loading && notificaciones.length !== 0">
         <tr *ngFor="let notificacion of notificaciones" class="text-center">
             <td>{{notificacion.titulo}}</td>
-            <td>
-                <c-badge *ngIf="notificacion.estadoNotificacion.id === 1" color="information">{{notificacion.estadoNotificacion.descripcion}}</c-badge>
-                <c-badge *ngIf="notificacion.estadoNotificacion.id === 2" color="success">{{notificacion.estadoNotificacion.descripcion}}</c-badge>
-            </td>
+            <td>{{notificacion.descripcion}}</td>
             <td>
                 <strong>{{notificacion.tipoNotificacion.descripcion}}</strong>
+            </td>
+            <td>
+                <c-badge *ngIf="notificacion.estadoNotificacion.id === 1" color="primary">{{notificacion.estadoNotificacion.descripcion}}</c-badge>
+                <c-badge *ngIf="notificacion.estadoNotificacion.id === 2" color="success">{{notificacion.estadoNotificacion.descripcion}}</c-badge>
             </td>
         </tr>
     </tbody>

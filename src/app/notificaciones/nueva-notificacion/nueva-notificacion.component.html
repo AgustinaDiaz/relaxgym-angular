@@ -30,7 +30,7 @@
                     </ul>
                 </c-col>
                 <c-col>
-                    <form cForm #nuevaNotificacionForm="ngForm" class="row g-3 needs-validation" (ngSubmit)="createNotificacion(nuevaNotificacionForm)" [validated]="tooltipValidated">
+                    <form cForm #nuevaNotificacionForm="ngForm" class="row g-3 needs-validation" (ngSubmit)="createNotificacion(nuevaNotificacionForm, this.usuarios)" [validated]="tooltipValidated">
                         <c-col class="position-relative" md="12">
                             <label cLabel for="titulo">Titulo</label>
                             <input cFormControl id="titulo" type="text" [(ngModel)]="notificacion.titulo" name="titulo" required />
