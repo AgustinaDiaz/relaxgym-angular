@@ -45,7 +45,7 @@ export class UsuariosComponent implements OnInit {
     this.loading = true;
     this.usuarioService.getUsuarios()
         .subscribe(response => {
-          this.usuarios = response;
+          this.usuarios = response.sort((a,b) => (a.apellido > b.apellido) ? 1 : ((b.apellido > a.apellido) ? -1 : 0));
           this.loading = false;
         },
         error => {

@@ -29,8 +29,14 @@
         <tr *ngFor="let notificacion of notificaciones" class="text-center">
             <td>{{notificacion.titulo}}</td>
             <td>{{notificacion.descripcion}}</td>
-            <td>
-                <strong>{{notificacion.tipoNotificacion.descripcion}}</strong>
+            <td *ngIf="notificacion.tipoNotificacion.id === 1" [cTextColor]="'info'">
+                {{notificacion.tipoNotificacion.descripcion}}
+            </td>
+            <td *ngIf="notificacion.tipoNotificacion.id === 2" [cTextColor]="'warning'">
+                {{notificacion.tipoNotificacion.descripcion}}
+            </td>
+            <td *ngIf="notificacion.tipoNotificacion.id === 3" [cTextColor]="'danger'">
+                {{notificacion.tipoNotificacion.descripcion}}
             </td>
             <td>
                 <c-badge *ngIf="notificacion.estadoNotificacion.id === 1" color="primary">{{notificacion.estadoNotificacion.descripcion}}</c-badge>

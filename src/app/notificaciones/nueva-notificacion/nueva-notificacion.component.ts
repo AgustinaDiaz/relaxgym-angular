@@ -2,10 +2,12 @@ import { animate, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+import { EstadoNotificacion } from 'src/app/models/estado-notificacion';
 import { Notificacion } from 'src/app/models/notificacion';
 import { TipoNotificacion } from 'src/app/models/tipo-notificacion';
 import { Usuario } from 'src/app/models/usuario';
 import { AlertService } from 'src/app/services/alert.service';
+import { EstadoNotificacionService } from 'src/app/services/estado-notificacion.service';
 import { NotificacionService } from 'src/app/services/notificacion.service';
 import { TipoNotificacionService } from 'src/app/services/tipo-notificacion.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
@@ -37,21 +39,24 @@ export class NuevaNotificacionComponent implements OnInit {
   tooltipValidated: boolean = false;
   notificacion: Notificacion = new Notificacion();
   tiposNotificaciones: Array<TipoNotificacion> = [];
-
+  
   constructor(private router: Router,
               private tipoNotificacionService: TipoNotificacionService,
               private notificacionService: NotificacionService,
+              private estadoNotificacionService: EstadoNotificacionService,
               private usuarioService: UsuarioService,
               private alertService: AlertService) {
                 this.notificacion.titulo = '';
                 this.notificacion.descripcion = '';
                 this.notificacion.tipoNotificacion = new TipoNotificacion();
                 this.notificacion.tipoNotificacion.id = 0;
+                this.notificacion.estadoNotificacion = new EstadoNotificacion();
+                this.notificacion.estadoNotificacion.id = 0;
                }
 
   ngOnInit(): void {
     this.usuarioService.getUsuarios().subscribe(response => {
-      this.usuarios = response;
+      this.usuarios = response.sort((a,b) => (a.apellido > b.apellido) ? 1 : ((b.apellido > a.apellido) ? -1 : 0));;
 
       this.usuarios.forEach((usuario) => { 
         usuario.selected = false;
@@ -71,19 +76,11 @@ export class NuevaNotificacionComponent implements OnInit {
 
   createNotificacion(createNotificacionForm: NgForm, usuarios: Array<Usuario>)
   {
-    let usuariosSeleccionados = usuarios.filter(x => x.selected);
-
-    this.notificacion.idUsuarios = usuariosSeleccionados.map(x => x.id);
-
-    if(this.allChecked) {
-      this.notificacion.idTipoNotificacion = 1;
-    } else {
-      this.notificacion.idTipoNotificacion = 2;
-    }
-
-    console.log(this.notificacion);
-
     if(!createNotificacionForm.invalid){
+      let usuariosSeleccionados = usuarios.filter(x => x.selected);
+      this.notificacion.idUsuarios = usuariosSeleccionados.map(x => x.id);
+      this.notificacion.idTipoNotificacion = this.notificacion.tipoNotificacion.id;
+
       this.notificacionService.createNotificacion(this.notificacion)
         .subscribe(response => {
           this.alertService.success('Se ha creado correctamente la/s notificacion/es.', { autoClose: true, keepAfterRouteChange: true, symbolAlert: 'check-circle-fill' });

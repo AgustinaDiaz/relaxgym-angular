@@ -21,8 +21,8 @@
 <table responsive cAlign="middle" cTable hover @inOut>
     <thead>
         <tr cTableColor="dark" class="text-center">
-            <th class="w-20" scope="col">Nombre</th>
             <th class="w-20" scope="col">Apellido</th>
+            <th class="w-20" scope="col">Nombre</th>
             <th class="w-20" scope="col">Email</th>
             <th class="w-20" scope="col">Telefono</th>
             <th class="w-20" scope="col">Usuario</th>
@@ -47,8 +47,8 @@
     </tbody>
     <tbody *ngIf="!loading && usuarios.length !== 0">
         <tr *ngFor="let usuario of usuarios" class="text-center">
-            <td>{{usuario.nombre}}</td>
             <td>{{usuario.apellido}}</td>
+            <td>{{usuario.nombre}}</td>
             <td>{{usuario.email}}</td>
             <td>{{usuario.telefono}}</td>
             <td>{{usuario.nombreUsuario}}</td>

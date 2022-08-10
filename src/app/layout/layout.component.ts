@@ -15,7 +15,7 @@ export class LayoutComponent {
   };
 
   constructor() {
-    this.navItems.push({ name: 'Inicio', url: 'home', iconComponent: { name: 'cil-home' }});
+    this.navItems.push({ name: 'Inicio', url: 'home', iconComponent: { name: 'cilHome' }});
     
     var token = localStorage.getItem("tokenUsuario") as string;
     var decodedToken = this.getDecodedAccessToken(token);

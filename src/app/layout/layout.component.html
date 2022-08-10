@@ -5,25 +5,11 @@
   unfoldable=true
   visible
 >
-  <c-sidebar-brand
-    [brandFull]="{
-      src: 'assets/img/brand/relaxgym-base.png',
-      width: 200,
-      height: 46,
-      alt: 'CoreUI Logo'
-    }"
-    [brandNarrow]="{
-      src: 'assets/img/brand/relaxgym-signet-white.png',
-      width: 60,
-      height: 60,
-      alt: 'CoreUI Logo'
-    }"
-    routerLink="./"
-  >
+  <c-sidebar-brand [brandFull]="{ src: 'assets/img/brand/relaxgym-base.png', width: 200, height: 46, alt: 'CoreUI Logo' }" [brandNarrow]="{ src: 'assets/img/brand/relaxgym-signet-white.png', width: 60, height: 60, alt: 'CoreUI Logo' }" routerLink="./">
   </c-sidebar-brand>
   <perfect-scrollbar [config]="perfectScrollbarConfig">
-  <c-sidebar-nav [navItems]="navItems"></c-sidebar-nav>
-    </perfect-scrollbar>
+    <c-sidebar-nav [navItems]="navItems"></c-sidebar-nav>
+  </perfect-scrollbar>
   <c-sidebar-toggler
     *ngIf="!sidebar.narrow"
     toggle="unfoldable"

@@ -11,6 +11,7 @@ import { LoginComponent } from './login/login.component';
 import { ResetPasswordConfirmComponent } from './login/reset-password-confirm/reset-password-confirm.component';
 import { ResetPasswordResolver } from './login/reset-password-confirm/reset-password.resolver';
 import { ResetPasswordMailComponent } from './login/reset-password-mail/reset-password-mail.component';
+import { DetalleNotificacionesComponent } from './notificaciones/detalle-notificaciones/detalle-notificaciones.component';
 import { NotificacionesComponent } from './notificaciones/notificaciones.component';
 import { NuevaNotificacionComponent } from './notificaciones/nueva-notificacion/nueva-notificacion.component';
 import { AsignarRutinaComponent } from './rutinas/asignar-rutina/asignar-rutina.component';
@@ -151,7 +152,18 @@ const routes: Routes = [
         data: {
           title: 'Notificaciones/Nuevo'
         }
-      }, 
+      },
+      {
+        path: 'detalle-notificaciones/:id', 
+        component: DetalleNotificacionesComponent,
+        canActivate: [AdministratorGuard],
+        data: {
+          title: 'Notificaciones/Detalle'
+        },
+        resolve: {
+          usuario: UsuarioResolver
+        }
+      },
       {
         path: 'nuevo-usuario', 
         component: NuevoUsuarioComponent,

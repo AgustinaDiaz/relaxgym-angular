@@ -17,7 +17,15 @@ export class NotificacionService {
     return this.httpClient.post<any>(this.url, notificacion);
   }
 
+  updateNotificacion(notificacion: Notificacion): Observable<any>{
+    return this.httpClient.put<any>(`${this.url}/${notificacion.id}`, notificacion);
+  }
+
   getNotificaciones(): Observable<Array<Notificacion>>{
     return this.httpClient.get<Array<Notificacion>>(this.url);
+  }
+
+  getNotificacionesByIdUsuario(idUsuario:number): Observable<Array<Notificacion>>{
+    return this.httpClient.get<Array<Notificacion>>(`${this.url}/Usuario/${idUsuario}`);
   }
 }

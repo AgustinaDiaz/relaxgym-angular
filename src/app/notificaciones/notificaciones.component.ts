@@ -47,8 +47,7 @@ export class NotificacionesComponent implements OnInit {
     this.loading = true;
     this.notificacionService.getNotificaciones()
         .subscribe(response => {
-          console.log(response);
-          this.notificaciones = response;
+          this.notificaciones = response.sort((a,b) => (a.titulo > b.titulo) ? 1 : ((b.titulo > a.titulo) ? -1 : 0));
           this.loading = false;
         },
         error => {

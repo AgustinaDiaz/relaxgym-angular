@@ -3,6 +3,9 @@ import { Router } from '@angular/router';
 
 import { ClassToggleService, HeaderComponent } from '@coreui/angular';
 import { Claim } from 'src/app/models/claim';
+import { Notificacion } from 'src/app/models/notificacion';
+import { AlertService } from 'src/app/services/alert.service';
+import { NotificacionService } from 'src/app/services/notificacion.service';
 
 @Component({
   selector: 'app-header',
@@ -12,28 +15,36 @@ export class AppHeaderComponent extends HeaderComponent {
 
   @Input() sidebarId: string = "sidebar";
 
-  public newMessages = new Array(4)
-  public newTasks = new Array(5)
-  public newNotifications = new Array(5)
+  notificaciones: Array<Notificacion> = new Array<Notificacion>();
+  claims: any;
+  totalNotificaciones: number = 0;
 
   constructor(private router: Router,
-              private classToggler: ClassToggleService) {
+              private classToggler: ClassToggleService,
+              private notificacionesService: NotificacionService,
+              private alertService: AlertService) {
     super();
+    this.claims = this.getClaimsFromToken();
+    this.notificacionesService.getNotificacionesByIdUsuario(this.claims.primarysid)
+        .subscribe(response => {
+          this.totalNotificaciones = response.filter(x => x.estadoNotificacion.id === 1).length;
+          this.notificaciones = response;
+        },
+        error => {
+          this.alertService.error('Ocurrió un error al cargar las notificaciones.',{ autoClose: true, keepAfterRouteChange: true, symbolAlert: 'exclamation-triangle-fill' });
+        });
   }
 
   logout()
   {
     localStorage.removeItem('tokenUsuario');
-    this.router.navigateByUrl("/login");
   }
 
-  detalleUsuario()
-  {
+  getClaimsFromToken(){
     var token = localStorage.getItem("tokenUsuario") as string;
     var decodedToken = this.getDecodedAccessToken(token);
     var claims = new Claim();
-    claims = JSON.parse(decodedToken);
-    this.router.navigateByUrl(`main/detalle-usuario/${claims.primarysid}`);
+    return claims = JSON.parse(decodedToken);
   }
 
   private getDecodedAccessToken(token: string): any {

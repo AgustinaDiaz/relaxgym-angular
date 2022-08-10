@@ -1,18 +1,15 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
-# Compiled output
+# compiled output
 /dist
 /tmp
 /out-tsc
-/bazel-out
 
-# Node
+# dependencies
 /node_modules
-npm-debug.log
-yarn-error.log
 
 # IDEs and editors
-.idea/
+/.idea
 .project
 .classpath
 .c9/
@@ -20,23 +17,49 @@ yarn-error.log
 .settings/
 *.sublime-workspace
 
-# Visual Studio Code
+# IDE - VSCode
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
-.history/*
 
-# Miscellaneous
-/.angular/cache
-.sass-cache/
+# misc
+/.sass-cache
 /connect.lock
 /coverage
 /libpeerconnection.log
+npm-debug.log
 testem.log
 /typings
 
-# System files
+# e2e
+/e2e/*.js
+/e2e/*.map
+
+# System Files
 .DS_Store
 Thumbs.db
+.angular/cache/13.3.6/angular-webpack/ab952a5ab6a91eb988878587050b30ffc21943cc/0.pack
+.angular/cache/13.3.6/angular-webpack/ab952a5ab6a91eb988878587050b30ffc21943cc/2.pack
+.angular/cache/13.3.6/angular-webpack/ab952a5ab6a91eb988878587050b30ffc21943cc/3.pack
+.angular/cache/13.3.6/angular-webpack/ab952a5ab6a91eb988878587050b30ffc21943cc/4.pack
+.angular/cache/13.3.6/angular-webpack/ab952a5ab6a91eb988878587050b30ffc21943cc/5.pack
+.angular/cache/13.3.6/angular-webpack/ab952a5ab6a91eb988878587050b30ffc21943cc/6.pack
+.angular/cache/13.3.6/angular-webpack/ab952a5ab6a91eb988878587050b30ffc21943cc/7.pack
+.angular/cache/13.3.6/angular-webpack/ab952a5ab6a91eb988878587050b30ffc21943cc/8.pack
+.angular/cache/13.3.6/angular-webpack/ab952a5ab6a91eb988878587050b30ffc21943cc/9.pack
+.angular/cache/13.3.6/angular-webpack/ab952a5ab6a91eb988878587050b30ffc21943cc/10.pack
+.angular/cache/13.3.6/angular-webpack/ab952a5ab6a91eb988878587050b30ffc21943cc/11.pack
+.angular/cache/13.3.6/angular-webpack/ab952a5ab6a91eb988878587050b30ffc21943cc/12.pack
+.angular/cache/13.3.6/angular-webpack/ab952a5ab6a91eb988878587050b30ffc21943cc/14.pack
+.angular/cache/13.3.6/angular-webpack/ab952a5ab6a91eb988878587050b30ffc21943cc/15.pack
+.angular/cache/13.3.6/angular-webpack/ab952a5ab6a91eb988878587050b30ffc21943cc/16.pack
+.angular/cache/13.3.6/angular-webpack/ab952a5ab6a91eb988878587050b30ffc21943cc/17.pack
+.angular/cache/13.3.6/angular-webpack/ab952a5ab6a91eb988878587050b30ffc21943cc/18.pack
+.angular/cache/13.3.6/angular-webpack/ab952a5ab6a91eb988878587050b30ffc21943cc/19.pack
+.angular/cache/13.3.6/angular-webpack/ab952a5ab6a91eb988878587050b30ffc21943cc/20.pack
+.angular/cache/13.3.6/angular-webpack/ab952a5ab6a91eb988878587050b30ffc21943cc/21.pack
+.angular/cache/13.3.6/angular-webpack/ab952a5ab6a91eb988878587050b30ffc21943cc/22.pack
+.angular/cache/13.3.6/angular-webpack/ab952a5ab6a91eb988878587050b30ffc21943cc/index.pack
+.angular/cache/13.3.6/angular-webpack/ab952a5ab6a91eb988878587050b30ffc21943cc/index.pack.old

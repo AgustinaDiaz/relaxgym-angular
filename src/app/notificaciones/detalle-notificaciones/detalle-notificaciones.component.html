@@ -1,0 +1,13 @@
+<div cListGroup>
+    <button *ngFor="let notificacion of notificaciones" 
+    [disabled]="this.notificacion.estadoNotificacion.id === 2" 
+    cListGroupItem class="d-flex justify-content-between align-items-center"
+    (click)="marcarComoLeida(notificacion)">
+        <svg *ngIf="this.notificacion.tipoNotificacion.id === 1" cIcon class="me-2" [cTextColor]="'info'" name="cilBellExclamation"></svg>
+        <svg *ngIf="this.notificacion.tipoNotificacion.id === 2" cIcon class="me-2" [cTextColor]="'warning'" name="cilBellExclamation"></svg>
+        <svg *ngIf="this.notificacion.tipoNotificacion.id === 3" cIcon class="me-2" [cTextColor]="'danger'" name="cilBellExclamation"></svg>
+        <strong [ngStyle]="{'font-weight': this.notificacion.estadoNotificacion.id === 1 ? 'bold' : 'normal' }">{{notificacion.titulo}} - {{notificacion.descripcion}}</strong>
+        <c-badge *ngIf="this.notificacion.estadoNotificacion.id === 1" color="success" shape="rounded-pill">Marcar como leida</c-badge>
+        <c-badge *ngIf="this.notificacion.estadoNotificacion.id === 2" color="primary" shape="rounded-pill">Leida</c-badge>
+    </button>
+</div>
