@@ -9,7 +9,7 @@ import { SolicitudCambioPassword } from '../models/solicitud-cambio-password';
 })
 export class ResetPasswordService {
 
-  private url = environment.urlBackend + '/SolicitudCambioPassword';
+  private url = environment.urlBackend + '/SolicitudesCambioPassword';
 
   constructor(private httpClient: HttpClient) { }
 
