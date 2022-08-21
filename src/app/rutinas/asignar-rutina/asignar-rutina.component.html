@@ -20,23 +20,16 @@
                             <cite>No existen alumnos que coincidan con el criterio de busqueda.</cite>
                         </li>
                     </ul>
-                    <ul *ngIf="this.filteredAlumnos.length != 0" class="mb-2" cListGroup>
-                        <li *ngFor="let alumno of this.filteredAlumnos" cListGroupItem>
-                            <c-form-check>
-                                <input cFormCheckInput type="checkbox" [value]="alumno.selected" (click)="setCheckSelected(alumno)">
-                                <label cFormCheckLabel>{{ alumno.apellido }}, {{ alumno.nombre }}</label>
-                            </c-form-check>
-                        </li>
-                        <textarea class="mt-3" cFormControl [(ngModel)]= "observacion" id="descripcion" rows="4" [placeholder]="'Ingrese una observacion...'"></textarea>
-                        <div class="d-grid gap-2">
-                            <c-button-group aria-label="Basic example" role="group">
-                                <button cButton color="primary" cTooltip="Asignar Alumno/s" cTooltipPlacement="bottom" class="mt-2" (click)="asignarAlumnos(rutina.id, this.alumnos, this.observacion)">
-                                    <svg cIcon name="cilArrowThickFromLeft" size="xs" title="Asignar Alumno/s"></svg>
-                                </button>
-                                <button cButton (click)="onBack()" color="secondary" class="mt-2" type="reset">Atras</button>
-                            </c-button-group>
-                        </div>
-                    </ul>
+                    <div style="height: '71%'; overflow: 'auto';">
+                        <ul *ngIf="this.filteredAlumnos.length != 0" class="mb-2" cListGroup>
+                            <li *ngFor="let alumno of this.filteredAlumnos" cListGroupItem>
+                                <c-form-check>
+                                    <input cFormCheckInput type="checkbox" [value]="alumno.selected" (click)="setCheckSelected(alumno)">
+                                    <label cFormCheckLabel>{{ alumno.apellido }}, {{ alumno.nombre }}</label>
+                                </c-form-check>
+                            </li>
+                        </ul>
+                    </div>
                 </c-col>
                 <c-col>
                     <div class="text-center">
@@ -47,15 +40,30 @@
                             <cite>No existen alumnos asignados.</cite>
                         </li>
                     </ul>
-                    <ul *ngIf="this.rutina.usuarios.length != 0" cListGroup>
-                        <li *ngFor="let alumno of this.rutina.usuarios" cListGroupItem>
-                            <svg cIcon name="cilCheck" title="Asignar Rutina" class="text-success"></svg> 
-                            {{ alumno.usuario.apellido }}, {{ alumno.usuario.nombre }}
-                            <button cButton color="danger" variant="ghost" cTooltip="Desasignar Alumno" cTooltipPlacement="right" (click)="desasignarAlumno(rutina.id, alumno.usuario.id)">
-                                <svg cIcon name="cilXCircle" title="Desasignar Alumno"></svg>
+                    <div style="height: '88%'; overflow: 'auto';">
+                        <ul *ngIf="this.rutina.usuarios.length != 0" cListGroup>
+                            <li class="pb-1 pt-1" *ngFor="let alumno of this.rutina.usuarios" cListGroupItem>
+                                <svg cIcon name="cilCheck" title="Asignar Rutina" class="text-success"></svg> 
+                                {{ alumno.usuario.apellido }}, {{ alumno.usuario.nombre }}
+                                <button cButton color="danger" variant="ghost" cTooltip="Desasignar Alumno" cTooltipPlacement="right" (click)="desasignarAlumno(rutina.id, alumno.usuario.id)">
+                                    <svg cIcon name="cilXCircle" title="Desasignar Alumno"></svg>
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                </c-col>
+            </c-row>
+            <c-row>
+                <c-col>
+                    <textarea class="mt-3" cFormControl [(ngModel)]= "observacion" id="descripcion" rows="4" [placeholder]="'Ingrese una observacion...'"></textarea>
+                    <div class="d-grid gap-2">
+                        <c-button-group aria-label="Basic example" role="group">
+                            <button cButton color="primary" cTooltip="Asignar Alumno/s" cTooltipPlacement="bottom" class="mt-2" (click)="asignarAlumnos(rutina.id, this.alumnos, this.observacion)">
+                                <svg cIcon name="cilArrowThickFromLeft" size="xs" title="Asignar Alumno/s"></svg>
                             </button>
-                        </li>
-                    </ul>
+                            <button cButton (click)="onBack()" color="secondary" class="mt-2" type="reset">Atras</button>
+                        </c-button-group>
+                    </div>
                 </c-col>
             </c-row>
         </c-card-body>

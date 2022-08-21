@@ -21,54 +21,54 @@
                     </textarea>
                     <c-form-feedback [valid]="false" tooltip>Debe ingresar una descripcion</c-form-feedback>
                 </c-col>
+                <c-col>
+                    <div class="text-center mt-2">
+                        <p class="text-medium-emphasis">Seleccione los ejercicios:</p>
+                    </div>
+                    <ul [flush]="true" *ngIf="this.ejercicios.length == 0" class="mb-2" cListGroup>
+                        <li class="text-center" cListGroupItem>
+                            <cite>No existen ejercicios para asignar a esta rutina.</cite>
+                        </li>
+                    </ul>
+                    <ul [flush]="true" *ngIf="this.ejercicios.length != 0" cListGroup>
+                        <li *ngFor="let ejercicio of this.ejercicios" cListGroupItem>
+                            <c-row class="align-items-center">
+                                <c-col xs="6">
+                                    <c-form-check>
+                                        <input cFormCheckInput type="checkbox" [value]="ejercicio.selected" (click)="setCheckSelected(ejercicio)" required>
+                                        <label cFormCheckLabel>{{ ejercicio.nombre }} </label>
+                                    </c-form-check>
+                                </c-col>
+                                <c-col xs="6">
+                                    <c-row>
+                                        <c-col xs="2" style="text-align: right;">
+                                            <label cLabel="col" for="series"><cite>Series: </cite></label>
+                                        </c-col>
+                                        <c-col xs="2">
+                                            <input cFormControl id="series" type="number" name="series" #series [min]="1"
+                                            [value]="ejercicio.cantidadRepeticiones" (change)="setSeries(series.value, ejercicio)" sizing="sm" [disabled]="!ejercicio.selected" required />
+                                        </c-col>
+                                        <c-col xs="4" style="text-align: right;">
+                                            <label cLabel="col" for="cantidadRepeticiones"><cite>Cantidad Repeticiones: </cite></label>
+                                        </c-col>
+                                        <c-col xs="4">
+                                            <input cFormControl id="cantidadRepeticiones" type="number" name="cantidadRepeticiones" #cantidadRepeticiones [min]="1"
+                                            [value]="ejercicio.cantidadRepeticiones" (change)="setCantidadRepeticiones(cantidadRepeticiones.value, ejercicio)" sizing="sm" [disabled]="!ejercicio.selected" required />
+                                        </c-col>
+                                    </c-row>
+                                </c-col>
+                            </c-row>                           
+                        </li>
+                    </ul>
+                </c-col>
                 <c-row>
-                    <c-col>
-                        <div class="text-center mt-2">
-                            <p class="text-medium-emphasis">Seleccione los ejercicios:</p>
-                        </div>
-                        <ul [flush]="true" *ngIf="this.ejercicios.length == 0" class="mb-2" cListGroup>
-                            <li class="text-center" cListGroupItem>
-                                <cite>No existen ejercicios para asignar a esta rutina.</cite>
-                            </li>
-                        </ul>
-                        <ul [flush]="true" *ngIf="this.ejercicios.length != 0" cListGroup>
-                            <li *ngFor="let ejercicio of this.ejercicios" cListGroupItem>
-                                <c-row class="align-items-center">
-                                    <c-col xs="6">
-                                        <c-form-check>
-                                            <input cFormCheckInput type="checkbox" [value]="ejercicio.selected" (click)="setCheckSelected(ejercicio)" required>
-                                            <label cFormCheckLabel>{{ ejercicio.nombre }} </label>
-                                        </c-form-check>
-                                    </c-col>
-                                    <c-col xs="6">
-                                        <c-row>
-                                            <c-col xs="2" style="text-align: right;">
-                                                <label cLabel="col" for="series"><cite>Series: </cite></label>
-                                            </c-col>
-                                            <c-col xs="2">
-                                                <input cFormControl id="series" type="number" name="series" #series [min]="1"
-                                                [value]="ejercicio.cantidadRepeticiones" (change)="setSeries(series.value, ejercicio)" sizing="sm" [disabled]="!ejercicio.selected" required />
-                                            </c-col>
-                                            <c-col xs="4" style="text-align: right;">
-                                                <label cLabel="col" for="cantidadRepeticiones"><cite>Cantidad Repeticiones: </cite></label>
-                                            </c-col>
-                                            <c-col xs="4">
-                                                <input cFormControl id="cantidadRepeticiones" type="number" name="cantidadRepeticiones" #cantidadRepeticiones [min]="1"
-                                                [value]="ejercicio.cantidadRepeticiones" (change)="setCantidadRepeticiones(cantidadRepeticiones.value, ejercicio)" sizing="sm" [disabled]="!ejercicio.selected" required />
-                                            </c-col>
-                                        </c-row>
-                                    </c-col>
-                                </c-row>                           
-                            </li>
-                        </ul>
+                    <c-col class="text-center" xs="12">
+                        <c-button-group aria-label="Basic example" role="group">
+                            <button cButton color="primary" type="submit">Confirmar</button>
+                            <button cButton (click)="onBack()" color="secondary" type="reset">Atras</button>
+                        </c-button-group>
                     </c-col>
                 </c-row>
-                <c-col class="text-center" xs="12">
-                    <c-button-group aria-label="Basic example" role="group">
-                        <button cButton color="primary" type="submit">Confirmar</button>
-                        <button cButton (click)="onBack()" color="secondary" type="reset">Atras</button>
-                    </c-button-group>
-                </c-col>
             </form>
         </c-card-body>
     </c-card>

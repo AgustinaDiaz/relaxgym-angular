@@ -7,6 +7,7 @@ export class Rutina {
     nombre!: string;
     descripcion!: string;
     nivel!: string;
+    idUsuarioCreador!: number;
     ejercicios!: Array<EjercicioRutina>;
     usuarios!:  Array<UsuarioRutina>;
 }

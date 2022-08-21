@@ -11,7 +11,6 @@ export class AuthenticateService {
   getClaimsUsuario() {
     var token = localStorage.getItem("tokenUsuario") as string;
     var decodedToken = this.getDecodedAccessToken(token);
-    var claims = new Claim();
     return JSON.parse(decodedToken);
   }
 

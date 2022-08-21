@@ -2,10 +2,12 @@ import { animate, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Claim } from 'src/app/models/claim';
 import { Ejercicio } from 'src/app/models/ejercicio';
 import { EjercicioRutina } from 'src/app/models/ejercicio-rutina';
 import { Rutina } from 'src/app/models/rutina';
 import { AlertService } from 'src/app/services/alert.service';
+import { AuthenticateService } from 'src/app/services/authenticate.service';
 import { EjercicioService } from 'src/app/services/ejercicio.service';
 import { RutinaService } from 'src/app/services/rutina.service';
 
@@ -34,8 +36,10 @@ export class NuevaRutinaComponent implements OnInit {
   tooltipValidated: boolean = false;
   rutina: Rutina = new Rutina();
   ejercicios: Array<Ejercicio> = [];
+  claims: Claim = new Claim();
 
   constructor(private router: Router,
+              private authenticateService: AuthenticateService,
               private rutinaService: RutinaService,
               private ejercicioService: EjercicioService,
               private alertService: AlertService) { 
@@ -45,6 +49,7 @@ export class NuevaRutinaComponent implements OnInit {
               }
 
   ngOnInit(): void {
+    this.claims = this.authenticateService.getClaimsUsuario();
     this.getEjercicios();
   }
 
@@ -76,21 +81,21 @@ export class NuevaRutinaComponent implements OnInit {
     if(!createRutinaForm.invalid && ejerciciosAsignados.length != 0) {
       ejerciciosAsignados.forEach((ejercicioAsignado) => { 
         let ejercicioAsignar = new EjercicioRutina();
-
+        
         ejercicioAsignar.idEjercicio = ejercicioAsignado.id;
         ejercicioAsignar.cantidadRepeticiones = ejercicioAsignado.cantidadRepeticiones;
         ejercicioAsignar.series = ejercicioAsignado.series;
 
         this.rutina.ejercicios.push(ejercicioAsignar);
       });
-
+      this.rutina.idUsuarioCreador = Number(this.claims.primarysid);
       this.rutinaService.createRutina(this.rutina)
         .subscribe(response => {
           this.alertService.success('Se ha creado correctamente la rutina.', { autoClose: true, keepAfterRouteChange: true, symbolAlert: 'check-circle-fill' });
           this.onBack();
         },
         error => {
-          this.alertService.error('Ocurrió un error al crear el usuario.',{ autoClose: true, keepAfterRouteChange: true, symbolAlert: 'exclamation-triangle-fill' });
+          this.alertService.error('Ocurrió un error al crear la rutina.',{ autoClose: true, keepAfterRouteChange: true, symbolAlert: 'exclamation-triangle-fill' });
         });
     }
     else {

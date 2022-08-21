@@ -11,6 +11,9 @@ $enable-rtl: true;
 // Import Chart.js custom tooltips styles
 @import "~@coreui/chartjs/scss/coreui-chartjs";
 
+@import '~bootstrap/dist/css/bootstrap.min.css';
+@import '~open-iconic/font/css/open-iconic-bootstrap.css';
+
 // perfect scrollbar theming for use with [perfectScrollbar] directive
 //@import '~perfect-scrollbar/css/perfect-scrollbar.css';
 

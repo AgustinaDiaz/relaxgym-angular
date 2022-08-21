@@ -82,6 +82,7 @@ import { DetalleTurnoComponent } from './turnos/detalle-turno/detalle-turno.comp
 import { NuevoTurnoComponent } from './turnos/nuevo-turno/nuevo-turno.component';
 import { NuevaNotificacionComponent } from './notificaciones/nueva-notificacion/nueva-notificacion.component';
 import { DetalleNotificacionesComponent } from './notificaciones/detalle-notificaciones/detalle-notificaciones.component';
+import { DlDateTimeDateModule, DlDateTimePickerModule } from 'angular-bootstrap-datetimepicker';
 
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
@@ -148,6 +149,8 @@ FullCalendarModule.registerPlugins([
     ButtonGroupModule,
     ReactiveFormsModule,
     FormsModule,
+    DlDateTimeDateModule,
+    DlDateTimePickerModule,
     SidebarModule,
     SharedModule,
     TabsModule,

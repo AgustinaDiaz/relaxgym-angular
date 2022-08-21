@@ -5,12 +5,12 @@
     </c-card-header>
     <c-card-body>
         <form cForm #nuevoTurnoForm="ngForm" class="row g-3 needs-validation" (ngSubmit)="createTurno(nuevoTurnoForm)" [validated]="tooltipValidated">
-            <c-col class="position-relative mb-4" md="6">
+            <c-col class="position-relative mb-2" md="6">
                 <label cLabel for="nombre">Cantidad de Alumnos</label>
-                <input cFormControl id="nombre" type="number" [(ngModel)]="turno.cantidadAlumnos" name="nombre" required />
-                <c-form-feedback [valid]="false" tooltip>Debe ingresar una cantidad</c-form-feedback>
+                <input cFormControl id="nombre" type="number" [(ngModel)]="turno.cantidadAlumnos" name="nombre" [min]="1" required />
+                <c-form-feedback [valid]="false" tooltip>La cantidad de alumnos debe ser mayor que 0</c-form-feedback>
             </c-col>
-            <c-col class="position-relative mb-4" md="6">
+            <c-col class="position-relative mb-2" md="6">
                 <label cLabel for="rol">Clase</label>
                 <select cSelect id="rol" name="rol" [(ngModel)]="turno.clase.id" required>
                     <option [ngValue]="0" disabled>Seleccione una clase</option>
@@ -18,11 +18,31 @@
                 </select>
                 <c-form-feedback [valid]="false" tooltip>Debe ingresar una clase</c-form-feedback>
             </c-col>
+            <c-col class="position-relative mb-2" md="12">
+                <label cLabel for="observacion">Observacion</label>
+                <textarea cFormControl id="observacion" [(ngModel)]="turno.observacion" rows="3" name="observacion" required>
+                </textarea>
+                <c-form-feedback [valid]="false" tooltip>Debe ingresar una observacion</c-form-feedback>
+            </c-col>
+            <c-col class="text-center" xs="1"></c-col>
+            <c-col class="text-center" xs="10">
+                <label cLabel for="fechaTurno" class="mb-2">Selecccione el horario del turno</label>
+                <dl-date-time-picker cFormControl 
+                                     id="fechaTurno" 
+                                     name="fechaTurno" 
+                                     startView="day" 
+                                     maxView="year" 
+                                     minView="minute" 
+                                     timeZone="America/Argentina/Buenos_Aires"
+                                     [(ngModel)]="selectedDate"
+                                     required></dl-date-time-picker>
+            </c-col>
+            <c-col class="text-center" xs="1"></c-col>
             <c-col class="text-center" xs="12">
                 <c-button-group aria-label="Basic example" role="group">
                     <button cButton color="primary" type="submit">Confirmar</button>
                     <button cButton (click)="onBack()" color="secondary" type="reset">Atras</button>
-                    </c-button-group>
+                </c-button-group>
             </c-col>
         </form>
     </c-card-body>

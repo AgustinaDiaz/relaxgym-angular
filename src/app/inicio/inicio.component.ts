@@ -149,7 +149,7 @@ export class InicioComponent implements OnInit {
         },
         y: {
           beginAtZero: true,
-          max: 10,
+          max: 40,
           ticks: {
             maxTicksLimit: 5,
             stepSize: Math.ceil(10 / 5)

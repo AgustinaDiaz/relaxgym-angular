@@ -60,13 +60,13 @@ export class RutinasComponent implements OnInit {
   }
 
   searchRutinas() {
-    console.log()
     if(this.searchAlumno == 0 && 
        this.searchEntrenador == 0) {
       return this.filteredRutinas = this.rutinas;
     }
     return this.filteredRutinas = this.rutinas.filter(rutina => 
-        { return ((!(this.searchAlumno == 0)) ? rutina.usuarios.some(x => x.idUsuario == this.searchAlumno) : true)});
+        { return ((!(this.searchAlumno == 0)) ? rutina.usuarios.some(x => x.idUsuario == this.searchAlumno) : true) &&
+                 ((!(this.searchEntrenador == 0)) ? rutina.idUsuarioCreador == this.searchEntrenador : true) });
   }
 
   getEntrenadores(){
@@ -157,5 +157,9 @@ export class RutinasComponent implements OnInit {
 
   deleteEventSearchAlumno() { 
     this.searchAlumno = 0;
+  }
+
+  deleteEventSearchEntrenador() { 
+    this.searchEntrenador = 0;
   }
 }

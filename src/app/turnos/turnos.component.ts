@@ -61,7 +61,7 @@ export class TurnosComponent implements OnInit {
           this.turnos = response;
           this.turnos.forEach(turno => {
             this.calendarComponent.getApi().addEvent({ 
-              title: turno.clase.nombre, 
+              title: turno.clase.nombre,
               date: turno.fechaHora, 
               turno: turno,
               editable:true,
@@ -80,7 +80,6 @@ export class TurnosComponent implements OnInit {
 
   handleTurnoDrop(dropTurnoEvent: any) {
     let turnoModificar = dropTurnoEvent.event._def.extendedProps.turno;
-    let fechaHora = this.pipe.transform(dropTurnoEvent.event._instance.range.start, 'yyyy-MM-ddThh:mm:ss a', '+0000') as string;
     turnoModificar.fechaHora = dropTurnoEvent.event._instance.range.start;
     this.turnoService.updateTurnoById(turnoModificar)
         .subscribe(response => { },

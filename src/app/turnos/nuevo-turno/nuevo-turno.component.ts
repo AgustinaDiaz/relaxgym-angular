@@ -2,6 +2,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+import * as moment from 'moment';
 import { Clase } from 'src/app/models/clase';
 import { Turno } from 'src/app/models/turno';
 import { AlertService } from 'src/app/services/alert.service';
@@ -33,12 +34,13 @@ export class NuevoTurnoComponent implements OnInit {
   tooltipValidated: boolean = false;
   turno: Turno = new Turno();
   clases: Array<Clase> = [];
+  selectedDate: any;
 
   constructor(private turnoService: TurnoService,
               private router: Router,
               private alertService: AlertService,
               private claseService: ClaseService) { 
-    this.turno.fechaHora = new Date();
+    moment.locale('es');
     this.turno.clase = new Clase();
     this.turno.clase.id = 0;
   }
@@ -54,6 +56,7 @@ export class NuevoTurnoComponent implements OnInit {
   {
     if(!createTurnoForm.invalid){
       this.turno.idClase = this.turno.clase.id;
+      this.turno.fechaHora = this.selectedDate;
       this.turnoService.createTurno(this.turno)
         .subscribe(response => {
           this.alertService.success('Se ha creado correctamente el turno.', { autoClose: true, keepAfterRouteChange: true, symbolAlert: 'check-circle-fill' });
