@@ -2,8 +2,10 @@ import { animate, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ModalService } from '@coreui/angular';
+import { Rol } from '../models/rol';
 import { Usuario } from '../models/usuario';
 import { AlertService } from '../services/alert.service';
+import { RolService } from '../services/rol.service';
 import { UsuarioService } from '../services/usuario.service';
 
 @Component({
@@ -30,15 +32,42 @@ export class UsuariosComponent implements OnInit {
 
   deletedUsuario: Usuario = new Usuario();
   usuarios: Array<Usuario> = [];
+  roles: Array<Rol> = [];
+  filteredUsuarios: Array<Usuario> = [];
   mostrarClave: boolean = false;
   loading: boolean = false;
+  searchRolUsuario: number = 0;
+  searchNombreUsuario: string = '';
+  searchApellidoUsuario: string = '';
 
   constructor(private usuarioService:UsuarioService,
+              private rolService: RolService,
               private router: Router,
               private alertService: AlertService) { }
 
   ngOnInit(): void {
     this.getUsuarios();
+    this.getRoles();
+  }
+
+  searchUsuarios() {
+    if(this.searchNombreUsuario.length == 0 && 
+       this.searchApellidoUsuario.length == 0 &&
+       (this.searchRolUsuario == 0)) {
+      return this.filteredUsuarios = this.usuarios;
+    }
+
+    return this.filteredUsuarios = this.usuarios.filter(usuario => 
+      { return (this.searchNombreUsuario.length > 0 ? usuario.nombre.toLowerCase().match(this.searchNombreUsuario.toLowerCase()) : true) &&
+        (this.searchApellidoUsuario.length > 0 ? usuario.apellido.toLowerCase().match(this.searchApellidoUsuario.toLowerCase()) : true) &&
+        ((!(this.searchRolUsuario == 0)) ? usuario.rol.id == this.searchRolUsuario : true)});
+  }
+
+  getRoles(){
+    this.rolService.getRoles()
+    .subscribe(response => {
+      this.roles = response;
+    });
   }
 
   getUsuarios() {
@@ -46,6 +75,7 @@ export class UsuariosComponent implements OnInit {
     this.usuarioService.getUsuarios()
         .subscribe(response => {
           this.usuarios = response.sort((a,b) => (a.apellido > b.apellido) ? 1 : ((b.apellido > a.apellido) ? -1 : 0));
+          this.filteredUsuarios = this.usuarios;
           this.loading = false;
         },
         error => {

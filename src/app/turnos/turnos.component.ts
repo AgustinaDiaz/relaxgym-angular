@@ -7,6 +7,8 @@ import { Turno } from '../models/turno';
 import { AlertService } from '../services/alert.service';
 import { TurnoService } from '../services/turno.service';
 import { DatePipe } from '@angular/common';
+import { AuthenticateService } from '../services/authenticate.service';
+import { Claim } from '../models/claim';
 
 @Component({
   selector: 'app-turnos',
@@ -33,6 +35,7 @@ export class TurnosComponent implements OnInit {
   @ViewChild('calendar')
   calendarComponent!: FullCalendarComponent;
   pipe = new DatePipe('en-US');
+  claims: Claim = new Claim;
 
   calendarOptions: CalendarOptions = {
     timeZone: 'America/Argentina/Buenos_Aires',
@@ -48,9 +51,11 @@ export class TurnosComponent implements OnInit {
 
   constructor(private router: Router,
               private turnoService: TurnoService,
-              private alertService: AlertService) { }
+              private alertService: AlertService,
+              private authenticateService:AuthenticateService) { }
 
   ngOnInit(): void {
+    this.claims = this.authenticateService.getClaimsUsuario(); 
     this.turnoService.getTurnos()
         .subscribe(response => {
           this.turnos = response;

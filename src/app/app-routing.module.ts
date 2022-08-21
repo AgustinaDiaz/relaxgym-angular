@@ -84,6 +84,13 @@ const routes: Routes = [
         }
       },
       {
+        path: 'rutinas',
+        component: RutinasComponent,
+        data: {
+          title: 'Rutinas'
+        }
+      },
+      {
         path: 'nueva-rutina', 
         component: NuevaRutinaComponent,
         canActivate: [AdministratorGuard],
@@ -111,9 +118,23 @@ const routes: Routes = [
         }
       },
       {
+        path: 'usuarios',
+        component: UsuariosComponent,
+        data: {
+          title: 'Usuarios'
+        }
+      },
+      {
         path: 'gestion-turnos',
         component: TurnosComponent,
         canActivate: [AdministratorGuard],
+        data: {
+          title: 'Turnos'
+        }
+      },
+      {
+        path: 'turnos',
+        component: TurnosComponent,
         data: {
           title: 'Turnos'
         }
@@ -195,9 +216,16 @@ const routes: Routes = [
         }
       },
       {
-        path: 'gestion-ejercicios',
+        path: 'gestion-ejercicios/:tipoEjercicio/:nombreEjercicio',
         component: EjerciciosComponent,
         canActivate: [AdministratorGuard],
+        data: {
+          title: 'Ejercicios'
+        }
+      },
+      {
+        path: 'ejercicios',
+        component: EjerciciosComponent,
         data: {
           title: 'Ejercicios'
         }

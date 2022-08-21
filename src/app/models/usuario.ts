@@ -6,6 +6,7 @@ export class Usuario {
     idWeb!: string;
     nombre!: string;
     apellido!: string;
+    nombreCompleto!: string;
     email!: string;
     telefono!: number;
     nombreUsuario!: string;

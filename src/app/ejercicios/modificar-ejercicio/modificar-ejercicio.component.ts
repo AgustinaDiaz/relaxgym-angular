@@ -67,6 +67,6 @@ export class ModificarEjercicioComponent implements OnInit {
   }
 
   onBack() {
-    this.router.navigateByUrl("main/gestion-ejercicios");
+    this.router.navigateByUrl("main/gestion-ejercicios/0/ ");
   }
 }

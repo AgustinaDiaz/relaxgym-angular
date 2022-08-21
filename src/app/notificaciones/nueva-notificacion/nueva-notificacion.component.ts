@@ -56,7 +56,7 @@ export class NuevaNotificacionComponent implements OnInit {
 
   ngOnInit(): void {
     this.usuarioService.getUsuarios().subscribe(response => {
-      this.usuarios = response.sort((a,b) => (a.apellido > b.apellido) ? 1 : ((b.apellido > a.apellido) ? -1 : 0));;
+      this.usuarios = response.sort((a,b) => (a.apellido > b.apellido) ? 1 : ((b.apellido > a.apellido) ? -1 : 0));
 
       this.usuarios.forEach((usuario) => { 
         usuario.selected = false;

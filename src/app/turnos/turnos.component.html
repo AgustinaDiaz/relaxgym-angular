@@ -1,6 +1,6 @@
-<div class="d-grid gap-2" @inOut>
+<div *ngIf="claims.role == '1'" class="d-grid gap-2" @inOut>
     <button cButton color="primary" class="mb-2" (click)="createTurno()">
-        <svg cIcon name="cilNoteAdd" size="lg" title="Nuevo Turno"></svg> Nuevo Turno
+        <svg cIcon name="cilNoteAdd" title="Nuevo Turno"></svg> Nuevo Turno
     </button>
 </div>
 <div class='calendar-app' @inOut>

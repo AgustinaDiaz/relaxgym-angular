@@ -1,10 +1,14 @@
 import { animate, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Claim } from '../models/claim';
 import { Ejercicio } from '../models/ejercicio';
+import { TipoEjercicio } from '../models/tipo-ejercicio';
 import { AlertService } from '../services/alert.service';
+import { AuthenticateService } from '../services/authenticate.service';
 import { EjercicioService } from '../services/ejercicio.service';
+import { TipoEjercicioService } from '../services/tipo-ejercicio.service';
 
 
 @Component({
@@ -30,18 +34,57 @@ import { EjercicioService } from '../services/ejercicio.service';
 export class EjerciciosComponent implements OnInit {
 
   ejercicios: Array<Ejercicio> = [];
+  filteredEjercicios: Array<Ejercicio> = [];
   safeSrc: Array<SafeResourceUrl> = [];
   loading: boolean = false;
   cards = new Array().fill({body: ''});
   deletedEjercicio: Ejercicio = new Ejercicio();
+  tiposEjercicios: Array<TipoEjercicio> = []; 
+  claims: Claim = new Claim();
+  searchTipoEjercicio: number = 0;
+  searchNombreEjercicio: string = '';
   
   constructor(private sanitizer: DomSanitizer,
               private ejercicioService: EjercicioService,
+              private tipoEjercicioService: TipoEjercicioService,
               private router: Router,
-              private alertService: AlertService) { }
+              private alertService: AlertService,
+              private authenticateService:AuthenticateService,
+              private activatedroute: ActivatedRoute) {
+                
+               }
 
   ngOnInit(): void {
-    this.getEjercicios()
+    this.activatedroute.paramMap.subscribe( paramMap => {
+      this.searchNombreEjercicio = paramMap.get('nombreEjercicio') as string;
+      if(this.searchNombreEjercicio == ' ') {
+        this.searchNombreEjercicio = '';
+      }
+      this.searchTipoEjercicio = paramMap.get('tipoEjercicio') as unknown as number;
+      if(this.searchTipoEjercicio == 0) {
+        this.searchTipoEjercicio == 0
+      }
+      this.claims = this.authenticateService.getClaimsUsuario();
+      this.getTipoEjercicios();
+    })
+  }
+
+  searchEjercicios() {
+    if(this.searchNombreEjercicio.length == 0 && 
+       (this.searchTipoEjercicio == 0)) {
+      return this.filteredEjercicios = this.ejercicios;
+    }
+    return this.filteredEjercicios = this.ejercicios.filter(ejercicio => 
+        { return (this.searchNombreEjercicio.length > 0 ? ejercicio.nombre.toLowerCase().match(this.searchNombreEjercicio.toLowerCase()) : true) &&
+                 ((!(this.searchTipoEjercicio == 0)) ? ejercicio.tipoEjercicio.id == this.searchTipoEjercicio : true)});
+  }
+
+  getTipoEjercicios() {
+    this.tipoEjercicioService.getTiposEjercicio()
+    .subscribe(response => {
+      this.tiposEjercicios = response;
+      this.getEjercicios()
+    })
   }
 
   getEjercicios() {
@@ -52,7 +95,9 @@ export class EjerciciosComponent implements OnInit {
             this.safeSrc.push(this.sanitizer.bypassSecurityTrustResourceUrl(element.urlEjercicio));
           });
           this.ejercicios = response;
+          this.filteredEjercicios = response;
           this.loading = false;
+          this.searchEjercicios();
         },
         error => {
           this.loading = false;

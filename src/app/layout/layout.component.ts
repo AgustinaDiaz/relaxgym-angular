@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { INavData } from '@coreui/angular';
 import { Claim } from '../models/claim';
+import { AuthenticateService } from '../services/authenticate.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -14,36 +15,23 @@ export class LayoutComponent {
     suppressScrollX: true,
   };
 
-  constructor() {
+  constructor(private authenticateService:AuthenticateService) {
     this.navItems.push({ name: 'Inicio', url: 'home', iconComponent: { name: 'cilHome' }});
-    
-    var token = localStorage.getItem("tokenUsuario") as string;
-    var decodedToken = this.getDecodedAccessToken(token);
-    var claims = new Claim();
-    claims = JSON.parse(decodedToken);
 
-    if(claims.role == '1' || claims.role == '2') {
-      this.navItems.push({ name: 'Gestion de Ejercicios', url: 'gestion-ejercicios', iconComponent: { name: 'cilWeightlifitng' }});
-      this.navItems.push({ name: 'Gestion de Rutinas', url: 'gestion-rutinas', iconComponent: { name: 'cilClipboard' }});
-      this.navItems.push({ name: 'Gestion de Turnos', url: 'gestion-turnos', iconComponent: { name: 'cilCalendarCheck' }});
+    let claims = this.authenticateService.getClaimsUsuario();
+
+    if(claims.role == '3') {
+      this.navItems.push({ name: 'Ejercicios', url: 'ejercicios/0/ ', iconComponent: { name: 'cilWeightlifitng' }});
+      this.navItems.push({ name: 'Mis Rutinas', url: 'rutinas', iconComponent: { name: 'cilClipboard' }});
+      this.navItems.push({ name: 'Mis Turnos', url: 'turnos', iconComponent: { name: 'cilCalendarCheck' }});
     }
 
     if(claims.role == '1') {
+      this.navItems.push({ name: 'Gestion de Ejercicios', url: 'gestion-ejercicios/0/ ', iconComponent: { name: 'cilWeightlifitng' }});
+      this.navItems.push({ name: 'Gestion de Rutinas', url: 'gestion-rutinas', iconComponent: { name: 'cilClipboard' }});
+      this.navItems.push({ name: 'Gestion de Turnos', url: 'gestion-turnos', iconComponent: { name: 'cilCalendarCheck' }});
       this.navItems.push({ name: 'Gestion de Usuarios', url: 'gestion-usuarios', iconComponent: { name: 'cil-contact' }});
       this.navItems.push({ name: 'Gestion de Notificaciones', url: 'gestion-notificaciones', iconComponent: { name: 'cil-bell' }});
-    }
-
-    if(claims.role == '3') {
-      this.navItems.push({ name: 'Rutinas', url: 'rutinas', iconComponent: { name: 'cilFeaturedPlaylist' }});
-      this.navItems.push({ name: 'Mis Turnos', url: 'turnos', iconComponent: { name: 'cilCalendarCheck' }});
-    }
-  }
-
-  private getDecodedAccessToken(token: string): any {
-    try {
-      return atob(token.split('.')[1]);
-    } catch(Error) {
-      return null;
     }
   }
 }

@@ -25,6 +25,9 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 import listPlugin from '@fullcalendar/list';
 import interactionPlugin from '@fullcalendar/interaction';
 
+import { AutocompleteLibModule } from 'angular-ng-autocomplete';
+
+
 import {
   AccordionModule,
   AlertModule,
@@ -123,6 +126,7 @@ FullCalendarModule.registerPlugins([
   imports: [
     AccordionModule,
     AlertModule,
+    AutocompleteLibModule,
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,

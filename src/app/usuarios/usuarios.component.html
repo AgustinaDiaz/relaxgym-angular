@@ -13,9 +13,20 @@
     </c-button-group>
   </c-modal-footer>
 </c-modal>
+<c-input-group class="mb-3">
+    <input aria-describedby="button-search" [(ngModel)]="searchNombreUsuario" cFormControl placeholder="Buscar por Nombre..."/>
+    <input aria-describedby="button-search" [(ngModel)]="searchApellidoUsuario" cFormControl placeholder="Buscar por Apellido..."/>
+    <select cSelect id="rol" name="rol" [(ngModel)]="searchRolUsuario" required>
+        <option [ngValue]="0">Buscar por Rol...</option>
+        <option *ngFor="let rol of roles" [ngValue]="rol.id">{{ rol.descripcion }}</option>
+    </select>
+    <button cButton color="primary" id="button-addon1" (click)="searchUsuarios()">
+        <svg cIcon name="cilSearch" title="Buscar Usuario"></svg>
+      </button>
+</c-input-group>
 <div class="d-grid gap-2" @inOut>
-    <button cButton color="primary" class="mb-2" (click)="createUsuario()">
-        <svg cIcon name="cilUserPlus" size="lg" title="Nuevo Usuario"></svg> Nuevo Usuario
+    <button cButton color="primary" class="mb-3" (click)="createUsuario()">
+        <svg cIcon name="cilUserPlus" title="Nuevo Usuario"></svg> Nuevo Usuario
     </button>
 </div>
 <table responsive cAlign="middle" cTable hover @inOut>
@@ -33,9 +44,9 @@
             <th class="w-20" scope="col">Acciones</th>
         </tr>
     </thead>
-    <tbody *ngIf="!loading && usuarios.length == 0">
+    <tbody *ngIf="!loading && filteredUsuarios.length == 0">
         <tr class="text-center">
-            <td colSpan="10"b><cite>No existen registros para mostrar.</cite></td>
+            <td colSpan="10"b><cite>No existen usuarios que coincidan con el criterio de busqueda.</cite></td>
         </tr>
     </tbody>
     <tbody *ngIf="loading">
@@ -45,8 +56,8 @@
             </td>
         </tr>
     </tbody>
-    <tbody *ngIf="!loading && usuarios.length !== 0">
-        <tr *ngFor="let usuario of usuarios" class="text-center">
+    <tbody *ngIf="!loading && filteredUsuarios.length !== 0">
+        <tr *ngFor="let usuario of filteredUsuarios" class="text-center">
             <td>{{usuario.apellido}}</td>
             <td>{{usuario.nombre}}</td>
             <td>{{usuario.email}}</td>
@@ -63,10 +74,10 @@
             <td>{{usuario.fechaAlta | date : 'dd-MM-yyyy hh:mm:ss' }}</td>
             <td>
                 <button cButton color="primary" variant="ghost" cTooltip="Editar Usuario" cTooltipPlacement="top" class="me-1" (click)="updateUsuario(usuario)">
-                    <svg cIcon name="cilPencil" size="lg" title="Editar Usuario"></svg>
+                    <svg cIcon name="cilPencil" title="Editar Usuario"></svg>
                 </button>
                 <button [cModalToggle]="verticallyCenteredModal.id" cButton color="secondary" variant="ghost" cTooltip="Eliminar Usuario" cTooltipPlacement="top" class="me-1" (click)="setDeleteUser(usuario)">
-                    <svg cIcon name="cilXCircle" size="lg" title="Eliminar Usuario"></svg>
+                    <svg cIcon name="cilXCircle" title="Eliminar Usuario"></svg>
                 </button>
             </td>
         </tr>
