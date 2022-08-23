@@ -122,6 +122,14 @@ export class DetalleTurnoComponent implements OnInit {
         this.turno = response;
         this.cuposDisponibles = this.turno.cantidadAlumnos - this.turno.usuarios.length;
       });
+      this.usuarioService.getUsuariosByIdRolForTurno(3, this.turno.id).subscribe(response => { 
+        this.alumnos = response.sort((a,b) => (a.apellido > b.apellido) ? 1 : ((b.apellido > a.apellido) ? -1 : 0));
+        this.alumnos.forEach((alumno) => { 
+          alumno.selected = false;
+          alumno.nombreCompleto = alumno.apellido.concat(' ', alumno.nombre);
+        });
+        this.filteredAlumnos = this.alumnos;
+      });
       this.alertService.success('Se ha desasignado correctamente el alumno.', { autoClose: true, keepAfterRouteChange: true, symbolAlert: 'check-circle-fill' });
     },
     error => {

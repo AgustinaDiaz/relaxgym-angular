@@ -25,18 +25,24 @@
                     <div class="text-center mt-2">
                         <p class="text-medium-emphasis">Seleccione los ejercicios:</p>
                     </div>
+                    <c-input-group class="mb-3">
+                        <input cFormControl name="searchNombreEjercicio" id="searchNombreEjercicio" aria-describedby="button-search" [(ngModel)]="searchNombreEjercicio"  placeholder="Buscar por Nombre..."/>
+                        <button cButton color="primary" id="button-addon1" (click)="searchEjercicios()">
+                            <svg cIcon name="cilSearch" title="Buscar Ejercicio"></svg>
+                            </button>
+                    </c-input-group>
                     <div class="overflow-scroll" style="height: 240px;">
-                        <ul [flush]="true" *ngIf="this.ejercicios.length == 0" class="mb-2" cListGroup>
+                        <ul [flush]="true" *ngIf="this.filteredEjercicios.length == 0" class="mb-2" cListGroup>
                             <li class="text-center" cListGroupItem>
                                 <cite>No existen ejercicios para asignar a esta rutina.</cite>
                             </li>
                         </ul>
-                        <ul [flush]="true" *ngIf="this.ejercicios.length != 0" cListGroup>
-                            <li *ngFor="let ejercicio of this.ejercicios" cListGroupItem>
+                        <ul [flush]="true" *ngIf="this.filteredEjercicios.length != 0" cListGroup>
+                            <li *ngFor="let ejercicio of this.filteredEjercicios" cListGroupItem>
                                 <c-row class="align-items-center">
                                     <c-col xs="6">
                                         <c-form-check>
-                                            <input cFormCheckInput type="checkbox" [value]="ejercicio.selected" (click)="setCheckSelected(ejercicio)" required>
+                                            <input cFormCheckInput type="checkbox" [checked]="ejercicio.selected" (click)="setCheckSelected(ejercicio)" required>
                                             <label cFormCheckLabel>{{ ejercicio.nombre }} </label>
                                         </c-form-check>
                                     </c-col>
@@ -47,7 +53,7 @@
                                             </c-col>
                                             <c-col xs="2">
                                                 <input cFormControl id="series" type="number" name="series" #series [min]="1"
-                                                [value]="ejercicio.cantidadRepeticiones" (change)="setSeries(series.value, ejercicio)" sizing="sm" [disabled]="!ejercicio.selected" required />
+                                                [value]="ejercicio.series" (change)="setSeries(series.value, ejercicio)" sizing="sm" [disabled]="!ejercicio.selected" required />
                                             </c-col>
                                             <c-col xs="4" style="text-align: right;">
                                                 <label cLabel="col" for="cantidadRepeticiones"><cite>Cantidad Repeticiones: </cite></label>

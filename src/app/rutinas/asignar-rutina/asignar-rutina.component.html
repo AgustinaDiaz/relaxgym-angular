@@ -24,7 +24,7 @@
                     <ul [flush]="true" *ngIf="this.filteredAlumnos.length != 0" class="mb-2" cListGroup>
                         <li *ngFor="let alumno of this.filteredAlumnos" cListGroupItem>
                             <c-form-check>
-                                <input cFormCheckInput type="checkbox" [value]="alumno.selected" (click)="setCheckSelected(alumno)">
+                                <input cFormCheckInput type="checkbox" [checked]="alumno.selected" (click)="setCheckSelected(alumno)">
                                 <label cFormCheckLabel>{{ alumno.apellido }}, {{ alumno.nombre }}</label>
                             </c-form-check>
                         </li>

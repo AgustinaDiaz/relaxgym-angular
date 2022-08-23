@@ -36,7 +36,9 @@ export class NuevaRutinaComponent implements OnInit {
   tooltipValidated: boolean = false;
   rutina: Rutina = new Rutina();
   ejercicios: Array<Ejercicio> = [];
+  filteredEjercicios: Array<Ejercicio> = [];
   claims: Claim = new Claim();
+  searchNombreEjercicio: string = '';
 
   constructor(private router: Router,
               private authenticateService: AuthenticateService,
@@ -53,6 +55,12 @@ export class NuevaRutinaComponent implements OnInit {
     this.getEjercicios();
   }
 
+  searchEjercicios() {
+    console.log()
+    return this.filteredEjercicios = this.ejercicios.filter(ejercicio => 
+        { return (this.searchNombreEjercicio.length > 0 ? ejercicio.nombre.toLowerCase().match(this.searchNombreEjercicio.toLowerCase()) : true)});
+  }
+
   getEjercicios() {
     this.ejercicioService.getEjercicios()
         .subscribe(response => {
@@ -60,6 +68,7 @@ export class NuevaRutinaComponent implements OnInit {
           this.ejercicios.forEach((ejercicio) => { 
             ejercicio.selected = false;
           });
+          this.filteredEjercicios = this.ejercicios;
         },
         error => {
           this.alertService.error('Ocurrió un error al cargar los ejercicios.', { autoClose: true, keepAfterRouteChange: true, symbolAlert: 'exclamation-triangle-fill' })
@@ -106,8 +115,18 @@ export class NuevaRutinaComponent implements OnInit {
   setCheckSelected(ejercicio: Ejercicio) {
     if(ejercicio.selected) {
       ejercicio.selected = false;
+      this.ejercicios.forEach(x => {
+        if(x.id == ejercicio.id) {
+          x.selected = false;
+        }
+      })
     } else {
       ejercicio.selected = true;
+      this.ejercicios.forEach(x => {
+        if(x.id == ejercicio.id) {
+          x.selected = true;
+        }
+      })
     }
   }
 

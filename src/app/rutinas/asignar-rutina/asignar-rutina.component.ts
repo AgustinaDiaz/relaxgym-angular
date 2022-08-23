@@ -62,8 +62,6 @@ export class AsignarRutinaComponent implements OnInit {
   }
 
   searchAlumnos() {
-    let array = this.alumnos.filter(x => x.selected);
-    console.log(array);
     return this.filteredAlumnos = this.alumnos.filter(alumno => 
         { return (this.searchNombreAlumno.length > 0 ? alumno.nombreCompleto.toLowerCase().match(this.searchNombreAlumno.toLowerCase()) : true)});
   }
