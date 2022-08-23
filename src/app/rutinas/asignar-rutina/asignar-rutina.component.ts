@@ -62,6 +62,8 @@ export class AsignarRutinaComponent implements OnInit {
   }
 
   searchAlumnos() {
+    let array = this.alumnos.filter(x => x.selected);
+    console.log(array);
     return this.filteredAlumnos = this.alumnos.filter(alumno => 
         { return (this.searchNombreAlumno.length > 0 ? alumno.nombreCompleto.toLowerCase().match(this.searchNombreAlumno.toLowerCase()) : true)});
   }
@@ -118,14 +120,14 @@ export class AsignarRutinaComponent implements OnInit {
     if(alumno.selected) {
       alumno.selected = false;
       this.alumnos.forEach(x => {
-        if(x.id == alumno.id){
+        if(x.id == alumno.id) {
           x.selected = false;
         }
       })
     } else {
       alumno.selected = true;
       this.alumnos.forEach(x => {
-        if(x.id == alumno.id){
+        if(x.id == alumno.id) {
           x.selected = true;
         }
       })

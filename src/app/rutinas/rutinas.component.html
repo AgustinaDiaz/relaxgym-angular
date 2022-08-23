@@ -14,22 +14,22 @@
   </c-modal-footer>
 </c-modal>
 <c-row class="mb-3">
-  <c-col>
-    <div class="ng-autocomplete">
+  <c-col sm="5">
+    <div class="ng-autocomplete" style="width: 100% !important; min-width: auto !important;">
       <ng-autocomplete [data]="entrenadoresAdmin" [searchKeyword]="keyword" placeholder="Buscar por Entrenador/Administrador" (selected)='selectEventEntrenadores($event)' (inputCleared)='deleteEventSearchEntrenador()' [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate"></ng-autocomplete>
       <ng-template #itemTemplate let-item><a [innerHTML]="item.nombreCompleto"></a></ng-template>
       <ng-template #notFoundTemplate let-notFound><div [innerHTML]="'<cite>Entrenador no encontrado</cite>'"></div></ng-template>
     </div>
   </c-col>
-  <c-col>
-    <div class="ng-autocomplete">
+  <c-col sm="6">
+    <div class="ng-autocomplete" style="width: 100% !important; min-width: auto !important;">
       <ng-autocomplete [data]="alumnos" [searchKeyword]="keyword" placeholder="Buscar por Alumno" (selected)='selectEventAlumnos($event)' (inputCleared)='deleteEventSearchAlumno()' [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate"></ng-autocomplete>
       <ng-template #itemTemplate let-item><a [innerHTML]="item.nombreCompleto"></a></ng-template>
       <ng-template #notFoundTemplate let-notFound><div [innerHTML]="'<cite>Alumno no encontrado</cite>'"></div></ng-template>
     </div>
   </c-col>
-  <c-col class="d-flex align-items-center">
-    <div class="float-end">
+  <c-col sm="1">
+    <div class="d-grid gap-2">
       <button cButton color="primary" id="button-addon1" (click)="searchRutinas()">
         <svg cIcon name="cilSearch" title="Buscar Rutina"></svg>
       </button>

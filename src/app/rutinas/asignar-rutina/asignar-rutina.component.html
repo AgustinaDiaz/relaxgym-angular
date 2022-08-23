@@ -21,7 +21,7 @@
                     </li>
                 </ul>
                 <div class="overflow-scroll" style="height: 250px;">
-                    <ul *ngIf="this.filteredAlumnos.length != 0" class="mb-2" cListGroup>
+                    <ul [flush]="true" *ngIf="this.filteredAlumnos.length != 0" class="mb-2" cListGroup>
                         <li *ngFor="let alumno of this.filteredAlumnos" cListGroupItem>
                             <c-form-check>
                                 <input cFormCheckInput type="checkbox" [value]="alumno.selected" (click)="setCheckSelected(alumno)">
@@ -41,7 +41,7 @@
                             <cite>No existen alumnos asignados.</cite>
                         </li>
                     </ul>
-                    <ul *ngIf="this.rutina.usuarios.length != 0" cListGroup>
+                    <ul [flush]="true" *ngIf="this.rutina.usuarios.length != 0" cListGroup>
                         <li class="pb-1 pt-1" *ngFor="let alumno of this.rutina.usuarios" cListGroupItem>
                             <svg cIcon name="cilCheck" title="Asignar Rutina" class="text-success"></svg> 
                             {{ alumno.usuario.apellido }}, {{ alumno.usuario.nombre }}
