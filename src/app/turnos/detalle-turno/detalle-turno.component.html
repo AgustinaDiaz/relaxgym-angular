@@ -1,80 +1,74 @@
 
-<c-row @inOut>
-    <c-col [sm]="12">
-        <c-widget-stat-b #widgetStatB1inv="cWidgetStatB" [title]="'Cupos Disponibles'" class="text-center mb-4" color="success" *ngIf="this.cuposDisponibles > 0" value="{{this.turno.usuarios.length}}/{{this.turno.cantidadAlumnos}}"></c-widget-stat-b>
-        <c-widget-stat-b #widgetStatB1inv="cWidgetStatB" [title]="'Cupos Disponibles'" class="text-center mb-4" color="danger" *ngIf="this.cuposDisponibles == 0" value="{{this.turno.usuarios.length}}/{{this.turno.cantidadAlumnos}}"></c-widget-stat-b>
-        <c-card [cBorder]="{top: {color: 'dark', width: 3}}" [textColor]="'primary'" class="mb-3">
-            <c-card-header class="text-center">
-                <strong>Clase: {{turno.clase.nombre}} - Horario: {{turno.fechaHora | date : 'dd-MM-yyyy hh:mm:ss a'}}</strong>
-            </c-card-header>
-            <c-card-body>
-                <c-row>
-                    <c-col class="position-relative mb-2" md="12">
-                        <label cLabel for="observacion">Observacion</label>
-                        <textarea cFormControl id="observacion" [(ngModel)]="turno.observacion" rows="2" name="observacion" disabled>
-                        </textarea>
-                    </c-col>
-                    <c-col>
-                        <div class="text-center">
-                            <p class="text-medium-emphasis">Seleccione los alumnos:</p>
-                        </div>
-                        <c-input-group class="mb-3">
-                            <input aria-describedby="button-search" [(ngModel)]="searchNombreAlumno" cFormControl placeholder="Buscar por Nombre..."/>
-                            <button cButton color="primary" id="button-addon1" (click)="searchAlumnos()">
-                                <svg cIcon name="cilSearch" title="Buscar Alumno"></svg>
-                              </button>
-                        </c-input-group>
-                        <ul *ngIf="this.filteredAlumnos.length == 0" class="mb-2" cListGroup>
-                            <li class="text-center" cListGroupItem>
-                                <cite>No existen alumnos que coincidan con el criterio de busqueda.</cite>
-                            </li>
-                        </ul>
-                        <div style="height: '72%'; overflow: 'auto';">
-                            <ul *ngIf="this.filteredAlumnos.length != 0" class="mb-2" cListGroup>
-                                <li *ngFor="let alumno of this.filteredAlumnos" cListGroupItem>
-                                    <c-form-check>
-                                        <input cFormCheckInput type="checkbox" [value]="alumno.selected" (click)="setCheckSelected(alumno)">
-                                        <label cFormCheckLabel>{{ alumno.apellido }}, {{ alumno.nombre }}</label>
-                                    </c-form-check>
-                                </li>
-                            </ul>
-                        </div>
-                    </c-col>
-                    <c-col>
-                        <div class="text-center">
-                            <p class="text-medium-emphasis">Alumnos asignados:</p>
-                        </div>
-                        <ul *ngIf="this.turno.usuarios.length == 0" class="mb-2" cListGroup>
-                            <li class="text-center" cListGroupItem>
-                                <cite>No existen alumnos asignados.</cite>
-                            </li>
-                        </ul>
-                        <div style="height: '88%'; overflow: 'auto';">
-                            <ul *ngIf="this.turno.usuarios.length != 0" cListGroup>
-                                <li class="pb-1 pt-1" *ngFor="let alumno of this.turno.usuarios" cListGroupItem>
-                                    <svg cIcon name="cilCheck" title="Asignar Turno" class="text-success"></svg> 
-                                    {{ alumno.usuario.apellido }}, {{ alumno.usuario.nombre }}
-                                    <button cButton color="danger" variant="ghost" cTooltip="Desasignar Alumno" cTooltipPlacement="right" (click)="desasignarAlumno(turno.id, alumno.usuario.id)">
-                                        <svg cIcon name="cilXCircle" title="Desasignar Alumno"></svg>
-                                    </button>
-                                </li>
-                            </ul>
-                        </div>
-                    </c-col>
-                </c-row>
-                <c-row>
-                    <c-col>
-                        <div class="d-grid gap-2">
-                            <c-button-group aria-label="Basic example" role="group">
-                                <button cButton color="primary" cTooltip="Asignar Alumno/s" cTooltipPlacement="bottom" class="mt-2" (click)="asignarTurno(turno.id, this.alumnos)" [disabled]="this.cuposDisponibles == 0">
-                                    <svg cIcon name="cilArrowThickFromLeft" size="xs" title="Asignar Alumno/s"></svg>
-                                </button>
-                                <button cButton (click)="onBack()" color="secondary" class="mt-2" type="reset">Atras</button>
-                            </c-button-group>
-                        </div>
-                    </c-col>
-                </c-row>
-            </c-card-body>
-        </c-card>
-    </c-col>
-</c-row>
+
+<c-widget-stat-b #widgetStatB1inv="cWidgetStatB" [title]="'Cupos Disponibles'" class="text-center mb-4" color="success" *ngIf="this.cuposDisponibles > 0" value="{{this.turno.usuarios.length}}/{{this.turno.cantidadAlumnos}}" @inOut></c-widget-stat-b>
+<c-widget-stat-b #widgetStatB1inv="cWidgetStatB" [title]="'Cupos Disponibles'" class="text-center mb-4" color="danger" *ngIf="this.cuposDisponibles == 0" value="{{this.turno.usuarios.length}}/{{this.turno.cantidadAlumnos}}" @inOut></c-widget-stat-b>
+<c-card [cBorder]="{top: {color: 'dark', width: 3}}" [textColor]="'primary'" class="mb-3" @inOut>
+    <c-card-header class="text-center">
+        <strong>Clase: {{turno.clase.nombre}} - Horario: {{turno.fechaHora | date : 'dd-MM-yyyy hh:mm:ss a'}}</strong>
+    </c-card-header>
+    <c-card-body>
+        <c-row>
+            <c-col>
+                <div class="text-center">
+                    <p class="text-medium-emphasis">Seleccione los alumnos:</p>
+                </div>
+                <c-input-group class="mb-3">
+                    <input aria-describedby="button-search" [(ngModel)]="searchNombreAlumno" cFormControl placeholder="Buscar por Nombre..."/>
+                    <button cButton color="primary" id="button-addon1" (click)="searchAlumnos()">
+                        <svg cIcon name="cilSearch" title="Buscar Alumno"></svg>
+                        </button>
+                </c-input-group>
+                <div class="overflow-scroll" style="height: 290px;">
+                    <ul *ngIf="this.filteredAlumnos.length == 0" class="mb-2" cListGroup>
+                        <li class="text-center" cListGroupItem>
+                            <cite>No existen alumnos que coincidan con el criterio de busqueda.</cite>
+                        </li>
+                    </ul>
+                    <ul *ngIf="this.filteredAlumnos.length != 0" class="mb-2" cListGroup>
+                        <li *ngFor="let alumno of this.filteredAlumnos" cListGroupItem>
+                            <c-form-check>
+                                <input cFormCheckInput type="checkbox" [value]="alumno.selected" (click)="setCheckSelected(alumno)">
+                                <label cFormCheckLabel>{{ alumno.apellido }}, {{ alumno.nombre }}</label>
+                            </c-form-check>
+                        </li>
+                    </ul>
+                </div>
+            </c-col>
+            <c-col>
+                <div class="text-center">
+                    <p class="text-medium-emphasis">Alumnos asignados:</p>
+                </div>
+                <div class="overflow-scroll" style="height: 343px;">
+                    <ul *ngIf="this.turno.usuarios.length == 0" class="mb-2" cListGroup>
+                        <li class="text-center" cListGroupItem>
+                            <cite>No existen alumnos asignados.</cite>
+                        </li>
+                    </ul>
+                    <ul *ngIf="this.turno.usuarios.length != 0" cListGroup>
+                        <li class="pb-1 pt-1" *ngFor="let alumno of this.turno.usuarios" cListGroupItem>
+                            <svg cIcon name="cilCheck" title="Asignar Turno" class="text-success"></svg> 
+                            {{ alumno.usuario.apellido }}, {{ alumno.usuario.nombre }}
+                            <button cButton color="danger" variant="ghost" cTooltip="Desasignar Alumno" cTooltipPlacement="right" (click)="desasignarAlumno(turno.id, alumno.usuario.id)">
+                                <svg cIcon name="cilXCircle" title="Desasignar Alumno"></svg>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </c-col>
+        </c-row>
+        <c-row>
+            <c-col>
+                <label cLabel for="observacion">Observacion</label>
+                <textarea cFormControl id="observacion" [(ngModel)]="turno.observacion" rows="2" name="observacion" disabled></textarea>
+                <div class="d-grid gap-2">
+                    <c-button-group aria-label="Basic example" role="group">
+                        <button cButton color="primary" cTooltip="Asignar Alumno/s" cTooltipPlacement="bottom" class="mt-2" (click)="asignarTurno(turno.id, this.alumnos)" [disabled]="this.cuposDisponibles == 0">
+                            <svg cIcon name="cilArrowThickFromLeft" size="xs" title="Asignar Alumno/s"></svg>
+                        </button>
+                        <button cButton (click)="onBack()" color="secondary" class="mt-2" type="reset">Atras</button>
+                    </c-button-group>
+                </div>
+            </c-col>
+        </c-row>
+    </c-card-body>
+</c-card>
