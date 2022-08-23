@@ -56,7 +56,7 @@ export class NuevaRutinaComponent implements OnInit {
   getEjercicios() {
     this.ejercicioService.getEjercicios()
         .subscribe(response => {
-          this.ejercicios = response;
+          this.ejercicios = response.sort((a,b) => (a.nombre > b.nombre) ? 1 : ((b.nombre > a.nombre) ? -1 : 0));;
           this.ejercicios.forEach((ejercicio) => { 
             ejercicio.selected = false;
           });
