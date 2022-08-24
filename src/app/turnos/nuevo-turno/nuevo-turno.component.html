@@ -5,6 +5,32 @@
     </c-card-header>
     <c-card-body>
         <form cForm #nuevoTurnoForm="ngForm" class="row g-3 needs-validation" (ngSubmit)="createTurno(nuevoTurnoForm)" [validated]="tooltipValidated">
+            <c-col class="position-relative mb-2" md="12">
+                <div class="text-center">
+                    <p class="text-medium-emphasis">Seleccione el entrenador a cargo:</p>
+                </div>
+                <c-input-group class="mb-3">
+                    <input id="buscarEntrenador" name="buscarEntrenador" aria-describedby="button-search" [(ngModel)]="searchNombreEntrenador" cFormControl placeholder="Buscar por Nombre..."/>
+                    <button cButton color="primary" id="buscarEntrenador" (click)="searchEntrenadores()">
+                        <svg cIcon name="cilSearch" title="Buscar Entrenador"></svg>
+                        </button>
+                </c-input-group>
+                <ul *ngIf="this.filteredEntrenadores.length == 0" class="mb-2" cListGroup>
+                    <li class="text-center" cListGroupItem>
+                        <cite>No existen entrenadores que coincidan con el criterio de busqueda.</cite>
+                    </li>
+                </ul>
+                <div class="overflow-scroll" style="height: 250px;">
+                    <ul [flush]="true" *ngIf="this.filteredEntrenadores.length != 0" class="mb-2" cListGroup>
+                        <li *ngFor="let entrenador of this.filteredEntrenadores" cListGroupItem>
+                            <c-form-check>
+                                <input cFormCheckInput id="listaEntrenadores" type="checkbox" [checked]="entrenador.selected" (click)="setCheckSelected(entrenador)" [disabled]="idEntrenadorSelected > 0 && idEntrenadorSelected != entrenador.id">
+                                <label cFormCheckLabel id="listaEntrenadores">{{ entrenador.apellido }}, {{ entrenador.nombre }}</label>
+                            </c-form-check>
+                        </li>
+                    </ul>
+                </div>
+            </c-col>
             <c-col class="position-relative mb-2" md="6">
                 <label cLabel for="nombre">Cantidad de Alumnos</label>
                 <input cFormControl id="nombre" type="number" [(ngModel)]="turno.cantidadAlumnos" name="nombre" [min]="1" required />

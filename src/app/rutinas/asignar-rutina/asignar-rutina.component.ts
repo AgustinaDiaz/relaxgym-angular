@@ -69,28 +69,29 @@ export class AsignarRutinaComponent implements OnInit {
   asignarAlumnos(idRutina: number, alumnos: Array<Usuario>, observacion: string) {
     let alumnosAsignados = alumnos.filter(x => x.selected);
 
-    if(alumnosAsignados.length != 0) {
-      this.rutinaService.asignarRutina(idRutina, alumnosAsignados.map(x => x.id), observacion).subscribe(response => {
-        this.observacion = "";
-        this.rutinaService.getRutinaById(this.rutina.id).subscribe(response => {
-          this.rutina = response;
-        });
-        this.usuarioService.getUsuariosByIdRolForRutina(3, this.rutina.id).subscribe(response => { 
-          this.alumnos = response.sort((a,b) => (a.apellido > b.apellido) ? 1 : ((b.apellido > a.apellido) ? -1 : 0));
-          this.alumnos.forEach((alumno) => { 
-            alumno.selected = false;
-            alumno.nombreCompleto = alumno.apellido.concat(' ', alumno.nombre);
-          });
-          this.filteredAlumnos = this.alumnos;
-        });
-        this.alertService.success('Se han asignado correctamente los alumnos.', { autoClose: true, keepAfterRouteChange: true, symbolAlert: 'check-circle-fill' });
-      },
-      error => {
-        this.alertService.error('Ocurrió un error al asignar los alumnos.', { autoClose: true, keepAfterRouteChange: true, symbolAlert: 'exclamation-triangle-fill' })
-      });
-    } else {
-      this.alertService.error('Debe seleccionar al menos 1 alumno.', { autoClose: true, keepAfterRouteChange: true, symbolAlert: 'exclamation-triangle-fill' })
+    if(alumnosAsignados.length == 0) {
+      this.alertService.error('Debe seleccionar al menos 1 alumno.', { autoClose: true, keepAfterRouteChange: true, symbolAlert: 'exclamation-triangle-fill' });
+      return;
     }
+
+    this.rutinaService.asignarRutina(idRutina, alumnosAsignados.map(x => x.id), observacion).subscribe(response => {
+      this.observacion = "";
+      this.rutinaService.getRutinaById(this.rutina.id).subscribe(response => {
+        this.rutina = response;
+      });
+      this.usuarioService.getUsuariosByIdRolForRutina(3, this.rutina.id).subscribe(response => { 
+        this.alumnos = response.sort((a,b) => (a.apellido > b.apellido) ? 1 : ((b.apellido > a.apellido) ? -1 : 0));
+        this.alumnos.forEach((alumno) => { 
+          alumno.selected = false;
+          alumno.nombreCompleto = alumno.apellido.concat(' ', alumno.nombre);
+        });
+        this.filteredAlumnos = this.alumnos;
+      });
+      this.alertService.success('Se han asignado correctamente los alumnos.', { autoClose: true, keepAfterRouteChange: true, symbolAlert: 'check-circle-fill' });
+    },
+    error => {
+      this.alertService.error('Ocurrió un error al asignar los alumnos.', { autoClose: true, keepAfterRouteChange: true, symbolAlert: 'exclamation-triangle-fill' })
+    });
   }
 
   desasignarAlumno(idRutina: number, idUsuario: number) {

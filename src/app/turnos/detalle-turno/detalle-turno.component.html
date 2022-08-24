@@ -57,18 +57,24 @@
             </c-col>
         </c-row>
         <c-row>
-            <c-col>
+            <c-col md="6">
+                <label cLabel for="nombre">Turno a cargo del entrenador:</label>
+                <input class="mb-2" cFormControl id="nombreEntrenador" type="text" [(ngModel)]="this.entrenadorAsignado.nombreCompleto" name="nombre" disabled />
+            </c-col>
+            <c-col md="6">
                 <label cLabel for="observacion">Observacion</label>
                 <textarea cFormControl id="observacion" [(ngModel)]="turno.observacion" rows="2" name="observacion" disabled></textarea>
-                <div class="d-grid gap-2">
-                    <c-button-group aria-label="Basic example" role="group">
-                        <button cButton color="primary" cTooltip="Asignar Alumno/s" cTooltipPlacement="bottom" class="mt-2" (click)="asignarTurno(turno.id, this.alumnos)" [disabled]="this.cuposDisponibles == 0">
-                            <svg cIcon name="cilArrowThickFromLeft" size="xs" title="Asignar Alumno/s"></svg>
-                        </button>
-                        <button cButton (click)="onBack()" color="secondary" class="mt-2" type="reset">Atras</button>
-                    </c-button-group>
-                </div>
             </c-col>
+        </c-row>
+        <c-row>
+            <div class="d-grid gap-2">
+                <c-button-group aria-label="Basic example" role="group">
+                    <button cButton color="primary" cTooltip="Asignar Alumno/s" cTooltipPlacement="bottom" class="mt-2" (click)="asignarTurno(turno.id, this.alumnos)" [disabled]="this.cuposDisponibles == 0">
+                        <svg cIcon name="cilArrowThickFromLeft" size="xs" title="Asignar Alumno/s"></svg>
+                    </button>
+                    <button cButton (click)="onBack()" color="secondary" class="mt-2" type="reset">Atras</button>
+                </c-button-group>
+            </div>
         </c-row>
     </c-card-body>
 </c-card>

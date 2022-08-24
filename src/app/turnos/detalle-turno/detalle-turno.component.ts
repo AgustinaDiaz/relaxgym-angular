@@ -31,6 +31,7 @@ export class DetalleTurnoComponent implements OnInit {
 
   turno: Turno = new Turno;
   alumnos: Array<Usuario> = [];
+  entrenadorAsignado: Usuario = new Usuario();
   cuposDisponibles: number = 0;
   searchNombreAlumno: string = '';
   filteredAlumnos: Array<Usuario> = [];
@@ -45,9 +46,13 @@ export class DetalleTurnoComponent implements OnInit {
     this.activatedRoute.data.subscribe(data => {
       this.turno = data['turno'];
       this.cuposDisponibles = this.turno.cantidadAlumnos - this.turno.usuarios.length;
+      this.entrenadorAsignado = this.turno.usuarios.filter(x => x.usuario.idRol == 2)[0].usuario;
+      this.entrenadorAsignado.nombreCompleto = this.entrenadorAsignado.apellido.concat(' ', this.entrenadorAsignado.nombre);
+      this.turno.usuarios = this.turno.usuarios.filter(x => x.usuario.idRol == 3);
 
-      this.usuarioService.getUsuariosByIdRolForRutina(3, this.turno.id).subscribe(response => {
+      this.usuarioService.getUsuariosByIdRolForTurno(3, this.turno.id).subscribe(response => {
         this.alumnos = response.sort((a,b) => (a.apellido > b.apellido) ? 1 : ((b.apellido > a.apellido) ? -1 : 0));
+        this.alumnos = this.alumnos.filter(x => x.idRol == 3);
         this.alumnos.forEach((alumno) => { 
           alumno.selected = false;
           alumno.nombreCompleto = alumno.apellido.concat(' ', alumno.nombre);
@@ -99,10 +104,12 @@ export class DetalleTurnoComponent implements OnInit {
     this.turnoService.asignarTurno(idRutina, alumnosAsignados.map(x => x.id)).subscribe(response => {
       this.turnoService.getTurnoById(this.turno.id).subscribe(response => {
         this.turno = response;
+        this.turno.usuarios = this.turno.usuarios.filter(x => x.usuario.idRol == 3);
         this.cuposDisponibles = this.turno.cantidadAlumnos - this.turno.usuarios.length;
       });
       this.usuarioService.getUsuariosByIdRolForTurno(3, this.turno.id).subscribe(response => { 
         this.alumnos = response.sort((a,b) => (a.apellido > b.apellido) ? 1 : ((b.apellido > a.apellido) ? -1 : 0));
+        this.alumnos = this.alumnos.filter(x => x.idRol == 3);
         this.alumnos.forEach((alumno) => { 
           alumno.selected = false;
           alumno.nombreCompleto = alumno.apellido.concat(' ', alumno.nombre);
@@ -120,10 +127,12 @@ export class DetalleTurnoComponent implements OnInit {
     this.turnoService.desasignarAlumno(idTurno, idUsuario).subscribe(response => {
       this.turnoService.getTurnoById(this.turno.id).subscribe(response => { 
         this.turno = response;
+        this.turno.usuarios = this.turno.usuarios.filter(x => x.usuario.idRol == 3);
         this.cuposDisponibles = this.turno.cantidadAlumnos - this.turno.usuarios.length;
       });
       this.usuarioService.getUsuariosByIdRolForTurno(3, this.turno.id).subscribe(response => { 
         this.alumnos = response.sort((a,b) => (a.apellido > b.apellido) ? 1 : ((b.apellido > a.apellido) ? -1 : 0));
+        this.alumnos = this.alumnos.filter(x => x.idRol == 3);
         this.alumnos.forEach((alumno) => { 
           alumno.selected = false;
           alumno.nombreCompleto = alumno.apellido.concat(' ', alumno.nombre);

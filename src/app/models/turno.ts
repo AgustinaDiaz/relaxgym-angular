@@ -9,5 +9,6 @@ export class Turno {
     cantidadAlumnos!: number;
     observacion!: string;
     fechaHora!: Date;
+    idEntrenadorAsignado!: number;
     usuarios!:  Array<UsuarioTurno>;
 }
