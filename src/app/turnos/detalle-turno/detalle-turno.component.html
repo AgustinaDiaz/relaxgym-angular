@@ -48,7 +48,7 @@
                         <li class="pb-1 pt-1" *ngFor="let alumno of this.turno.usuarios" cListGroupItem>
                             <svg cIcon name="cilCheck" title="Asignar Turno" class="text-success"></svg> 
                             {{ alumno.usuario.apellido }}, {{ alumno.usuario.nombre }}
-                            <button *ngIf="claims.role == '1'" cButton color="danger" variant="ghost" cTooltip="Desasignar Alumno" cTooltipPlacement="right" (click)="desasignarAlumno(turno.id, alumno.usuario.id)">
+                            <button *ngIf="claims.role == '1' || this.claims.primarysid == alumno.idUsuario" cButton color="danger" variant="ghost" cTooltip="Desasignar Alumno" cTooltipPlacement="right" (click)="desasignarAlumno(turno.id, alumno.usuario.id)">
                                 <svg cIcon name="cilXCircle" title="Desasignar Alumno"></svg>
                             </button>
                         </li>

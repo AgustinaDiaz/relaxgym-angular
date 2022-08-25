@@ -67,7 +67,8 @@ export class TurnosComponent implements OnInit {
               date: turno.fechaHora, 
               turno: turno,
               editable:true,
-              color: (turno.cantidadAlumnos - turno.usuarios.length) == 0 ? 'red' : turno.usuarios.some(x => x.idUsuario == (this.claims.primarysid as unknown as number)) ? 'green' : ''
+              color: (turno.cantidadAlumnos - (turno.usuarios.filter(x => x.idUsuario == (this.claims.primarysid as unknown as number)).length)) == 0 &&
+                      !turno.usuarios.some(x => x.idUsuario == (this.claims.primarysid as unknown as number)) ? 'red' : turno.usuarios.some(x => x.idUsuario == (this.claims.primarysid as unknown as number)) ? 'green' : ''
             });
           });
         },

@@ -50,12 +50,21 @@ export class RutinasComponent implements OnInit {
 
   ngOnInit(): void {
     this.claims = this.authenticateService.getClaimsUsuario();
-    if(this.claims.role == '1' || this.claims.role == '2') {
+    this.getDataByRole(); 
+  }
+
+  private getDataByRole() {
+    if (this.claims.role == '1') {
       this.getRutinas();
       this.getEntrenadores();
       this.getAlumnos();
-    } else {
-      this.getRutinasByIdUsuario()
+    }
+    if (this.claims.role == '2') {
+      this.getRutinasByIdUsuarioCreador();
+      this.getAlumnos();
+    }
+    if (this.claims.role == '3') {
+      this.getRutinasByIdUsuario();
     }
   }
 
@@ -90,6 +99,21 @@ export class RutinasComponent implements OnInit {
     });
   }
 
+  getRutinasByIdUsuarioCreador() {
+    this.loading = true;
+    let idUsuario = this.claims.primarysid as unknown as number;
+    this.rutinaService.getRutinaByIdUsuarioCreador(idUsuario)
+        .subscribe(response => {
+          this.rutinas = response;
+          this.filteredRutinas = this.rutinas;
+          this.loading = false;
+        },
+        error => {
+          this.loading = false;
+          this.alertService.error('Ocurrió un error al cargar las rutinas.',{ autoClose: true, keepAfterRouteChange: true, symbolAlert: 'exclamation-triangle-fill' })
+        });
+  }
+
   getRutinasByIdUsuario() {
     this.loading = true;
     let idUsuario = this.claims.primarysid as unknown as number;
@@ -110,6 +134,7 @@ export class RutinasComponent implements OnInit {
     this.rutinaService.getRutinas()
         .subscribe(response => {
           this.rutinas = response;
+          console.log(this.rutinas);
           this.filteredRutinas = this.rutinas;
           this.loading = false;
         },
@@ -131,7 +156,7 @@ export class RutinasComponent implements OnInit {
     this.rutinaService.deleteRutinaById(this.deletedRutina.id)
         .subscribe(response => {
           this.alertService.success('Se ha eliminado correctamente la rutina.', { autoClose: true, keepAfterRouteChange: true, symbolAlert: 'check-circle-fill' });
-          this.getRutinas();
+          this.getDataByRole();
         },
         error => {
           if(error.status == 400){

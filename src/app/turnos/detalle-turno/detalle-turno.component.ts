@@ -49,10 +49,10 @@ export class DetalleTurnoComponent implements OnInit {
     this.activatedRoute.data.subscribe(data => {
       this.claims = this.authenticateService.getClaimsUsuario();
       this.turno = data['turno'];
-      this.cuposDisponibles = this.turno.cantidadAlumnos - this.turno.usuarios.length;
       this.entrenadorAsignado = this.turno.usuarios.filter(x => x.usuario.idRol == 2)[0].usuario;
       this.entrenadorAsignado.nombreCompleto = this.entrenadorAsignado.apellido.concat(' ', this.entrenadorAsignado.nombre);
       this.turno.usuarios = this.turno.usuarios.filter(x => x.usuario.idRol == 3);
+      this.cuposDisponibles = this.turno.cantidadAlumnos - this.turno.usuarios.length;
 
       this.usuarioService.getUsuariosByIdRolForTurno(3, this.turno.id).subscribe(response => {
         this.alumnos = response.sort((a,b) => (a.apellido > b.apellido) ? 1 : ((b.apellido > a.apellido) ? -1 : 0));

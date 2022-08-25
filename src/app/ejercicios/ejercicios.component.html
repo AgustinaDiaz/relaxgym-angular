@@ -23,7 +23,7 @@
         <svg cIcon name="cilSearch" title="Buscar Ejercicio"></svg>
       </button>
 </c-input-group>
-<div *ngIf="claims.role == '1'" class="d-grid gap-2" @inOut>
+<div *ngIf="claims.role == '1' || claims.role == '2'" class="d-grid gap-2" @inOut>
     <button cButton color="primary" class="mb-3" (click)="createEjercicio()">
         <svg cIcon name="cilLibraryAdd" title="Nuevo Rutina"></svg> Nuevo Ejercicio
     </button>
@@ -46,7 +46,7 @@
                 <c-col [xs]=8 class="d-flex align-items-center">
                     <small class="text-medium-emphasis"><cite>Tipo de Ejercicio: </cite><c-badge color="primary">{{ejercicio.tipoEjercicio.descripcion}}</c-badge></small>
                 </c-col>
-                <c-col *ngIf="claims.role == '1'" [xs]=4 class="d-flex justify-content-end pe-0">
+                <c-col *ngIf="claims.role == '1' || claims.role == '2'" [xs]=4 class="d-flex justify-content-end pe-0">
                     <button cButton color="primary" variant="ghost" cTooltip="Editar Ejercicio" cTooltipPlacement="top" (click)="updateEjercicio(ejercicio)">
                         <svg cIcon name="cilPencil" title="Editar Usuario"></svg>
                     </button>

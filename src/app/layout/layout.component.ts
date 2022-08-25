@@ -26,6 +26,12 @@ export class LayoutComponent {
       this.navItems.push({ name: 'Mis Turnos', url: 'turnos', iconComponent: { name: 'cilCalendarCheck' }});
     }
 
+    if(claims.role == '2') {
+      this.navItems.push({ name: 'Gestion de Ejercicios', url: 'ejercicios/0/ ', iconComponent: { name: 'cilWeightlifitng' }});
+      this.navItems.push({ name: 'Mis Rutinas', url: 'rutinas', iconComponent: { name: 'cilClipboard' }});
+      this.navItems.push({ name: 'Mis Turnos', url: 'turnos', iconComponent: { name: 'cilCalendarCheck' }});
+    }
+
     if(claims.role == '1') {
       this.navItems.push({ name: 'Gestion de Ejercicios', url: 'gestion-ejercicios/0/ ', iconComponent: { name: 'cilWeightlifitng' }});
       this.navItems.push({ name: 'Gestion de Rutinas', url: 'gestion-rutinas', iconComponent: { name: 'cilClipboard' }});

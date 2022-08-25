@@ -13,22 +13,22 @@
     </c-button-group>
   </c-modal-footer>
 </c-modal>
-<c-row class="mb-3" *ngIf="this.claims.role == '1' || this.claims.role == '2'">
-  <c-col sm="5">
+<c-row class="mb-3">
+  <c-col *ngIf="this.claims.role == '1'">
     <div class="ng-autocomplete" style="width: 100% !important; min-width: auto !important;">
       <ng-autocomplete [data]="entrenadoresAdmin" [searchKeyword]="keyword" placeholder="Buscar por Entrenador/Administrador" (selected)='selectEventEntrenadores($event)' (inputCleared)='deleteEventSearchEntrenador()' [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate"></ng-autocomplete>
       <ng-template #itemTemplate let-item><a [innerHTML]="item.nombreCompleto"></a></ng-template>
       <ng-template #notFoundTemplate let-notFound><div [innerHTML]="'<cite>Entrenador no encontrado</cite>'"></div></ng-template>
     </div>
   </c-col>
-  <c-col sm="6">
+  <c-col *ngIf="this.claims.role == '1' || this.claims.role == '2'">
     <div class="ng-autocomplete" style="width: 100% !important; min-width: auto !important;">
       <ng-autocomplete [data]="alumnos" [searchKeyword]="keyword" placeholder="Buscar por Alumno" (selected)='selectEventAlumnos($event)' (inputCleared)='deleteEventSearchAlumno()' [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate"></ng-autocomplete>
       <ng-template #itemTemplate let-item><a [innerHTML]="item.nombreCompleto"></a></ng-template>
       <ng-template #notFoundTemplate let-notFound><div [innerHTML]="'<cite>Alumno no encontrado</cite>'"></div></ng-template>
     </div>
   </c-col>
-  <c-col sm="1">
+  <c-col sm="1" *ngIf="this.claims.role == '1' || this.claims.role == '2'">
     <div class="d-grid gap-2">
       <button cButton color="primary" id="button-addon1" (click)="searchRutinas()">
         <svg cIcon name="cilSearch" title="Buscar Rutina"></svg>
@@ -36,13 +36,16 @@
     </div>
   </c-col>
 </c-row>
-<div *ngIf="claims.role == '1'" class="d-grid gap-2" @inOut>
+<div *ngIf="this.claims.role == '1' || this.claims.role == '2'" class="d-grid gap-2" @inOut>
   <button cButton color="primary" class="mb-3" (click)="createRutina()">
       <svg cIcon name="cilPlaylistAdd" title="Nuevo Rutina"></svg> Nueva Rutina
   </button>
 </div>
-<div *ngIf="!loading && filteredRutinas.length == 0"class="text-center">
-    <cite>No existen rutinas que coincidan con los criterios de busqueda.</cite>
+<div *ngIf="this.claims.role == '3' && !loading && filteredRutinas.length == 0"class="text-center">
+  <cite>No existen rutinas asignadas.</cite>
+</div>
+<div *ngIf="(this.claims.role == '1' || this.claims.role == '2') && !loading && filteredRutinas.length == 0"class="text-center">
+  <cite>No existen rutinas creadas o que coincidan con los criterios de busqueda.</cite>
 </div>
 <c-accordion [alwaysOpen]="true" [flush]="true" @inOut>
     <c-accordion-item #item0="cAccordionItem" [visible]="true" *ngFor="let rutina of filteredRutinas; index as i;" class="mt-2">
@@ -76,7 +79,7 @@
                           </div>
                       </c-col>
                   </c-row>
-                  <div *ngIf="claims.role == '1'" class="d-grid gap-2 d-md-flex justify-content-md-end mt-2">
+                  <div *ngIf="claims.role == '1' || claims.role == '2'" class="d-grid gap-2 d-md-flex justify-content-md-end mt-2">
                     <button cButton color="primary" cTooltip="Asignar Rutina" cTooltipPlacement="right" (click)="asignarRutina(rutina)">
                       <svg cIcon name="cilArrowThickFromLeft" size="xs" title="Asignar Rutina"></svg>
                     </button>

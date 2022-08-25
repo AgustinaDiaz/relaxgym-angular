@@ -3,6 +3,7 @@ import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from
 import { Observable } from 'rxjs';
 import { Claim } from '../models/claim';
 import { AlertService } from './alert.service';
+import { AuthenticateService } from './authenticate.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,8 @@ import { AlertService } from './alert.service';
 export class AdministratorGuard implements CanActivate {
   
   constructor(private router: Router,
-    private alertService: AlertService) { }
+              private alertService: AlertService,
+              private authenticateService: AuthenticateService) { }
 
   canActivate(router: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
     var token = localStorage.getItem("tokenUsuario");
@@ -23,11 +25,9 @@ export class AdministratorGuard implements CanActivate {
 
     token = token as string;
 
-    var decodedToken = this.getDecodedAccessToken(token);
-    var claims = new Claim();
-    claims = JSON.parse(decodedToken);
+    var claims = this.authenticateService.getClaimsUsuario();
 
-    if(claims.role != '1')
+    if(claims.role != '1' && claims.role != '2')
     {
       this.alertService.info('Acceso no permitido.', { autoClose: true, keepAfterRouteChange: true, symbolAlert: 'info-fill' })
       this.router.navigate(['/login']);
@@ -47,13 +47,5 @@ export class AdministratorGuard implements CanActivate {
   private tokenExpired(token: string) {
     const expiry = (JSON.parse(atob(token.split('.')[1]))).exp;
     return (Math.floor((new Date).getTime() / 1000)) >= expiry;
-  }
-  
-  private getDecodedAccessToken(token: string): any {
-    try {
-      return atob(token.split('.')[1]);
-    } catch(Error) {
-      return null;
-    }
   }
 }

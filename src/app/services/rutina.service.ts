@@ -29,6 +29,10 @@ export class RutinaService {
     return this.httpClient.get<Array<Rutina>>(`${this.url}/Usuario/${idUsuario}`);
   }
 
+  getRutinaByIdUsuarioCreador(idUsuario: number): Observable<Array<Rutina>>{
+    return this.httpClient.get<Array<Rutina>>(`${this.url}/UsuarioCreador/${idUsuario}`);
+  }
+
   deleteRutinaById(id: number): Observable<any>{
     return this.httpClient.delete<any>(`${this.url}/${id}`);
   }
