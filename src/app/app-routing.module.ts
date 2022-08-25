@@ -150,7 +150,6 @@ const routes: Routes = [
       {
         path: 'detalle-turno/:id',
         component: DetalleTurnoComponent,
-        canActivate: [AdministratorGuard],
         data: {
           title: 'Turnos/Detalle'
         },
@@ -225,6 +224,13 @@ const routes: Routes = [
       },
       {
         path: 'ejercicios',
+        component: EjerciciosComponent,
+        data: {
+          title: 'Ejercicios'
+        }
+      },
+      {
+        path: 'ejercicios/:tipoEjercicio/:nombreEjercicio',
         component: EjerciciosComponent,
         data: {
           title: 'Ejercicios'

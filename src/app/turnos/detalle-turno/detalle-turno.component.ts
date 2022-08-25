@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Turno } from 'src/app/models/turno';
 import { Usuario } from 'src/app/models/usuario';
 import { AlertService } from 'src/app/services/alert.service';
+import { AuthenticateService } from 'src/app/services/authenticate.service';
 import { TurnoService } from 'src/app/services/turno.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 
@@ -35,15 +36,18 @@ export class DetalleTurnoComponent implements OnInit {
   cuposDisponibles: number = 0;
   searchNombreAlumno: string = '';
   filteredAlumnos: Array<Usuario> = [];
+  claims: any;
 
   constructor(private activatedRoute:ActivatedRoute,
               private router: Router,
+              private authenticateService: AuthenticateService,
               private turnoService: TurnoService,
               private usuarioService: UsuarioService,
               private alertService: AlertService) { }
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(data => {
+      this.claims = this.authenticateService.getClaimsUsuario();
       this.turno = data['turno'];
       this.cuposDisponibles = this.turno.cantidadAlumnos - this.turno.usuarios.length;
       this.entrenadorAsignado = this.turno.usuarios.filter(x => x.usuario.idRol == 2)[0].usuario;
@@ -86,6 +90,37 @@ export class DetalleTurnoComponent implements OnInit {
   searchAlumnos() {
     return this.filteredAlumnos = this.alumnos.filter(alumno => 
         { return (this.searchNombreAlumno.length > 0 ? alumno.nombreCompleto.toLowerCase().match(this.searchNombreAlumno.toLowerCase()) : true)});
+  }
+
+  existeUsuarioAsignado(idAlumno: number) {
+    if(this.turno.usuarios.some(x => x.idUsuario == idAlumno)){
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  asignarTurnoById(idRutina: number, idAlumno: number) {
+    this.turnoService.asignarTurnoById(idRutina, idAlumno).subscribe(response => {
+      this.turnoService.getTurnoById(this.turno.id).subscribe(response => {
+        this.turno = response;
+        this.turno.usuarios = this.turno.usuarios.filter(x => x.usuario.idRol == 3);
+        this.cuposDisponibles = this.turno.cantidadAlumnos - this.turno.usuarios.length;
+      });
+      this.usuarioService.getUsuariosByIdRolForTurno(3, this.turno.id).subscribe(response => { 
+        this.alumnos = response.sort((a,b) => (a.apellido > b.apellido) ? 1 : ((b.apellido > a.apellido) ? -1 : 0));
+        this.alumnos = this.alumnos.filter(x => x.idRol == 3);
+        this.alumnos.forEach((alumno) => { 
+          alumno.selected = false;
+          alumno.nombreCompleto = alumno.apellido.concat(' ', alumno.nombre);
+        });
+        this.filteredAlumnos = this.alumnos;
+      });
+      this.alertService.success('Se ha asignado correctamente el turno.', { autoClose: true, keepAfterRouteChange: true, symbolAlert: 'check-circle-fill' });
+    },
+    error => {
+      this.alertService.error('Ocurrió un error al asignar el turno.', { autoClose: true, keepAfterRouteChange: true, symbolAlert: 'exclamation-triangle-fill' })
+    });
   }
 
   asignarTurno(idRutina: number, alumnos: Array<Usuario>) {
@@ -147,6 +182,11 @@ export class DetalleTurnoComponent implements OnInit {
   }
 
   onBack() {
+    if(this.claims.role != '1') {
+      this.router.navigateByUrl("main/turnos");
+      return;
+    }
+
     this.router.navigateByUrl("main/gestion-turnos");
   }
 }

@@ -96,6 +96,7 @@ export class RutinasComponent implements OnInit {
     this.rutinaService.getRutinaByIdUsuario(idUsuario)
         .subscribe(response => {
           this.rutinas = response;
+          this.filteredRutinas = this.rutinas;
           this.loading = false;
         },
         error => {

@@ -8,7 +8,7 @@
     </c-card-header>
     <c-card-body>
         <c-row>
-            <c-col>
+            <c-col *ngIf="claims.role == '1'">
                 <div class="text-center">
                     <p class="text-medium-emphasis">Seleccione los alumnos:</p>
                 </div>
@@ -18,7 +18,7 @@
                         <svg cIcon name="cilSearch" title="Buscar Alumno"></svg>
                         </button>
                 </c-input-group>
-                <div class="overflow-scroll" style="height: 290px;">
+                <div class="overflow-scroll" style="max-height: 290px;">
                     <ul *ngIf="this.filteredAlumnos.length == 0" class="mb-2" cListGroup>
                         <li class="text-center" cListGroupItem>
                             <cite>No existen alumnos que coincidan con el criterio de busqueda.</cite>
@@ -38,7 +38,7 @@
                 <div class="text-center">
                     <p class="text-medium-emphasis">Alumnos asignados:</p>
                 </div>
-                <div class="overflow-scroll" style="height: 343px;">
+                <div class="overflow-scroll" style="max-height: 343px;">
                     <ul *ngIf="this.turno.usuarios.length == 0" class="mb-2" cListGroup>
                         <li class="text-center" cListGroupItem>
                             <cite>No existen alumnos asignados.</cite>
@@ -48,7 +48,7 @@
                         <li class="pb-1 pt-1" *ngFor="let alumno of this.turno.usuarios" cListGroupItem>
                             <svg cIcon name="cilCheck" title="Asignar Turno" class="text-success"></svg> 
                             {{ alumno.usuario.apellido }}, {{ alumno.usuario.nombre }}
-                            <button cButton color="danger" variant="ghost" cTooltip="Desasignar Alumno" cTooltipPlacement="right" (click)="desasignarAlumno(turno.id, alumno.usuario.id)">
+                            <button *ngIf="claims.role == '1'" cButton color="danger" variant="ghost" cTooltip="Desasignar Alumno" cTooltipPlacement="right" (click)="desasignarAlumno(turno.id, alumno.usuario.id)">
                                 <svg cIcon name="cilXCircle" title="Desasignar Alumno"></svg>
                             </button>
                         </li>
@@ -69,8 +69,11 @@
         <c-row>
             <div class="d-grid gap-2">
                 <c-button-group aria-label="Basic example" role="group">
-                    <button cButton color="primary" cTooltip="Asignar Alumno/s" cTooltipPlacement="bottom" class="mt-2" (click)="asignarTurno(turno.id, this.alumnos)" [disabled]="this.cuposDisponibles == 0">
+                    <button *ngIf="claims.role == '1'" cButton color="primary" cTooltip="Asignar Alumno/s" cTooltipPlacement="bottom" class="mt-2" (click)="asignarTurno(turno.id, this.alumnos)" [disabled]="this.cuposDisponibles == 0">
                         <svg cIcon name="cilArrowThickFromLeft" size="xs" title="Asignar Alumno/s"></svg>
+                    </button>
+                    <button *ngIf="claims.role == '3'" cButton color="primary" cTooltip="Asignar Turno" cTooltipPlacement="bottom" class="mt-2" (click)="asignarTurnoById(turno.id, this.claims.primarysid)" [disabled]="existeUsuarioAsignado(this.claims.primarysid)">
+                        <svg cIcon name="cilArrowThickFromLeft" size="xs" title="Asignar Turno"></svg>
                     </button>
                     <button cButton (click)="onBack()" color="secondary" class="mt-2" type="reset">Atras</button>
                 </c-button-group>

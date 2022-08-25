@@ -24,6 +24,7 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import listPlugin from '@fullcalendar/list';
 import interactionPlugin from '@fullcalendar/interaction';
+import bootstrap5Plugin from '@fullcalendar/bootstrap5';
 
 import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 
@@ -93,7 +94,8 @@ FullCalendarModule.registerPlugins([
   dayGridPlugin,
   timeGridPlugin,
   listPlugin,
-  interactionPlugin
+  interactionPlugin,
+  bootstrap5Plugin
 ]);
 
 @NgModule({

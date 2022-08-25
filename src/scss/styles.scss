@@ -11,6 +11,7 @@ $enable-rtl: true;
 // Import Chart.js custom tooltips styles
 @import "~@coreui/chartjs/scss/coreui-chartjs";
 
+@import 'bootstrap-icons/font/bootstrap-icons.css'; // needs additional webpack config!
 @import '~bootstrap/dist/css/bootstrap.min.css';
 @import '~open-iconic/font/css/open-iconic-bootstrap.css';
 

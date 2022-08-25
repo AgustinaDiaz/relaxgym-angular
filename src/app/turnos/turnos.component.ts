@@ -38,10 +38,12 @@ export class TurnosComponent implements OnInit {
   claims: Claim = new Claim;
 
   calendarOptions: CalendarOptions = {
+    themeSystem: 'bootstrap',
     timeZone: 'America/Argentina/Buenos_Aires',
-    initialView: 'timeGridWeek',
+    initialView: 'dayGridMonth',
     locale: esLocale,
     height: 650,
+    showNonCurrentDates: true,
     eventClick: this.handleTurnoEventClick.bind(this),
     eventDrop: this.handleTurnoDrop.bind(this),
     events: []
@@ -65,7 +67,7 @@ export class TurnosComponent implements OnInit {
               date: turno.fechaHora, 
               turno: turno,
               editable:true,
-              color: ((turno.cantidadAlumnos - turno.usuarios.length) == 0 ? 'red' : '')
+              color: (turno.cantidadAlumnos - turno.usuarios.length) == 0 ? 'red' : turno.usuarios.some(x => x.idUsuario == (this.claims.primarysid as unknown as number)) ? 'green' : ''
             });
           });
         },

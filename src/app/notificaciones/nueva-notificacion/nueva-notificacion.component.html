@@ -9,7 +9,7 @@
                     <div class="text-center">
                         <p class="text-medium-emphasis">Seleccione los usuarios:</p>
                     </div>
-                    <div class="overflow-scroll" style="height: 240px;">
+                    <div class="overflow-scroll" style="max-height: 240px;">
                         <ul [flush]="true" *ngIf="this.usuarios.length == 0" class="mb-2" cListGroup>
                             <li class="text-center" cListGroupItem>
                                 <cite>No existen usuarios para seleccionar.</cite>

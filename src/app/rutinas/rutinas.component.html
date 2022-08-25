@@ -13,7 +13,7 @@
     </c-button-group>
   </c-modal-footer>
 </c-modal>
-<c-row class="mb-3">
+<c-row class="mb-3" *ngIf="this.claims.role == '1' || this.claims.role == '2'">
   <c-col sm="5">
     <div class="ng-autocomplete" style="width: 100% !important; min-width: auto !important;">
       <ng-autocomplete [data]="entrenadoresAdmin" [searchKeyword]="keyword" placeholder="Buscar por Entrenador/Administrador" (selected)='selectEventEntrenadores($event)' (inputCleared)='deleteEventSearchEntrenador()' [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate"></ng-autocomplete>
@@ -65,7 +65,12 @@
                   <c-row>
                       <c-col sm="3" *ngFor="let ejercicio of rutina.ejercicios; index as i;">
                           <div class="border-start border-start-4 border-start-primary py-1 px-3">
-                            <div class="text-medium-emphasis"><a [routerLink]="['/main/gestion-ejercicios/', ejercicio.ejercicio.tipoEjercicio.id, ejercicio.ejercicio.nombre]">{{ejercicio.ejercicio.nombre}}</a></div>
+                            <div class="text-medium-emphasis" *ngIf="this.claims.role == '1' || this.claims.role == '2'">
+                              <a [routerLink]="['/main/gestion-ejercicios/', ejercicio.ejercicio.tipoEjercicio.id, ejercicio.ejercicio.nombre]">{{ejercicio.ejercicio.nombre}}</a>
+                            </div>
+                            <div class="text-medium-emphasis" *ngIf="this.claims.role == '3'">
+                              <a [routerLink]="['/main/ejercicios/', ejercicio.ejercicio.tipoEjercicio.id, ejercicio.ejercicio.nombre]">{{ejercicio.ejercicio.nombre}}</a>
+                            </div>
                             <div class="text-medium-emphasis small">Series: {{ejercicio.series}}</div>
                             <div class="text-medium-emphasis small">Repeticiones: {{ejercicio.cantidadRepeticiones}}</div>
                           </div>
