@@ -1,6 +1,6 @@
 import { animate, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Claim } from '../models/claim';
 import { Rutina } from '../models/rutina';
 import { Usuario } from '../models/usuario';
@@ -41,16 +41,24 @@ export class RutinasComponent implements OnInit {
   keyword: string = 'nombreCompleto';
   searchAlumno: number = 0;
   searchEntrenador: number = 0;
+  searchNombreRutina: string = '';
 
   constructor(private rutinaService: RutinaService,
               private usuarioService: UsuarioService,
               private router: Router,
               private alertService: AlertService,
-              private authenticateService:AuthenticateService) { }
+              private authenticateService:AuthenticateService,
+              private activatedRoute: ActivatedRoute,) { }
 
   ngOnInit(): void {
-    this.claims = this.authenticateService.getClaimsUsuario();
-    this.getDataByRole(); 
+    this.activatedRoute.paramMap.subscribe( paramMap => {
+      this.searchNombreRutina = paramMap.get('nombreRutina') as string;
+      if(this.searchNombreRutina == ' ' || this.searchNombreRutina == undefined) {
+        this.searchNombreRutina = '';
+      }
+      this.claims = this.authenticateService.getClaimsUsuario();
+    })
+    this.getDataByRole();
   }
 
   private getDataByRole() {
@@ -59,10 +67,12 @@ export class RutinasComponent implements OnInit {
       this.getEntrenadores();
       this.getAlumnos();
     }
+
     if (this.claims.role == '2') {
       this.getRutinasByIdUsuarioCreador();
       this.getAlumnos();
     }
+    
     if (this.claims.role == '3') {
       this.getRutinasByIdUsuario();
     }
@@ -70,12 +80,15 @@ export class RutinasComponent implements OnInit {
 
   searchRutinas() {
     if(this.searchAlumno == 0 && 
-       this.searchEntrenador == 0) {
+       this.searchEntrenador == 0 &&
+       this.searchNombreRutina.length == 0) {
       return this.filteredRutinas = this.rutinas;
     }
+
     return this.filteredRutinas = this.rutinas.filter(rutina => 
         { return ((!(this.searchAlumno == 0)) ? rutina.usuarios.some(x => x.idUsuario == this.searchAlumno) : true) &&
-                 ((!(this.searchEntrenador == 0)) ? rutina.idUsuarioCreador == this.searchEntrenador : true) });
+                 ((!(this.searchEntrenador == 0)) ? rutina.idUsuarioCreador == this.searchEntrenador : true) &&
+                 (this.searchNombreRutina.length > 0 ? rutina.nombre.toLowerCase().match(this.searchNombreRutina.toLowerCase()) : true)});
   }
 
   getEntrenadores(){
@@ -122,6 +135,7 @@ export class RutinasComponent implements OnInit {
           this.rutinas = response;
           this.filteredRutinas = this.rutinas;
           this.loading = false;
+          this.searchRutinas();
         },
         error => {
           this.loading = false;
@@ -134,7 +148,6 @@ export class RutinasComponent implements OnInit {
     this.rutinaService.getRutinas()
         .subscribe(response => {
           this.rutinas = response;
-          console.log(this.rutinas);
           this.filteredRutinas = this.rutinas;
           this.loading = false;
         },

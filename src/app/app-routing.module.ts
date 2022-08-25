@@ -91,6 +91,13 @@ const routes: Routes = [
         }
       },
       {
+        path: 'rutinas/:nombreRutina',
+        component: RutinasComponent,
+        data: {
+          title: 'Ejercicios'
+        }
+      },
+      {
         path: 'nueva-rutina', 
         component: NuevaRutinaComponent,
         canActivate: [AdministratorGuard],

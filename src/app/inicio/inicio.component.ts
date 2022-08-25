@@ -6,6 +6,10 @@ import { UsuarioService } from '../services/usuario.service';
 import { getStyle, hexToRgba } from '@coreui/utils/src';
 import { ActivatedRoute } from '@angular/router';
 import { Usuario } from '../models/usuario';
+import { Claim } from '../models/claim';
+import { AuthenticateService } from '../services/authenticate.service';
+import { RutinaService } from '../services/rutina.service';
+import { Rutina } from '../models/rutina';
 
 export interface IChartProps {
   data?: any;
@@ -41,24 +45,48 @@ export interface IChartProps {
 export class InicioComponent implements OnInit {
 
   loading: boolean = false;
+  rutinasAlumno: Array<Rutina>= [];
   totalAlumnosActivos: string = '0';
   totalEntrenadoresActivos: string = '0';
   totalAdministradoresActivos: string = '0';
   totalUsuariosInactivos: string ='0';
   public mainChart: IChartProps = {};
+  claims: Claim = new Claim();
   public trafficRadioGroup = new FormGroup({
     trafficRadio: new FormControl('Month')
   });
 
   constructor(private activatedroute:ActivatedRoute,
               private usuarioService: UsuarioService,
-              private alertService: AlertService) { }
+              private alertService: AlertService,
+              private authenticateService: AuthenticateService,
+              private rutinaService: RutinaService) { }
 
   ngOnInit(): void {
-    this.activatedroute.data.subscribe(data => {
-      this.initCharts(data['usuarios']);
-    })
-    this.getUsuarios();
+    this.claims = this.authenticateService.getClaimsUsuario();
+    if (this.claims.role == '3') {
+      this.getRutinasByIdUsuario();
+    }
+    if (this.claims.role == '1') {
+      this.activatedroute.data.subscribe(data => {
+        this.initCharts(data['usuarios']);
+      })
+      this.getUsuarios();
+    }
+  }
+
+  getRutinasByIdUsuario() {
+    this.loading = true;
+    let idUsuario = this.claims.primarysid as unknown as number;
+    this.rutinaService.getRutinaByIdUsuario(idUsuario)
+        .subscribe(response => {
+          this.rutinasAlumno = response;
+          this.loading = false;
+        },
+        error => {
+          this.loading = false;
+          this.alertService.error('Ocurrió un error al cargar las rutinas del alumno.',{ autoClose: true, keepAfterRouteChange: true, symbolAlert: 'exclamation-triangle-fill' })
+        });
   }
 
   getUsuarios()

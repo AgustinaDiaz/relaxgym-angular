@@ -36,6 +36,12 @@
     </div>
   </c-col>
 </c-row>
+<c-input-group class="mb-3" *ngIf="this.claims.role == '3'">
+  <input aria-describedby="button-search" [(ngModel)]="searchNombreRutina" cFormControl placeholder="Buscar por Nombre..."/>
+  <button cButton color="primary" id="button-addon1" (click)="searchRutinas()">
+      <svg cIcon name="cilSearch" title="Buscar Ejercicio"></svg>
+    </button>
+</c-input-group>
 <div *ngIf="this.claims.role == '1' || this.claims.role == '2'" class="d-grid gap-2" @inOut>
   <button cButton color="primary" class="mb-3" (click)="createRutina()">
       <svg cIcon name="cilPlaylistAdd" title="Nuevo Rutina"></svg> Nueva Rutina

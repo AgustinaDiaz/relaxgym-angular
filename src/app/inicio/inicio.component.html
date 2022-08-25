@@ -1,4 +1,4 @@
-<c-card-group class="mb-4" @inOut>
+<c-card-group *ngIf="this.claims.role == '1'" class="mb-4" @inOut>
   <c-widget-stat-c [title]="'Total Alumnos Activos'" [value]="totalAlumnosActivos">
     <ng-template cTemplateId="widgetIconTemplate">
       <svg cIcon height="36" name="cilPeople"></svg>
@@ -40,7 +40,7 @@
     </ng-template>
   </c-widget-stat-c>
 </c-card-group>
-<c-card class="mb-4" @inOut>
+<c-card *ngIf="this.claims.role == '1'" class="mb-4" @inOut>
   <c-card-body>
     <c-row>
       <c-col sm="5">
@@ -57,5 +57,32 @@
              [type]="mainChart.type">
       Main chart
     </c-chart>
+  </c-card-body>
+</c-card>
+<c-card *ngIf="this.claims.role == '3'" class="mb-4" @inOut>
+  <c-card-body>
+    <c-row>
+      <c-col sm="5">
+        <h4 class="card-title mb-0" id="traffic">
+          Mis Rutinas
+        </h4>
+        <div class="small text-medium-emphasis mb-3">Rutinas asignadas por entrenador</div>
+      </c-col>
+    </c-row>
+    <c-row>
+      <c-col *ngFor="let rutinaAlumno of this.rutinasAlumno">
+        <c-widget-stat-f [title]="" class="mb-3" color="primary" padding value="{{rutinaAlumno.nombre}}">
+          <ng-template cTemplateId="widgetIconTemplate">
+            <svg cIcon name="cilClipboard" size="xl" width="24"></svg>
+          </ng-template>
+          <ng-template cTemplateId="widgetFooterTemplate">
+            <a class="font-weight-bold font-xs text-medium-emphasis" [routerLink]="['/main/rutinas/', rutinaAlumno.nombre]">
+              Ver Rutina
+              <svg cIcon class="float-end" name="cilArrowRight" width="16"></svg>
+            </a>
+          </ng-template>
+        </c-widget-stat-f>
+      </c-col>
+    </c-row>
   </c-card-body>
 </c-card>
