@@ -25,6 +25,7 @@ import { NuevoTurnoComponent } from './turnos/nuevo-turno/nuevo-turno.component'
 import { TurnoResolver } from './turnos/turno.resolver';
 import { TurnosComponent } from './turnos/turnos.component';
 import { DetalleUsuarioComponent } from './usuarios/detalle-usuario/detalle-usuario.component';
+import { HistorialUsuarioComponent } from './usuarios/historial-usuario/historial-usuario.component';
 import { ModificarUsuarioComponent } from './usuarios/modificar-usuario/modificar-usuario.component';
 import { NuevoUsuarioComponent } from './usuarios/nuevo-usuario/nuevo-usuario.component';
 import { UsuarioResolver } from './usuarios/usuario.resolver';
@@ -122,6 +123,17 @@ const routes: Routes = [
         canActivate: [AdministratorGuard],
         data: {
           title: 'Usuarios'
+        }
+      },
+      {
+        path: 'historial-usuario/:id',
+        component: HistorialUsuarioComponent,
+        canActivate: [AdministratorGuard],
+        data: {
+          title: 'Usuarios/Historial'
+        },
+        resolve: {
+          usuario: UsuarioResolver
         }
       },
       {

@@ -42,6 +42,7 @@
             <th class="w-20" scope="col">Estado</th>
             <th class="w-20" scope="col">FechaAlta</th>
             <th class="w-20" scope="col">Acciones</th>
+
         </tr>
     </thead>
     <tbody *ngIf="!loading && filteredUsuarios.length == 0">
@@ -73,10 +74,13 @@
             </td>
             <td>{{usuario.fechaAlta | date : 'dd-MM-yyyy hh:mm:ss' }}</td>
             <td>
-                <button cButton color="primary" variant="ghost" cTooltip="Editar Usuario" cTooltipPlacement="top" class="me-1" (click)="updateUsuario(usuario)">
+                <button cButton size="sm" color="primary" variant="ghost" cTooltip="Detalle Usuario" cTooltipPlacement="top" class="me-1" (click)="historialUsuario(usuario)">
+                    <svg cIcon name="cilApplications" title="Detalle Usuario"></svg>
+                </button>
+                <button cButton size="sm" color="primary" variant="ghost" cTooltip="Editar Usuario" cTooltipPlacement="top" class="me-1" (click)="updateUsuario(usuario)">
                     <svg cIcon name="cilPencil" title="Editar Usuario"></svg>
                 </button>
-                <button [cModalToggle]="verticallyCenteredModal.id" cButton color="secondary" variant="ghost" cTooltip="Eliminar Usuario" cTooltipPlacement="top" class="me-1" (click)="setDeleteUser(usuario)">
+                <button size="sm" [cModalToggle]="verticallyCenteredModal.id" cButton color="secondary" variant="ghost" cTooltip="Eliminar Usuario" cTooltipPlacement="top" class="me-1" (click)="setDeleteUser(usuario)">
                     <svg cIcon name="cilXCircle" title="Eliminar Usuario"></svg>
                 </button>
             </td>

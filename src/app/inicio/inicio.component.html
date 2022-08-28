@@ -59,10 +59,36 @@
     </c-chart>
   </c-card-body>
 </c-card>
+<c-card *ngIf="this.claims.role == '1'" class="mb-4" @inOut>
+  <c-card-body>
+    <c-row>
+      <c-col>
+        <h4 class="card-title mb-0" id="traffic">
+          Cantidad de Alumnos asignados a Turnos
+        </h4>
+        <div class="small text-medium-emphasis">De Lunes a Domingo</div>
+        <c-chart [data]="dataCantidadAlumnosTurnos" type="bar"></c-chart>
+      </c-col>
+    </c-row>
+  </c-card-body>
+</c-card>
+<c-card *ngIf="this.claims.role == '1'" class="mb-4" @inOut>
+  <c-card-body>
+    <c-row>
+      <c-col>
+        <h4 class="card-title mb-0" id="traffic">
+          Cantidad de Alumnos por Clases
+        </h4>
+        <div class="small text-medium-emphasis">Ranking de clases por cantidad de alumnos</div>
+        <c-chart [data]="dataCantidadAlumnosClases" type="polarArea"></c-chart>
+      </c-col>
+    </c-row>
+  </c-card-body>
+</c-card>
 <c-card *ngIf="this.claims.role == '3'" class="mb-4" @inOut>
   <c-card-body>
     <c-row>
-      <c-col sm="5">
+      <c-col>
         <h4 class="card-title mb-0" id="traffic">
           Mis Rutinas
         </h4>

@@ -9,6 +9,7 @@ import { TurnoService } from '../services/turno.service';
 import { DatePipe } from '@angular/common';
 import { AuthenticateService } from '../services/authenticate.service';
 import { Claim } from '../models/claim';
+import { Constantes } from '../shared/feriados.constants';
 
 @Component({
   selector: 'app-turnos',
@@ -42,8 +43,8 @@ export class TurnosComponent implements OnInit {
     timeZone: 'America/Argentina/Buenos_Aires',
     initialView: 'dayGridMonth',
     locale: esLocale,
-    height: 650,
-    showNonCurrentDates: true,
+    height: 630,
+    eventOverlap: false,
     eventClick: this.handleTurnoEventClick.bind(this),
     eventDrop: this.handleTurnoDrop.bind(this),
     events: []
@@ -67,8 +68,16 @@ export class TurnosComponent implements OnInit {
               date: turno.fechaHora, 
               turno: turno,
               editable:true,
-              color: (turno.cantidadAlumnos - (turno.usuarios.filter(x => x.idUsuario == (this.claims.primarysid as unknown as number)).length)) == 0 &&
+              color: (turno.cantidadAlumnos - (turno.usuarios.length - 1)) == 0 &&
                       !turno.usuarios.some(x => x.idUsuario == (this.claims.primarysid as unknown as number)) ? 'red' : turno.usuarios.some(x => x.idUsuario == (this.claims.primarysid as unknown as number)) ? 'green' : ''
+            });
+          });
+          Constantes.Feriados.forEach(feriado =>{
+            this.calendarComponent.getApi().addEvent({ 
+              title: feriado.nombre,
+              date: new Date(feriado.fecha), 
+              allDay: true,
+              color: 'grey'
             });
           });
         },

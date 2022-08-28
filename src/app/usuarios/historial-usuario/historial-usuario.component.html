@@ -1,0 +1,53 @@
+<c-col xs="12" @inOut>
+    <c-row>
+        <c-col>
+            <c-card [cBorder]="{top: {color: 'dark', width: 3}}" [textColor]="'primary'" class="text-center mb-3">
+                <c-card-header><strong>Datos de {{usuario.apellido}} {{usuario.nombre}}</strong></c-card-header>
+                <c-card-body>
+                  <ng-container *ngTemplateOutlet="cardBodyTemplate"></ng-container>
+                </c-card-body>
+                <c-card-footer class="text-medium-emphasis">
+                    <c-badge *ngIf="usuario.rol.id === 1" color="warning">{{usuario.rol.descripcion}}</c-badge>
+                    <c-badge *ngIf="usuario.rol.id === 2" color="success">{{usuario.rol.descripcion}}</c-badge>
+                    <c-badge *ngIf="usuario.rol.id === 3" color="primary">{{usuario.rol.descripcion}}</c-badge>
+                </c-card-footer>
+            </c-card>
+        </c-col>
+    </c-row>
+</c-col>
+<ng-template #cardBodyTemplate>
+    <c-row>
+        <c-col>
+            <label cLabel for="usuario">Usuario: </label>
+            <input cFormControl id="usuario" type="text" [(ngModel)]="usuario.nombreUsuario" name="usuario" disabled />
+        </c-col>
+        <c-col>
+            <label cLabel for="email">Email: </label>
+            <input cFormControl id="email" type="text" [(ngModel)]="usuario.email" name="email" disabled />
+        </c-col>
+        <c-col>
+            <label cLabel for="telefono">Telefono: </label>
+            <input cFormControl id="telefono" type="text" [(ngModel)]="usuario.telefono" name="telefono" disabled />
+        </c-col>
+        <c-col>
+            <label cLabel for="password">Password: </label>
+            <input cFormControl id="password" type="text" [(ngModel)]="usuario.claveUsuario" name="password" disabled />
+        </c-col>
+    </c-row>
+</ng-template>
+<c-card @inOut>
+    <c-card-body>
+      <c-row>
+        <c-col>
+          <h4 class="card-title mb-0" id="traffic">
+            Rutinas de {{usuario.apellido}} {{usuario.nombre}}
+          </h4>
+          <div class="small text-medium-emphasis mb-3">Rutinas asignadas</div>
+        </c-col>
+      </c-row>
+      <c-row>
+        <c-col>
+        </c-col>
+      </c-row>
+    </c-card-body>
+  </c-card>

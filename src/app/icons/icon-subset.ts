@@ -1,5 +1,6 @@
 import {
     cilAsteriskCircle,
+    cilApplications,
     cilArrowThickFromLeft,
     cilCalendarCheck,
     cibCcAmex,
@@ -109,6 +110,7 @@ import {
   
   export const iconSubset = {
     cilAsteriskCircle,
+    cilApplications,
     cilArrowThickFromLeft,
     cilCalendarCheck,
     cibCcAmex,
@@ -218,6 +220,7 @@ import {
   
   export enum IconSubset {
     cilAsteriskCircle = 'cilAsteriskCircle',
+    cilApplications = 'cilApplications',
     cilArrowThickFromLeft = 'cilArrowThickFromLeft',
     cilCalendarCheck = 'cilCalendarCheck',
     cibCcAmex = 'cibCcAmex',

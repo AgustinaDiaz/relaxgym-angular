@@ -3,8 +3,12 @@
         <svg cIcon name="cilNoteAdd" title="Nuevo Turno"></svg> Nuevo Turno
     </button>
 </div>
-<div class='calendar-app' @inOut>
-    <div class='calendar-app-main'>
-        <full-calendar #calendar [options]='calendarOptions'></full-calendar>
-    </div>
-</div>
+<c-card @inOut>
+    <c-card-body>
+        <div class='calendar-app' @inOut>
+            <div class='calendar-app-main'>
+                <full-calendar #calendar [options]='calendarOptions'></full-calendar>
+            </div>
+        </div>
+    </c-card-body>
+</c-card>

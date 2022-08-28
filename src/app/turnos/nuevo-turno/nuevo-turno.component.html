@@ -64,6 +64,14 @@
                                      required></dl-date-time-picker>
             </c-col>
             <c-col class="text-center" xs="1"></c-col>
+            <c-col class="text-center" xs="4"></c-col>
+            <c-col class="text-center" xs="4">
+                <c-form-check *ngIf='selectedDate != undefined || null' [switch]="true">
+                    <input cFormCheckInput type="checkbox" [checked]="checkAllDays" (click)="setCheckAllDaysSelected()" />
+                    <label cFormCheckLabel>Asignar todos los dias {{selectedDate?.toLocaleDateString('es-ES', { weekday: 'long' })}} del año</label>
+                </c-form-check>
+            </c-col>
+            <c-col class="text-center" xs="4"></c-col>
             <c-col class="text-center" xs="12">
                 <c-button-group aria-label="Basic example" role="group">
                     <button cButton color="primary" type="submit">Confirmar</button>

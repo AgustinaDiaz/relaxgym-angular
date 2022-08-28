@@ -91,6 +91,10 @@ export class UsuariosComponent implements OnInit {
   updateUsuario(usuario:Usuario) {
     this.router.navigateByUrl(`main/modificar-usuario/${usuario.id}`, { state: { usuario: usuario } });
   }
+
+  historialUsuario(usuario:Usuario) {
+    this.router.navigateByUrl(`main/historial-usuario/${usuario.id}`, { state: { usuario: usuario } });
+  }
   
   deleteUsuario() {
     this.usuarioService.deleteUsuarioById(this.deletedUsuario.id)
