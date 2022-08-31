@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  urlBackend: "https://relaxgymapi20220831162021.azurewebsites.net"
 };
