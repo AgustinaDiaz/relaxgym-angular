@@ -86,7 +86,7 @@ export class RutinasComponent implements OnInit {
     }
 
     return this.filteredRutinas = this.rutinas.filter(rutina => 
-        { return ((!(this.searchAlumno == 0)) ? rutina.usuarios.some(x => x.idUsuario == this.searchAlumno) : true) &&
+        { return ((!(this.searchAlumno == 0)) ? rutina.usuarios?.some(x => x.idUsuario == this.searchAlumno) : true) &&
                  ((!(this.searchEntrenador == 0)) ? rutina.idUsuarioCreador == this.searchEntrenador : true) &&
                  (this.searchNombreRutina.length > 0 ? rutina.nombre.toLowerCase().match(this.searchNombreRutina.toLowerCase()) : true)});
   }

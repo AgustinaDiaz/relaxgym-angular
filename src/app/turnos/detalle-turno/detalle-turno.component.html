@@ -72,7 +72,7 @@
                     <button *ngIf="claims.role == '1'" cButton color="primary" cTooltip="Asignar Alumno/s" cTooltipPlacement="bottom" class="mt-2" (click)="asignarTurno(turno.id, this.alumnos)" [disabled]="this.cuposDisponibles == 0">
                         <svg cIcon name="cilArrowThickFromLeft" size="xs" title="Asignar Alumno/s"></svg>
                     </button>
-                    <button *ngIf="claims.role == '3'" cButton color="primary" cTooltip="Asignar Turno" cTooltipPlacement="bottom" class="mt-2" (click)="asignarTurnoById(turno.id, this.claims.primarysid)" [disabled]="existeUsuarioAsignado(this.claims.primarysid)">
+                    <button *ngIf="claims.role == '3'" cButton color="primary" cTooltip="Asignar Turno" cTooltipPlacement="bottom" class="mt-2" (click)="asignarTurnoById(turno.id, this.claims.primarysid)" [disabled]="this.cuposDisponibles == 0 || existeUsuarioAsignado(this.claims.primarysid)">
                         <svg cIcon name="cilArrowThickFromLeft" size="xs" title="Asignar Turno"></svg>
                     </button>
                     <button cButton (click)="onBack()" color="secondary" class="mt-2" type="reset">Atras</button>

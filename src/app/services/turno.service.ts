@@ -21,6 +21,10 @@ export class TurnoService {
     return this.httpClient.get<Array<Turno>>(this.url);
   }
 
+  getTurnosByIdUsuario(idUsuario: number): Observable<Array<Turno>>{
+    return this.httpClient.get<Array<Turno>>(`${this.url}/Alumno/${idUsuario}`);
+  }
+
   getTurnoById(id: number): Observable<Turno>{
     return this.httpClient.get<Turno>(`${this.url}/${id}`);
   }
