@@ -52,4 +52,4 @@ jobs:
           app-name: 'relaxgym-angular'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_9D906F3BE0AE4602A1B5095B932EA11D }}
-          package: .
+          package: ./dist/relaxgym-angular
