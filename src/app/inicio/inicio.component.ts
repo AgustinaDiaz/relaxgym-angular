@@ -77,6 +77,7 @@ export class InicioComponent implements OnInit {
 
   ngOnInit(): void {
     this.claims = this.authenticateService.getClaimsUsuario();
+    this.loading = true;
     if (this.claims.role == '3') {
       this.getRutinasByIdUsuario();
     }
@@ -90,7 +91,6 @@ export class InicioComponent implements OnInit {
   }
 
   getRutinasByIdUsuario() {
-    this.loading = true;
     let idUsuario = this.claims.primarysid as unknown as number;
     this.rutinaService.getRutinaByIdUsuario(idUsuario)
         .subscribe(response => {
@@ -274,5 +274,7 @@ export class InicioComponent implements OnInit {
       datasets,
       labels
     };
+    
+    this.loading = false;
   }
 }

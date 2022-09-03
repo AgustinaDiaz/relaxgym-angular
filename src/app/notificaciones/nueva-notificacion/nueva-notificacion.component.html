@@ -1,7 +1,7 @@
 
 <c-card [cBorder]="{top: {color: 'dark', width: 3}}" [textColor]="'primary'" class="mb-3" @inOut>
     <c-card-header class="text-center">
-        <strong>Nueva Notifiacion</strong>
+        <strong>Nueva Notificacion</strong>
     </c-card-header>
         <c-card-body>
             <c-row>
@@ -18,13 +18,13 @@
                         <ul [flush]="true" *ngIf="this.usuarios.length != 0" class="mb-2" cListGroup>
                             <li cListGroupItem>
                                 <c-form-check>
-                                    <input cFormCheckInput type="checkbox" [checked]="allChecked" [value]="allChecked" (click)="setAllCheckSelected()">
+                                    <input cFormCheckInput type="checkbox" [checked]="allChecked" (click)="setAllCheckSelected()">
                                     <label class="text-medium-emphasis" cFormCheckLabel><cite>Seleccionar todos</cite></label>
                                 </c-form-check>
                             </li>
                             <li *ngFor="let usuario of this.usuarios" [disabled]="notificacion.tipoNotificacion.id == 1" cListGroupItem>
                                 <c-form-check>
-                                    <input cFormCheckInput type="checkbox" [checked]="usuario.selected" [value]="usuario.selected" (click)="setCheckSelected(usuario)">
+                                    <input cFormCheckInput type="checkbox" [checked]="usuario.selected" (click)="setCheckSelected(usuario)">
                                     <label cFormCheckLabel>{{ usuario.apellido }}, {{ usuario.nombre }}</label>
                                 </c-form-check>
                             </li>

@@ -70,9 +70,10 @@
             <c-col>
                 <table responsive cAlign="middle" cTable hover @inOut>
                     <thead>
-                        <tr cTableColor="dark" class="text-center">
-                            <th class="w-20" scope="col">Fecha</th>
+                        <tr cTableColor="primary" class="text-center">
                             <th class="w-20" scope="col">Clase</th>
+                            <th class="w-20" scope="col">Fecha</th>
+                            <th class="w-20" scope="col">Hora</th>
                         </tr>
                     </thead>
                     <tbody *ngIf="turnosAlumno.length == 0">
@@ -82,8 +83,9 @@
                     </tbody>
                     <tbody *ngIf="turnosAlumno.length !== 0">
                         <tr *ngFor="let turno of turnosAlumno" class="text-center">
-                            <td>{{turno.fechaHora | date : 'dd-MM-yyyy hh:mm:ss'}}</td>
                             <td>{{turno.clase.nombre}}</td>
+                            <td>{{turno.fechaHora | date : 'dd-MM-yyyy'}}</td>
+                            <td>{{turno.fechaHora | date : 'hh:mm:ss'}}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -91,3 +93,8 @@
         </c-row>
     </c-card-body>
 </c-card>
+<div class="d-grid gap-2 mt-3">
+    <c-button-group aria-label="Basic example" role="group">
+        <button cButton (click)="onBack()" color="secondary" type="reset">Atras</button>
+    </c-button-group>
+</div>

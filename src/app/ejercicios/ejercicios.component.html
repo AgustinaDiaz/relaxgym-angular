@@ -28,6 +28,9 @@
         <svg cIcon name="cilLibraryAdd" title="Nuevo Rutina"></svg> Nuevo Ejercicio
     </button>
 </div>
+<div *ngIf="loading" class="text-center">
+    <c-spinner color="dark"></c-spinner>
+</div>
 <div *ngIf="!loading && filteredEjercicios.length == 0"class="text-center">
     <cite>No existen ejercicios que coincidan con el criterio de busqueda.</cite>
 </div>

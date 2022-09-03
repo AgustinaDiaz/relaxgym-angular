@@ -65,6 +65,7 @@ export class EjerciciosComponent implements OnInit {
         this.searchTipoEjercicio == 0
       }
       this.claims = this.authenticateService.getClaimsUsuario();
+      this.loading = true;
       this.getTipoEjercicios();
     })
   }
@@ -96,12 +97,12 @@ export class EjerciciosComponent implements OnInit {
           });
           this.ejercicios = response;
           this.filteredEjercicios = response;
-          this.loading = false;
           this.searchEjercicios();
+          this.loading = false;
         },
         error => {
-          this.loading = false;
           this.alertService.error('Ocurrió un error al cargar los ejercicios.',{ autoClose: true, keepAfterRouteChange: true, symbolAlert: 'exclamation-triangle-fill' })
+          this.loading = false;
         });
   }
 

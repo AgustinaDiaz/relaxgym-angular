@@ -63,14 +63,24 @@
         class="px-3"
         >
         <c-badge *ngIf="this.totalNotificaciones > 0" color="danger" position="bottom-end" shape="rounded-pill" style="top: 70% !important; left: 87% !important">{{this.totalNotificaciones}}</c-badge>
-        <svg cIcon name="cilBell" size="xl"></svg>
+            <svg cIcon name="cilBell" size="xl"></svg>
         </button>
-        <ul cDropdownMenu class="pt-0 pr-5 w-auto">
+        <ul *ngIf="loading || this.totalNotificaciones  == 0" cDropdownMenu class="pt-0 pr-5 w-auto">
+            <li>
+                <h6 cDropdownHeader class="bg-light fw-semibold py-2">Notificaciones</h6>
+            </li>
+            <li>
+                <a [routerLink]="" cDropdownItem>
+                    <cite>No existen notificaciones pendientes</cite>
+                </a>
+            </li>
+        </ul>
+        <ul *ngIf="!loading && this.totalNotificaciones > 0" cDropdownMenu class="pt-0 pr-5 w-auto">
             <li>
                 <h6 cDropdownHeader class="bg-light fw-semibold py-2">Notificaciones</h6>
             </li>
             <li *ngFor="let notificacion of notificaciones" >
-                <a [routerLink]="['detalle-notificaciones', this.claims.primarysid]" cDropdownItem>
+                <a [routerLink]="['/main/detalle-notificaciones/', this.claims.primarysid]" cDropdownItem>
                     <svg *ngIf="this.notificacion.tipoNotificacion.id === 1" cIcon class="me-2" [cTextColor]="'info'" name="cilBellExclamation"></svg>
                     <svg *ngIf="this.notificacion.tipoNotificacion.id === 2" cIcon class="me-2" [cTextColor]="'warning'" name="cilBellExclamation"></svg>
                     <svg *ngIf="this.notificacion.tipoNotificacion.id === 3" cIcon class="me-2" [cTextColor]="'danger'" name="cilBellExclamation"></svg>

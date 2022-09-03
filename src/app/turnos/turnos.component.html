@@ -5,8 +5,11 @@
 </div>
 <c-card @inOut>
     <c-card-body>
+        <div *ngIf="loading" class="text-center">
+            <c-spinner color="dark"></c-spinner>
+        </div>
         <div class='calendar-app' @inOut>
-            <div class='calendar-app-main'>
+            <div  class='calendar-app-main'>
                 <full-calendar #calendar [options]='calendarOptions'></full-calendar>
             </div>
         </div>

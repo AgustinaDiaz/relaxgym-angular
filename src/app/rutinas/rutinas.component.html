@@ -47,13 +47,16 @@
       <svg cIcon name="cilPlaylistAdd" title="Nuevo Rutina"></svg> Nueva Rutina
   </button>
 </div>
-<div *ngIf="this.claims.role == '3' && !loading && filteredRutinas.length == 0"class="text-center">
+<div *ngIf="loading"class="text-center">
+  <c-spinner color="dark"></c-spinner>
+</div>
+<div *ngIf="this.claims.role == '3' && !loading && filteredRutinas.length == 0" class="text-center">
   <cite>No existen rutinas asignadas.</cite>
 </div>
 <div *ngIf="(this.claims.role == '1' || this.claims.role == '2') && !loading && filteredRutinas.length == 0"class="text-center">
   <cite>No existen rutinas creadas o que coincidan con los criterios de busqueda.</cite>
 </div>
-<c-accordion [alwaysOpen]="true" [flush]="true" @inOut>
+<c-accordion *ngIf="!loading && filteredRutinas.length > 0"[alwaysOpen]="true" [flush]="true" @inOut>
     <c-accordion-item #item0="cAccordionItem" [visible]="true" *ngFor="let rutina of filteredRutinas; index as i;" class="mt-2">
       <ng-template cTemplateId="accordionHeaderTemplate">
         <button (click)="item0.toggleItem()" [collapsed]="item0.visible" cAccordionButton [cTextColor]="'primary'">

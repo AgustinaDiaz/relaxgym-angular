@@ -37,6 +37,7 @@ export class TurnosComponent implements OnInit {
   calendarComponent!: FullCalendarComponent;
   pipe = new DatePipe('en-US');
   claims: Claim = new Claim;
+  loading: boolean = false;
 
   calendarOptions: CalendarOptions = {
     themeSystem: 'bootstrap',
@@ -58,6 +59,7 @@ export class TurnosComponent implements OnInit {
               private authenticateService:AuthenticateService) { }
 
   ngOnInit(): void {
+    this.loading = true;
     this.claims = this.authenticateService.getClaimsUsuario(); 
     this.turnoService.getTurnos()
         .subscribe(response => {
@@ -80,9 +82,11 @@ export class TurnosComponent implements OnInit {
               color: 'grey'
             });
           });
+          this.loading = false;
         },
         error => {
           this.alertService.error('Ocurrió un error al cargar los turnos.',{ autoClose: true, keepAfterRouteChange: true, symbolAlert: 'exclamation-triangle-fill' })
+          this.loading = false;
         });
   }
 
@@ -97,6 +101,7 @@ export class TurnosComponent implements OnInit {
         .subscribe(response => { },
         error => {
           this.alertService.error('Ocurrió un error al actualizar turnos.',{ autoClose: true, keepAfterRouteChange: true, symbolAlert: 'exclamation-triangle-fill' })
+          this.loading = false;
         });
   }
 

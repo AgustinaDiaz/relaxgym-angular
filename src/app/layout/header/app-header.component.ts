@@ -18,17 +18,18 @@ export class AppHeaderComponent extends HeaderComponent {
   notificaciones: Array<Notificacion> = new Array<Notificacion>();
   claims: any;
   totalNotificaciones: number = 0;
+  loading: boolean = false;
 
-  constructor(private router: Router,
-              private classToggler: ClassToggleService,
-              private notificacionesService: NotificacionService,
+  constructor(private notificacionesService: NotificacionService,
               private alertService: AlertService) {
     super();
     this.claims = this.getClaimsFromToken();
+    this.loading = true;
     this.notificacionesService.getNotificacionesByIdUsuario(this.claims.primarysid)
         .subscribe(response => {
           this.totalNotificaciones = response.filter(x => x.estadoNotificacion.id === 1).length;
           this.notificaciones = response;
+          this.loading = false;
         },
         error => {
           this.alertService.error('Ocurrió un error al cargar las notificaciones.',{ autoClose: true, keepAfterRouteChange: true, symbolAlert: 'exclamation-triangle-fill' });

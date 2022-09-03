@@ -195,7 +195,6 @@ const routes: Routes = [
       {
         path: 'detalle-notificaciones/:id', 
         component: DetalleNotificacionesComponent,
-        canActivate: [AdministratorGuard],
         data: {
           title: 'Notificaciones/Detalle'
         },

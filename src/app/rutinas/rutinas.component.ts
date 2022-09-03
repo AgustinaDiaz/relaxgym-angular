@@ -62,6 +62,7 @@ export class RutinasComponent implements OnInit {
   }
 
   private getDataByRole() {
+    this.loading = true;
     if (this.claims.role == '1') {
       this.getRutinas();
       this.getEntrenadores();
@@ -134,12 +135,12 @@ export class RutinasComponent implements OnInit {
         .subscribe(response => {
           this.rutinas = response;
           this.filteredRutinas = this.rutinas;
-          this.loading = false;
           this.searchRutinas();
+          this.loading = false;
         },
         error => {
-          this.loading = false;
           this.alertService.error('Ocurrió un error al cargar las rutinas.',{ autoClose: true, keepAfterRouteChange: true, symbolAlert: 'exclamation-triangle-fill' })
+          this.loading = false;
         });
   }
 
@@ -152,8 +153,8 @@ export class RutinasComponent implements OnInit {
           this.loading = false;
         },
         error => {
-          this.loading = false;
           this.alertService.error('Ocurrió un error al cargar las rutinas.',{ autoClose: true, keepAfterRouteChange: true, symbolAlert: 'exclamation-triangle-fill' })
+          this.loading = false;
         });
   }
 
@@ -166,6 +167,7 @@ export class RutinasComponent implements OnInit {
   }
 
   deleteRutina() {
+    this.loading = true;
     this.rutinaService.deleteRutinaById(this.deletedRutina.id)
         .subscribe(response => {
           this.alertService.success('Se ha eliminado correctamente la rutina.', { autoClose: true, keepAfterRouteChange: true, symbolAlert: 'check-circle-fill' });
@@ -178,7 +180,6 @@ export class RutinasComponent implements OnInit {
             this.alertService.error('Ocurrió un error al eliminar la rutina.', { autoClose: true, keepAfterRouteChange: true, symbolAlert: 'exclamation-triangle-fill' })
           }
           this.loading = false;
-          
         });
   }
 

@@ -46,6 +46,7 @@ export class UsuariosComponent implements OnInit {
               private alertService: AlertService) { }
 
   ngOnInit(): void {
+    this.loading = true;
     this.getUsuarios();
     this.getRoles();
   }
@@ -71,7 +72,6 @@ export class UsuariosComponent implements OnInit {
   }
 
   getUsuarios() {
-    this.loading = true;
     this.usuarioService.getUsuarios()
         .subscribe(response => {
           this.usuarios = response.sort((a,b) => (a.apellido > b.apellido) ? 1 : ((b.apellido > a.apellido) ? -1 : 0));
@@ -79,8 +79,8 @@ export class UsuariosComponent implements OnInit {
           this.loading = false;
         },
         error => {
-          this.loading = false;
           this.alertService.error('Ocurrió un error al cargar los usuarios.',{ autoClose: true, keepAfterRouteChange: true, symbolAlert: 'exclamation-triangle-fill' })
+          this.loading = false;
         });
   }
 
@@ -97,14 +97,15 @@ export class UsuariosComponent implements OnInit {
   }
   
   deleteUsuario() {
+    this.loading = true;
     this.usuarioService.deleteUsuarioById(this.deletedUsuario.id)
         .subscribe(response => {
           this.alertService.success('Se ha eliminado correctamente el usuario.', { autoClose: true, keepAfterRouteChange: true, symbolAlert: 'check-circle-fill' });
           this.getUsuarios();
         },
         error => {
-          this.loading = false;
           this.alertService.error('Ocurrió un error al eliminar el usuario.',{ autoClose: true, keepAfterRouteChange: true, symbolAlert: 'exclamation-triangle-fill' })
+          this.loading = false;
         });
   }
 

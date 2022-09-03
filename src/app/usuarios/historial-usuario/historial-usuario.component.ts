@@ -1,6 +1,6 @@
 import { animate, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Rutina } from 'src/app/models/rutina';
 import { Turno } from 'src/app/models/turno';
 import { Usuario } from 'src/app/models/usuario';
@@ -36,7 +36,8 @@ export class HistorialUsuarioComponent implements OnInit {
   
   constructor(private activatedroute: ActivatedRoute,
               private turnoService: TurnoService,
-              private rutinaService: RutinaService) { }
+              private rutinaService: RutinaService,
+              private router: Router) { }
 
   ngOnInit(): void {
     this.activatedroute.data.subscribe(data => {
@@ -64,5 +65,9 @@ export class HistorialUsuarioComponent implements OnInit {
   showPassword()
   {
     return this.mostrarClave === true ? this.mostrarClave = false : this.mostrarClave = true 
+  }
+
+  onBack() {
+    this.router.navigateByUrl("main/gestion-usuarios");
   }
 }

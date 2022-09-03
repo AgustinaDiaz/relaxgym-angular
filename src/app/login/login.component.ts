@@ -47,8 +47,8 @@ export class LoginComponent implements OnInit {
         .subscribe(
           data => {
             localStorage.setItem('tokenUsuario', data.token)
-            this.loading = false;
             this.router.navigateByUrl("/main/home");
+            this.loading = false;
           },
           errorResponse => {
             if(errorResponse.status == 400){
