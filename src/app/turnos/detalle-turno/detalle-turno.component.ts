@@ -30,6 +30,7 @@ import { UsuarioService } from 'src/app/services/usuario.service';
 })
 export class DetalleTurnoComponent implements OnInit {
 
+  loading: boolean = false;
   turno: Turno = new Turno;
   alumnos: Array<Usuario> = [];
   entrenadorAsignado: Usuario = new Usuario();
@@ -46,6 +47,7 @@ export class DetalleTurnoComponent implements OnInit {
               private alertService: AlertService) { }
 
   ngOnInit(): void {
+    this.loading = true;
     this.activatedRoute.data.subscribe(data => {
       this.claims = this.authenticateService.getClaimsUsuario();
       this.turno = data['turno'];
@@ -62,6 +64,7 @@ export class DetalleTurnoComponent implements OnInit {
           alumno.nombreCompleto = alumno.apellido.concat(' ', alumno.nombre);
         });
         this.filteredAlumnos = this.alumnos;
+        this.loading = false;
       },
       error => {
         this.alertService.error('Ocurrió un error al cargar los alumnos.', { autoClose: true, keepAfterRouteChange: true, symbolAlert: 'exclamation-triangle-fill' })
@@ -101,6 +104,7 @@ export class DetalleTurnoComponent implements OnInit {
   }
 
   asignarTurnoById(idRutina: number, idAlumno: number) {
+    this.loading = true;
     this.turnoService.asignarTurnoById(idRutina, idAlumno).subscribe(response => {
       this.turnoService.getTurnoById(this.turno.id).subscribe(response => {
         this.turno = response;
@@ -115,6 +119,7 @@ export class DetalleTurnoComponent implements OnInit {
           alumno.nombreCompleto = alumno.apellido.concat(' ', alumno.nombre);
         });
         this.filteredAlumnos = this.alumnos;
+        this.loading = false;
       });
       this.alertService.success('Se ha asignado correctamente el turno.', { autoClose: true, keepAfterRouteChange: true, symbolAlert: 'check-circle-fill' });
     },
@@ -136,6 +141,7 @@ export class DetalleTurnoComponent implements OnInit {
       return;
     }
 
+    this.loading = true;
     this.turnoService.asignarTurno(idRutina, alumnosAsignados.map(x => x.id)).subscribe(response => {
       this.turnoService.getTurnoById(this.turno.id).subscribe(response => {
         this.turno = response;
@@ -150,6 +156,7 @@ export class DetalleTurnoComponent implements OnInit {
           alumno.nombreCompleto = alumno.apellido.concat(' ', alumno.nombre);
         });
         this.filteredAlumnos = this.alumnos;
+        this.loading = false;
       });
       this.alertService.success('Se han asignado correctamente los alumnos.', { autoClose: true, keepAfterRouteChange: true, symbolAlert: 'check-circle-fill' });
     },
@@ -159,6 +166,7 @@ export class DetalleTurnoComponent implements OnInit {
   }
 
   desasignarAlumno(idTurno: number, idUsuario: number) {
+    this.loading = true;
     this.turnoService.desasignarAlumno(idTurno, idUsuario).subscribe(response => {
       this.turnoService.getTurnoById(this.turno.id).subscribe(response => { 
         this.turno = response;
@@ -173,6 +181,7 @@ export class DetalleTurnoComponent implements OnInit {
           alumno.nombreCompleto = alumno.apellido.concat(' ', alumno.nombre);
         });
         this.filteredAlumnos = this.alumnos;
+        this.loading = false;
       });
       this.alertService.success('Se ha desasignado correctamente el alumno.', { autoClose: true, keepAfterRouteChange: true, symbolAlert: 'check-circle-fill' });
     },

@@ -34,6 +34,7 @@ import { UsuarioService } from 'src/app/services/usuario.service';
 })
 export class NuevaNotificacionComponent implements OnInit {
 
+  loading: boolean = false;
   usuarios: Array<Usuario> = [];
   allChecked: boolean = false;
   tooltipValidated: boolean = false;
@@ -55,12 +56,15 @@ export class NuevaNotificacionComponent implements OnInit {
                }
 
   ngOnInit(): void {
+    this.loading = true;
     this.usuarioService.getUsuarios().subscribe(response => {
       this.usuarios = response.sort((a,b) => (a.apellido > b.apellido) ? 1 : ((b.apellido > a.apellido) ? -1 : 0));
 
       this.usuarios.forEach((usuario) => { 
         usuario.selected = false;
       });
+
+      this.loading = false;
     },
     error => {
       this.alertService.error('Ocurrió un error al cargar los alumnos.', { autoClose: true, keepAfterRouteChange: true, symbolAlert: 'exclamation-triangle-fill' })
@@ -111,6 +115,17 @@ export class NuevaNotificacionComponent implements OnInit {
       this.allChecked = true;
       this.usuarios.map(x => x.selected = true);
     }
+  }
+
+  onOptionsSelected() {
+    if(this.notificacion.tipoNotificacion.id == 1) {
+      this.allChecked = false;
+      this.setAllCheckSelected();
+      return;
+    }
+
+    this.allChecked = true;
+      this.setAllCheckSelected();
   }
 
   onBack() {

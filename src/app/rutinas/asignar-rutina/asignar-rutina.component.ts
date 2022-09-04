@@ -30,6 +30,7 @@ import { UsuarioService } from 'src/app/services/usuario.service';
 })
 export class AsignarRutinaComponent implements OnInit {
 
+  loading: boolean = false;
   rutina: Rutina = new Rutina;
   alumnos: Array<Usuario> = [];
   filteredAlumnos: Array<Usuario> = [];
@@ -46,7 +47,7 @@ export class AsignarRutinaComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(data => {
       this.rutina = data['rutina'];
-
+      this.loading = true;
       this.usuarioService.getUsuariosByIdRolForRutina(3, this.rutina.id).subscribe(response => {
         this.alumnos = response.sort((a,b) => (a.apellido > b.apellido) ? 1 : ((b.apellido > a.apellido) ? -1 : 0));
         this.alumnos.forEach((alumno) => { 
@@ -54,6 +55,7 @@ export class AsignarRutinaComponent implements OnInit {
           alumno.nombreCompleto = alumno.apellido.concat(' ', alumno.nombre);
         });
         this.filteredAlumnos = this.alumnos;
+        this.loading = false;
       },
       error => {
         this.alertService.error('Ocurrió un error al cargar los alumnos.', { autoClose: true, keepAfterRouteChange: true, symbolAlert: 'exclamation-triangle-fill' })
@@ -67,6 +69,7 @@ export class AsignarRutinaComponent implements OnInit {
   }
 
   asignarAlumnos(idRutina: number, alumnos: Array<Usuario>, observacion: string) {
+    this.loading = true;
     let alumnosAsignados = alumnos.filter(x => x.selected);
 
     if(alumnosAsignados.length == 0) {
@@ -86,6 +89,7 @@ export class AsignarRutinaComponent implements OnInit {
           alumno.nombreCompleto = alumno.apellido.concat(' ', alumno.nombre);
         });
         this.filteredAlumnos = this.alumnos;
+        this.loading = false;
       });
       this.alertService.success('Se han asignado correctamente los alumnos.', { autoClose: true, keepAfterRouteChange: true, symbolAlert: 'check-circle-fill' });
     },
@@ -95,6 +99,7 @@ export class AsignarRutinaComponent implements OnInit {
   }
 
   desasignarAlumno(idRutina: number, idUsuario: number) {
+    this.loading = true;
     this.rutinaService.desasignarAlumno(idRutina, idUsuario).subscribe(response => {
       this.rutinaService.getRutinaById(this.rutina.id).subscribe(response => {
         this.rutina = response;
@@ -106,6 +111,7 @@ export class AsignarRutinaComponent implements OnInit {
           alumno.nombreCompleto = alumno.apellido.concat(' ', alumno.nombre);
         });
         this.filteredAlumnos = this.alumnos;
+        this.loading = false;
       });
       this.alertService.success('Se ha desasignado correctamente el alumno.', { autoClose: true, keepAfterRouteChange: true, symbolAlert: 'check-circle-fill' });
     },

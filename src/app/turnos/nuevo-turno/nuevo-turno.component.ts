@@ -35,6 +35,7 @@ import { Constantes } from 'src/app/shared/feriados.constants';
 })
 export class NuevoTurnoComponent implements OnInit {
   
+  loading: boolean = false;
   tooltipValidated: boolean = false;
   turno: Turno = new Turno();
   clases: Array<Clase> = [];
@@ -56,6 +57,7 @@ export class NuevoTurnoComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.loading = true;
     this.claseService.getClases()
         .subscribe(response => {
           this.clases = response
@@ -66,6 +68,7 @@ export class NuevoTurnoComponent implements OnInit {
               entrenador.nombreCompleto = entrenador.apellido.concat(' ', entrenador.nombre);
             });
             this.filteredEntrenadores = this.entrenadores;
+            this.loading = false;
           },
           error => {
             this.alertService.error('Ocurrió un error al cargar los entrenadores.', { autoClose: true, keepAfterRouteChange: true, symbolAlert: 'exclamation-triangle-fill' })

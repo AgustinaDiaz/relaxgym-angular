@@ -10,13 +10,16 @@
                         <p class="text-medium-emphasis">Seleccione los usuarios:</p>
                     </div>
                     <div class="overflow-scroll" style="max-height: 240px;">
-                        <ul [flush]="true" *ngIf="this.usuarios.length == 0" class="mb-2" cListGroup>
+                        <div *ngIf="loading" class="text-center">
+                            <c-spinner color="dark"></c-spinner>
+                        </div>
+                        <ul [flush]="true" *ngIf="!loading && this.usuarios.length == 0" class="mb-2" cListGroup>
                             <li class="text-center" cListGroupItem>
                                 <cite>No existen usuarios para seleccionar.</cite>
                             </li>
                         </ul>
                         <ul [flush]="true" *ngIf="this.usuarios.length != 0" class="mb-2" cListGroup>
-                            <li cListGroupItem>
+                            <li [disabled]="notificacion.tipoNotificacion.id == 1" cListGroupItem>
                                 <c-form-check>
                                     <input cFormCheckInput type="checkbox" [checked]="allChecked" (click)="setAllCheckSelected()">
                                     <label class="text-medium-emphasis" cFormCheckLabel><cite>Seleccionar todos</cite></label>
@@ -40,7 +43,7 @@
                         </c-col>
                         <c-col class="position-relative" md="6">
                             <label cLabel for="tipoNotificacion">Tipo Notificacion</label>
-                            <select cSelect id="tipoNotificacion" name="tipoNotificacion" [(ngModel)]="notificacion.tipoNotificacion.id" required>
+                            <select cSelect id="tipoNotificacion" name="tipoNotificacion" [(ngModel)]="notificacion.tipoNotificacion.id" (change)='onOptionsSelected()' required>
                                 <option [ngValue]="0" disabled>Seleccione un tipo</option>
                                 <option *ngFor="let tipoNotificacion of tiposNotificaciones" [ngValue]="tipoNotificacion.id">{{ tipoNotificacion.descripcion }}</option>
                             </select>
