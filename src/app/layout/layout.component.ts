@@ -33,6 +33,7 @@ export class LayoutComponent {
     }
 
     if(claims.role == '1') {
+      this.navItems.push({ name: 'Gestion de Clases', url: 'gestion-clases', iconComponent: { name: 'cilColumns' }});
       this.navItems.push({ name: 'Gestion de Ejercicios', url: 'gestion-ejercicios/0/ ', iconComponent: { name: 'cilWeightlifitng' }});
       this.navItems.push({ name: 'Gestion de Rutinas', url: 'gestion-rutinas', iconComponent: { name: 'cilClipboard' }});
       this.navItems.push({ name: 'Gestion de Turnos', url: 'gestion-turnos', iconComponent: { name: 'cilCalendarCheck' }});

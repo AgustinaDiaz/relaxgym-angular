@@ -12,6 +12,8 @@ import { RutinaService } from '../services/rutina.service';
 import { Rutina } from '../models/rutina';
 import { TurnoService } from '../services/turno.service';
 import { ClaseService } from '../services/clase.service';
+import { Clase } from '../models/clase';
+import { DomSanitizer } from '@angular/platform-browser';
 
 export interface IChartProps {
   data?: any;
@@ -61,6 +63,9 @@ export class InicioComponent implements OnInit {
   totalAlumnosDomingo: number = 0;
   public mainChart: IChartProps = {};
   claims: Claim = new Claim();
+  clases: Clase[] = [];
+
+
   public trafficRadioGroup = new FormGroup({
     trafficRadio: new FormControl('Month')
   });
@@ -71,6 +76,7 @@ export class InicioComponent implements OnInit {
               private usuarioService: UsuarioService,
               private alertService: AlertService,
               private authenticateService: AuthenticateService,
+              private _sanitizer: DomSanitizer,
               private rutinaService: RutinaService,
               private turnoService: TurnoService,
               private claseService: ClaseService) { }
@@ -79,6 +85,7 @@ export class InicioComponent implements OnInit {
     this.claims = this.authenticateService.getClaimsUsuario();
     this.loading = true;
     if (this.claims.role == '3') {
+      this.getClases();
       this.getRutinasByIdUsuario();
     }
     if (this.claims.role == '1') {
@@ -88,6 +95,25 @@ export class InicioComponent implements OnInit {
       this.getUsuarios();
       this.getTurnos();
     }
+  }
+
+  onItemChange($event: any){ }
+
+  getClases()
+  {
+    this.loading = true;
+    this.claseService.getClases()
+        .subscribe(response => {
+          response.map(x => {
+            x.imagen = this._sanitizer.bypassSecurityTrustResourceUrl('data:image/jpg;base64,' + x.imagen);
+          });
+          this.clases = response;
+          this.loading = false;
+        },
+        error => {
+          this.loading = false;
+          this.alertService.error('Ocurrió un error al cargar las clases.',{ autoClose: true, keepAfterRouteChange: true, symbolAlert: 'exclamation-triangle-fill' })
+        });
   }
 
   getRutinasByIdUsuario() {

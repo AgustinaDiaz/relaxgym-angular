@@ -1,6 +1,6 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Clase } from '../models/clase';
 
@@ -15,5 +15,18 @@ export class ClaseService {
 
   getClases(): Observable<Array<Clase>>{
     return this.httpClient.get<Array<Clase>>(this.url);
+  }
+
+  createClase(clase: Clase): Observable<any>{
+    let formData: FormData = new FormData();
+    formData.append('imagen', clase.imagen);
+    formData.append('nombre', clase.nombre);
+    formData.append('descripcion', clase.descripcion);
+
+    return this.httpClient.post(this.url, formData);
+  }
+
+  deleteClaseById(id: number): Observable<any>{
+    return this.httpClient.delete(`${this.url}/${id}`);
   }
 }

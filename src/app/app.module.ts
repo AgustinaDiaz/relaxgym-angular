@@ -38,6 +38,8 @@ import {
   ButtonGroupModule,
   ButtonModule,
   CardModule,
+  CalloutModule ,
+  CarouselModule,
   DropdownModule,
   FooterModule,
   FormModule,
@@ -85,6 +87,8 @@ import { NuevaNotificacionComponent } from './notificaciones/nueva-notificacion/
 import { DetalleNotificacionesComponent } from './notificaciones/detalle-notificaciones/detalle-notificaciones.component';
 import { DlDateTimeDateModule, DlDateTimePickerModule } from 'angular-bootstrap-datetimepicker';
 import { HistorialUsuarioComponent } from './usuarios/historial-usuario/historial-usuario.component';
+import { ClasesComponent } from './clases/clases.component';
+import { NuevaClaseComponent } from './clases/nueva-clase/nueva-clase.component';
 
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
@@ -126,7 +130,9 @@ FullCalendarModule.registerPlugins([
     NuevoTurnoComponent,
     NuevaNotificacionComponent,
     DetalleNotificacionesComponent,
-    HistorialUsuarioComponent
+    HistorialUsuarioComponent,
+    ClasesComponent,
+    NuevaClaseComponent
   ],
   imports: [
     AccordionModule,
@@ -141,6 +147,8 @@ FullCalendarModule.registerPlugins([
     DropdownModule,
     GridModule,
     FullCalendarModule,
+    CarouselModule,
+    CalloutModule,
     HeaderModule,
     SidebarModule,
     IconModule,

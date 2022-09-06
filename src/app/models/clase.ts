@@ -3,4 +3,5 @@ export class Clase {
     idWeb!: string;
     nombre!: string;
     descripcion!: string;
+    imagen!: any;
 }
