@@ -161,13 +161,14 @@ export class InicioComponent implements OnInit {
               }
             ]
           };
-          responseTurno.filter(x => new Date(x.fechaHora).toLocaleDateString('es-ES', { weekday: 'long' }) == 'lunes')?.forEach(x => this.totalAlumnosLunes = this.totalAlumnosLunes + x.usuarios?.length);
-          responseTurno.filter(x => new Date(x.fechaHora).toLocaleDateString('es-ES', { weekday: 'long' }) == 'martes')?.forEach(x => this.totalAlumnosMartes = this.totalAlumnosMartes + x.usuarios?.length);
-          responseTurno.filter(x => new Date(x.fechaHora).toLocaleDateString('es-ES', { weekday: 'long' }) == 'miércoles')?.forEach(x => this.totalAlumnosMiercoles = this.totalAlumnosMiercoles + x.usuarios?.length);
-          responseTurno.filter(x => new Date(x.fechaHora).toLocaleDateString('es-ES', { weekday: 'long' }) == 'jueves')?.forEach(x => this.totalAlumnosJueves = this.totalAlumnosJueves + x.usuarios?.length);
-          responseTurno.filter(x => new Date(x.fechaHora).toLocaleDateString('es-ES', { weekday: 'long' }) == 'viernes')?.forEach(x => this.totalAlumnosViernes = this.totalAlumnosViernes + x.usuarios?.length);
-          responseTurno.filter(x => new Date(x.fechaHora).toLocaleDateString('es-ES', { weekday: 'long' }) == 'sábado')?.forEach(x => this.totalAlumnosSabado = this.totalAlumnosSabado + x.usuarios?.length);
-          responseTurno.filter(x => new Date(x.fechaHora).toLocaleDateString('es-ES', { weekday: 'long' }) == 'domingo')?.forEach(x => this.totalAlumnosDomingo = this.totalAlumnosDomingo + x.usuarios?.length);
+          
+          responseTurno.filter(x => new Date(x.fechaHora).toLocaleDateString('es-ES', { weekday: 'long' }) == 'lunes')?.forEach(x => this.totalAlumnosLunes = this.totalAlumnosLunes + x.usuarios?.filter(x => x.usuario.rol.id == 3).length);
+          responseTurno.filter(x => new Date(x.fechaHora).toLocaleDateString('es-ES', { weekday: 'long' }) == 'martes')?.forEach(x => this.totalAlumnosMartes = this.totalAlumnosMartes + x.usuarios?.filter(x => x.usuario.rol.id == 3).length);
+          responseTurno.filter(x => new Date(x.fechaHora).toLocaleDateString('es-ES', { weekday: 'long' }) == 'miércoles')?.forEach(x => this.totalAlumnosMiercoles = this.totalAlumnosMiercoles + x.usuarios?.filter(x => x.usuario.rol.id == 3).length);
+          responseTurno.filter(x => new Date(x.fechaHora).toLocaleDateString('es-ES', { weekday: 'long' }) == 'jueves')?.forEach(x => this.totalAlumnosJueves = this.totalAlumnosJueves + x.usuarios?.filter(x => x.usuario.rol.id == 3).length);
+          responseTurno.filter(x => new Date(x.fechaHora).toLocaleDateString('es-ES', { weekday: 'long' }) == 'viernes')?.forEach(x => this.totalAlumnosViernes = this.totalAlumnosViernes + x.usuarios?.filter(x => x.usuario.rol.id == 3).length);
+          responseTurno.filter(x => new Date(x.fechaHora).toLocaleDateString('es-ES', { weekday: 'long' }) == 'sábado')?.forEach(x => this.totalAlumnosSabado = this.totalAlumnosSabado + x.usuarios?.filter(x => x.usuario.rol.id == 3).length);
+          responseTurno.filter(x => new Date(x.fechaHora).toLocaleDateString('es-ES', { weekday: 'long' }) == 'domingo')?.forEach(x => this.totalAlumnosDomingo = this.totalAlumnosDomingo + x.usuarios?.filter(x => x.usuario.rol.id == 3).length);
 
           this.dataCantidadAlumnosTurnos?.datasets[0].data.push(this.totalAlumnosLunes);
           this.dataCantidadAlumnosTurnos?.datasets[0].data.push(this.totalAlumnosMartes);
@@ -189,7 +190,7 @@ export class InicioComponent implements OnInit {
             };
             responseClase.forEach(clase => {
               let cantidadAlumnosPorClase = 0;
-              responseTurno.filter(x => x.clase.id == clase.id)?.forEach(x => cantidadAlumnosPorClase = cantidadAlumnosPorClase + x.usuarios?.length)
+              responseTurno.filter(x => x.clase.id == clase.id)?.forEach(x => cantidadAlumnosPorClase = cantidadAlumnosPorClase + x.usuarios?.filter(x => x.usuario.idRol == 3).length)
               this.dataCantidadAlumnosClases?.labels.push(clase.nombre);
               this.dataCantidadAlumnosClases?.datasets[0].backgroundColor.push('#'+(0x1000000+Math.random()*0xffffff).toString(16).substr(1,6));
               this.dataCantidadAlumnosClases?.datasets[0].data.push(cantidadAlumnosPorClase);

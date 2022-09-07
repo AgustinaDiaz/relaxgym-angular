@@ -46,6 +46,7 @@ export class TurnosComponent implements OnInit {
     locale: esLocale,
     height: 630,
     eventOverlap: false,
+    weekends: false,
     eventClick: this.handleTurnoEventClick.bind(this),
     eventDrop: this.handleTurnoDrop.bind(this),
     events: []
