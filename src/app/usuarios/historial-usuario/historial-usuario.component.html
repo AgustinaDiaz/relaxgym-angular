@@ -42,14 +42,18 @@
                 <h4 class="card-title mb-0" id="traffic">
                 Rutinas de {{usuario.apellido}} {{usuario.nombre}}
                 </h4>
-                <div class="small text-medium-emphasis mb-3">Rutinas asignadas</div>
+                <div class="small text-medium-emphasis mb-3" *ngIf="this.usuario.rol.id == 3">Rutinas asignadas</div>
+                <div class="small text-medium-emphasis mb-3" *ngIf="this.usuario.rol.id == 2">Rutinas creadas</div>
             </c-col>
         </c-row>
+        <div *ngIf="loading" class="text-center">
+            <c-spinner color="dark"></c-spinner>
+          </div>
         <c-row>
-            <div *ngIf="this.rutinasAlumno.length == 0" class="text-center">
+            <div *ngIf="!loading && this.rutinasAlumno.length == 0" class="text-center">
                 <cite>No existen rutinas asignadas.</cite>
               </div>
-            <c-col *ngIf="this.rutinasAlumno.length > 0">
+            <c-col *ngIf="!loading && this.rutinasAlumno.length > 0">
                 <c-widget-stat-f *ngFor="let rutinaAlumno of this.rutinasAlumno" [title]="rutinaAlumno.descripcion" class="mb-3" color="primary" padding value="{{rutinaAlumno.nombre}}">
                 <ng-template cTemplateId="widgetIconTemplate">
                     <svg cIcon name="cilClipboard" size="xl" width="24"></svg>
@@ -66,7 +70,7 @@
                 <h4 class="card-title mb-0" id="traffic">
                 Turnos de {{usuario.apellido}} {{usuario.nombre}}
                 </h4>
-                <div class="small text-medium-emphasis mb-3">Turnos asignadas</div>
+                <div class="small text-medium-emphasis mb-3">Turnos asignados</div>
             </c-col>
         </c-row>
         <c-row>
@@ -79,11 +83,18 @@
                             <th class="w-20" scope="col">Hora</th>
                         </tr>
                     </thead>
-                    <tbody *ngIf="turnosAlumno.length == 0">
+                    <tbody *ngIf="!loading && this.turnosAlumno.length == 0">
                         <tr class="text-center">
                             <td colSpan="3"><cite>No existen turnos asignados para este alumno.</cite></td>
                         </tr>
                     </tbody>
+                    <tbody *ngIf="loading">
+                        <tr class="text-center">
+                            <td colSpan="10"b>
+                                <c-spinner color="dark"></c-spinner>
+                            </td>
+                        </tr>
+                      </tbody>
                     <tbody *ngIf="turnosAlumno.length !== 0">
                         <tr *ngFor="let turno of turnosAlumno" class="text-center">
                             <td>{{turno.clase.nombre}}</td>

@@ -1,9 +1,11 @@
 import { animate, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Claim } from 'src/app/models/claim';
 import { Rutina } from 'src/app/models/rutina';
 import { Turno } from 'src/app/models/turno';
 import { Usuario } from 'src/app/models/usuario';
+import { AuthenticateService } from 'src/app/services/authenticate.service';
 import { RutinaService } from 'src/app/services/rutina.service';
 import { TurnoService } from 'src/app/services/turno.service';
 
@@ -28,37 +30,45 @@ import { TurnoService } from 'src/app/services/turno.service';
   ]
 })
 export class HistorialUsuarioComponent implements OnInit {
-
+  
+  loading: boolean = false;
   usuario: Usuario = new Usuario();
   mostrarClave: boolean = false;
   turnosAlumno: Array<Turno> = [];
   rutinasAlumno: Array<Rutina> = [];
+  claims: Claim = new Claim();
   
   constructor(private activatedroute: ActivatedRoute,
               private turnoService: TurnoService,
               private rutinaService: RutinaService,
+              private authenticateService: AuthenticateService,
               private router: Router) { }
 
   ngOnInit(): void {
+    this.claims = this.authenticateService.getClaimsUsuario();
+    this.loading = true;
     this.activatedroute.data.subscribe(data => {
       this.usuario = data['usuario'];
-      this.getTurnosByIdAlumno(this.usuario.id);
-      this.getRutinasByIdAlumno(this.usuario.id);
+      this.getTurnosRutinasByIdAlumno(this.usuario.id);
     })
   }
 
-  getTurnosByIdAlumno(idAlumno: number)
+  getTurnosRutinasByIdAlumno(idAlumno: number)
   {
     this.turnoService.getTurnos().subscribe(response => {
       this.turnosAlumno = response;
       this.turnosAlumno = this.turnosAlumno.filter(x => x.usuarios.some(x => x.idUsuario == idAlumno));
-    })
-  }
 
-  getRutinasByIdAlumno(idAlumno: number)
-  {
-    this.rutinaService.getRutinaByIdUsuario(idAlumno).subscribe(response => {
-      this.rutinasAlumno = response
+      this.rutinaService.getRutinas()
+        .subscribe(response => {
+          this.rutinasAlumno = response;
+          if (this.usuario.rol.id == 3) {
+            this.rutinasAlumno = this.rutinasAlumno.filter(x => x.usuarios.some(x => x.idUsuario == idAlumno));
+          } else {
+            this.rutinasAlumno = this.rutinasAlumno.filter(x => x.idUsuarioCreador == idAlumno);
+          }
+          this.loading = false;
+      });
     })
   }
 

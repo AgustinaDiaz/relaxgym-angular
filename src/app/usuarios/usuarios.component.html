@@ -74,7 +74,7 @@
             </td>
             <td>{{usuario.fechaAlta | date : 'dd-MM-yyyy hh:mm:ss' }}</td>
             <td>
-                <button cButton size="sm" color="primary" variant="ghost" cTooltip="Detalle Usuario" cTooltipPlacement="top" class="me-1" (click)="historialUsuario(usuario)">
+                <button *ngIf="usuario.rol.id != 1" cButton size="sm" color="primary" variant="ghost" cTooltip="Detalle Usuario" cTooltipPlacement="top" class="me-1" (click)="historialUsuario(usuario)">
                     <svg cIcon name="cilApplications" title="Detalle Usuario"></svg>
                 </button>
                 <button cButton size="sm" color="primary" variant="ghost" cTooltip="Editar Usuario" cTooltipPlacement="top" class="me-1" (click)="updateUsuario(usuario)">

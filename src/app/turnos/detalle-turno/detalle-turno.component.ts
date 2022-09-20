@@ -190,6 +190,24 @@ export class DetalleTurnoComponent implements OnInit {
     });
   }
 
+  deleteTurno(idTurno: number) {
+    this.turnoService.deleteTurnoById(idTurno).subscribe(response => {
+      this.alertService.success('Se ha eliminado el turno correctamente el turno.', { autoClose: true, keepAfterRouteChange: true, symbolAlert: 'check-circle-fill' });
+      this.onBack();
+    },
+    error => {
+      if(error.status == 400){
+        this.alertService.error(error.error.detail,{ autoClose: true, keepAfterRouteChange: true, symbolAlert: 'exclamation-triangle-fill' })
+        this.loading = false;
+      }
+      else{
+        this.alertService.error('Ocurrió un error al eliminar el turno.',{ autoClose: true, keepAfterRouteChange: true, symbolAlert: 'exclamation-triangle-fill' })
+        this.loading = false;
+      }
+    });
+  }
+
+
   onBack() {
     if(this.claims.role != '1') {
       this.router.navigateByUrl("main/turnos");

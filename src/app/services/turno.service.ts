@@ -42,6 +42,10 @@ export class TurnoService {
     return this.httpClient.post<any>(`${this.url}/Desasignar/${idTurno}/Alumno/${idUsuario}`, {});
   }
 
+  deleteTurnoById(id: number): Observable<any>{
+    return this.httpClient.delete<any>(`${this.url}/${id}`);
+  }
+
   updateTurnoById(turno:Turno): Observable<any>{
     return this.httpClient.put<Turno>(`${this.url}/${turno.id}`, turno);
   }

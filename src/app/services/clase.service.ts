@@ -26,6 +26,19 @@ export class ClaseService {
     return this.httpClient.post(this.url, formData);
   }
 
+  updateClase(clase: Clase): Observable<any>{
+    let formData: FormData = new FormData();
+    formData.append('imagen', clase.imagen);
+    formData.append('nombre', clase.nombre);
+    formData.append('descripcion', clase.descripcion);
+
+    return this.httpClient.put(`${this.url}/${clase.id}`, formData);
+  }
+
+  getClaseById(id: number): Observable<Clase>{
+    return this.httpClient.get<Clase>(`${this.url}/${id}`);
+  }
+
   deleteClaseById(id: number): Observable<any>{
     return this.httpClient.delete(`${this.url}/${id}`);
   }

@@ -24,6 +24,11 @@
           <svg cIcon name="cilPlus" title="Nuevo Clase"></svg> Nueva Clase
       </button>
   </div>
+  <c-col *ngIf="loading">
+    <div class="text-center">
+      <c-spinner color="dark"></c-spinner>
+    </div>
+  </c-col>
   <c-row *ngIf="!loading && filteredClases.length !== 0" [gutter]="4" class="mb-3" [md]="3" [xs]="1" @inOut>
     <c-col *ngFor="let clase of filteredClases; index as i;">
         <c-card class="h-100">
@@ -37,7 +42,7 @@
             <c-card-footer>
                 <c-row>
                     <c-col [xs]=12 class="d-flex justify-content-end pe-0">
-                        <button cButton color="primary" variant="ghost" cTooltip="Editar Ejercicio" cTooltipPlacement="top" (click)="updateClase(clase)">
+                        <button cButton color="primary" variant="ghost" cTooltip="Editar Clase" cTooltipPlacement="top" (click)="updateClase(clase)">
                             <svg cIcon name="cilPencil" title="Editar Clase"></svg>
                         </button>
                         <button [cModalToggle]="verticallyCenteredModal.id" cButton color="secondary" variant="ghost" cTooltip="Eliminar Clase" cTooltipPlacement="top" class="me-1" (click)="setDeleteClase(clase)">

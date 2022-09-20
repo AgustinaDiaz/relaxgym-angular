@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { ClaseResolver } from './clases/clase.resolver';
 import { ClasesComponent } from './clases/clases.component';
+import { ModificarClaseComponent } from './clases/modificar-clase/modificar-clase.component';
 import { NuevaClaseComponent } from './clases/nueva-clase/nueva-clase.component';
 import { EjercicioResolver } from './ejercicios/ejercicio.resolver';
 import { EjerciciosComponent } from './ejercicios/ejercicios.component';
@@ -290,7 +292,18 @@ const routes: Routes = [
         data: {
           title: 'Clases/Nuevo'
         }
-      },  
+      },
+      {
+        path: 'modificar-clase/:id', 
+        component: ModificarClaseComponent,
+        canActivate: [AdministratorGuard],
+        data: {
+          title: 'Clase/Modificar'
+        },
+        resolve: {
+          clase: ClaseResolver
+        }
+      }
     ]
   },
   { path: '**', redirectTo: 'home' }

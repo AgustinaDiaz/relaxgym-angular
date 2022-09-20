@@ -1,0 +1,30 @@
+<c-card [cBorder]="{top: {color: 'dark', width: 3}}" [textColor]="'primary'" class="mb-3" @inOut>
+    <c-card-header class="text-center">
+        <strong>{{clase.nombre}}</strong>
+    </c-card-header>
+    <c-card-body>
+        <form cForm #nuevoClaseForm="ngForm" class="row g-3 needs-validation" (ngSubmit)="modificarClase(nuevoClaseForm)" [validated]="tooltipValidated">
+            <c-col class="position-relative mb-3" md="6">
+                <label cLabel for="nombre">Nombre</label>
+                <input cFormControl id="nombre" type="text" [(ngModel)]="clase.nombre" name="nombre" required />
+                <c-form-feedback [valid]="false" tooltip>Debe ingresar un nombre</c-form-feedback>
+            </c-col>
+            <c-col class="position-relative mb-3" md="6">
+                <label cLabel for="imagen">Seleccione una imagen</label>
+                <input cFormControl id="imagen" name="imagen" type="file" (change)="fileChanged($event)" #fileInputClase required/>
+            </c-col>
+            <c-col class="position-relative mb-3" md="12">
+                <label cLabel for="descripcion">Descripcion</label>
+                <textarea cFormControl id="descripcion" [(ngModel)]="clase.descripcion" rows="3" name="descripcion" required>
+                </textarea>
+                <c-form-feedback [valid]="false" tooltip>Debe ingresar una descripcion</c-form-feedback>
+            </c-col>
+            <c-col class="text-center" xs="12">
+                <c-button-group aria-label="Basic example" role="group">
+                    <button cButton color="primary" type="submit">Confirmar</button>
+                    <button cButton (click)="onBack()" color="secondary" type="reset">Atras</button>
+                    </c-button-group>
+            </c-col>
+        </form>
+    </c-card-body>
+</c-card>

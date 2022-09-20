@@ -14,6 +14,8 @@ import { TurnoService } from '../services/turno.service';
 import { ClaseService } from '../services/clase.service';
 import { Clase } from '../models/clase';
 import { DomSanitizer } from '@angular/platform-browser';
+import { Turno } from '../models/turno';
+import { TurnosEntrenador } from './models/turnos-entrenador';
 
 export interface IChartProps {
   data?: any;
@@ -48,8 +50,12 @@ export interface IChartProps {
 })
 export class InicioComponent implements OnInit {
 
+  public mainChart: IChartProps = {};
+  public trafficRadioGroup = new FormGroup({ trafficRadio: new FormControl('Month') });
   loading: boolean = false;
   rutinasAlumno: Array<Rutina>= [];
+  turnosUsuario: Array<Turno>= [];
+  turnosEntrenadores: Array<TurnosEntrenador> = [];
   totalAlumnosActivos: string = '0';
   totalEntrenadoresActivos: string = '0';
   totalAdministradoresActivos: string = '0';
@@ -61,14 +67,9 @@ export class InicioComponent implements OnInit {
   totalAlumnosViernes: number = 0;
   totalAlumnosSabado: number = 0;
   totalAlumnosDomingo: number = 0;
-  public mainChart: IChartProps = {};
   claims: Claim = new Claim();
   clases: Clase[] = [];
 
-
-  public trafficRadioGroup = new FormGroup({
-    trafficRadio: new FormControl('Month')
-  });
   dataCantidadAlumnosTurnos: { labels: string[]; datasets: { label: string; backgroundColor: string; data: number[]; }[]; } | undefined;
   dataCantidadAlumnosClases: { labels: string[], datasets: { data: number[], backgroundColor: string[] }[]; } | undefined;
 
@@ -79,130 +80,155 @@ export class InicioComponent implements OnInit {
               private _sanitizer: DomSanitizer,
               private rutinaService: RutinaService,
               private turnoService: TurnoService,
-              private claseService: ClaseService) { }
+              private claseService: ClaseService) { 
+                this.claims = this.authenticateService.getClaimsUsuario();
+                this.loading = true;
+                let idUsuario = this.claims.primarysid as unknown as number;
+                if (this.claims.role == '3' || this.claims.role == '2') {
+                  this.getClases();
+                  this.getTurnosRutinasByIdUsuario(idUsuario);
+                }
+                if (this.claims.role == '1') {
+                  this.activatedroute.data.subscribe(data => {
+                    this.initCharts(data['usuarios']);
+                  })
+                  this.getUsuariosTurnos();
+                }
+              }
 
-  ngOnInit(): void {
-    this.claims = this.authenticateService.getClaimsUsuario();
-    this.loading = true;
-    if (this.claims.role == '3') {
-      this.getClases();
-      this.getRutinasByIdUsuario();
-    }
-    if (this.claims.role == '1') {
-      this.activatedroute.data.subscribe(data => {
-        this.initCharts(data['usuarios']);
-      })
-      this.getUsuarios();
-      this.getTurnos();
-    }
-  }
+  ngOnInit(): void { }
 
   onItemChange($event: any){ }
 
   getClases()
   {
-    this.loading = true;
     this.claseService.getClases()
         .subscribe(response => {
           response.map(x => {
             x.imagen = this._sanitizer.bypassSecurityTrustResourceUrl('data:image/jpg;base64,' + x.imagen);
           });
           this.clases = response;
-          this.loading = false;
         },
         error => {
-          this.loading = false;
           this.alertService.error('Ocurrió un error al cargar las clases.',{ autoClose: true, keepAfterRouteChange: true, symbolAlert: 'exclamation-triangle-fill' })
         });
   }
 
-  getRutinasByIdUsuario() {
-    let idUsuario = this.claims.primarysid as unknown as number;
-    this.rutinaService.getRutinaByIdUsuario(idUsuario)
+  getTurnosRutinasByIdUsuario(idUsuario: number)
+  {
+    this.turnoService.getTurnos().subscribe(response => {
+      this.turnosUsuario = response;
+      this.turnosUsuario = this.turnosUsuario.filter(x => x.usuarios.some(x => x.idUsuario == idUsuario));
+      
+      let result = this.turnosUsuario.reduce(function (r, a) {
+          r[a.clase.nombre] = r[a.clase.nombre] || [];
+          r[a.clase.nombre].push(a);
+          return r;
+      }, Object.create(null));
+
+      this.clases.forEach(x => {
+        if(result[x.nombre] != undefined && result[x.nombre] != null) {
+          let cantidadAlumnosClase = 0;
+          result[x.nombre].forEach((x: any) => {
+            cantidadAlumnosClase = cantidadAlumnosClase + x.usuarios.length;
+          });
+          let clase = new TurnosEntrenador();
+          clase.descripcion = x.nombre;
+          clase.cantidadAlumnosAsignados = cantidadAlumnosClase;
+          this.turnosEntrenadores.push(clase);
+        }
+      })
+
+      console.log(this.turnosEntrenadores);
+      this.rutinaService.getRutinas()
         .subscribe(response => {
           this.rutinasAlumno = response;
+          if (this.claims.role == '3') {
+            this.rutinasAlumno = this.rutinasAlumno.filter(x => x.usuarios.some(x => x.idUsuario == idUsuario));
+          } else {
+            this.rutinasAlumno = this.rutinasAlumno.filter(x => x.idUsuarioCreador == idUsuario);
+          }
           this.loading = false;
         },
         error => {
           this.loading = false;
           this.alertService.error('Ocurrió un error al cargar las rutinas del alumno.',{ autoClose: true, keepAfterRouteChange: true, symbolAlert: 'exclamation-triangle-fill' })
         });
+    },
+    error => {
+      this.alertService.error('Ocurrió un error al cargar las turnos del alumno.',{ autoClose: true, keepAfterRouteChange: true, symbolAlert: 'exclamation-triangle-fill' })
+    })
   }
 
-  getUsuarios()
+  getUsuariosTurnos()
   {
     this.loading = true;
     this.usuarioService.getUsuarios()
-        .subscribe(response => {
-          this.totalAdministradoresActivos = response.filter(x => x.idRol == 1 && x.idEstadoUsuario == 1)?.length.toString();
-          this.totalEntrenadoresActivos = response.filter(x => x.idRol == 2 && x.idEstadoUsuario == 1)?.length.toString();
-          this.totalAlumnosActivos = response.filter(x => x.idRol == 3 && x.idEstadoUsuario == 1)?.length.toString();
-          this.totalUsuariosInactivos = response.filter(x => x.idEstadoUsuario == 2)?.length.toString();
-          this.loading = false;
-        },
-        error => {
-          this.loading = false;
-          this.alertService.error('Ocurrió un error estadisticas de los usuarios.',{ autoClose: true, keepAfterRouteChange: true, symbolAlert: 'exclamation-triangle-fill' })
-        });
-  }
+      .subscribe(response => {
+        this.totalAdministradoresActivos = response.filter(x => x.idRol == 1 && x.idEstadoUsuario == 1)?.length.toString();
+        this.totalEntrenadoresActivos = response.filter(x => x.idRol == 2 && x.idEstadoUsuario == 1)?.length.toString();
+        this.totalAlumnosActivos = response.filter(x => x.idRol == 3 && x.idEstadoUsuario == 1)?.length.toString();
+        this.totalUsuariosInactivos = response.filter(x => x.idEstadoUsuario == 2)?.length.toString();
 
-  getTurnos()
-  {
-    this.loading = true;
-    this.turnoService.getTurnos()
-        .subscribe(responseTurno => {
-          this.dataCantidadAlumnosTurnos = {
-            labels: ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'],
-            datasets: [
-              {
-                label: 'Cantidad de Alumnos',
-                backgroundColor: '#3c4b64',
-                data: []
-              }
-            ]
-          };
-          
-          responseTurno.filter(x => new Date(x.fechaHora).toLocaleDateString('es-ES', { weekday: 'long' }) == 'lunes')?.forEach(x => this.totalAlumnosLunes = this.totalAlumnosLunes + x.usuarios?.filter(x => x.usuario.rol.id == 3).length);
-          responseTurno.filter(x => new Date(x.fechaHora).toLocaleDateString('es-ES', { weekday: 'long' }) == 'martes')?.forEach(x => this.totalAlumnosMartes = this.totalAlumnosMartes + x.usuarios?.filter(x => x.usuario.rol.id == 3).length);
-          responseTurno.filter(x => new Date(x.fechaHora).toLocaleDateString('es-ES', { weekday: 'long' }) == 'miércoles')?.forEach(x => this.totalAlumnosMiercoles = this.totalAlumnosMiercoles + x.usuarios?.filter(x => x.usuario.rol.id == 3).length);
-          responseTurno.filter(x => new Date(x.fechaHora).toLocaleDateString('es-ES', { weekday: 'long' }) == 'jueves')?.forEach(x => this.totalAlumnosJueves = this.totalAlumnosJueves + x.usuarios?.filter(x => x.usuario.rol.id == 3).length);
-          responseTurno.filter(x => new Date(x.fechaHora).toLocaleDateString('es-ES', { weekday: 'long' }) == 'viernes')?.forEach(x => this.totalAlumnosViernes = this.totalAlumnosViernes + x.usuarios?.filter(x => x.usuario.rol.id == 3).length);
-          responseTurno.filter(x => new Date(x.fechaHora).toLocaleDateString('es-ES', { weekday: 'long' }) == 'sábado')?.forEach(x => this.totalAlumnosSabado = this.totalAlumnosSabado + x.usuarios?.filter(x => x.usuario.rol.id == 3).length);
-          responseTurno.filter(x => new Date(x.fechaHora).toLocaleDateString('es-ES', { weekday: 'long' }) == 'domingo')?.forEach(x => this.totalAlumnosDomingo = this.totalAlumnosDomingo + x.usuarios?.filter(x => x.usuario.rol.id == 3).length);
-
-          this.dataCantidadAlumnosTurnos?.datasets[0].data.push(this.totalAlumnosLunes);
-          this.dataCantidadAlumnosTurnos?.datasets[0].data.push(this.totalAlumnosMartes);
-          this.dataCantidadAlumnosTurnos?.datasets[0].data.push(this.totalAlumnosMiercoles);
-          this.dataCantidadAlumnosTurnos?.datasets[0].data.push(this.totalAlumnosJueves);
-          this.dataCantidadAlumnosTurnos?.datasets[0].data.push(this.totalAlumnosViernes);
-          this.dataCantidadAlumnosTurnos?.datasets[0].data.push(this.totalAlumnosSabado);
-          this.dataCantidadAlumnosTurnos?.datasets[0].data.push(this.totalAlumnosDomingo);
-
-          this.claseService.getClases().subscribe(responseClase => {
-            this.dataCantidadAlumnosClases = {
-              labels: [],
+        this.turnoService.getTurnos()
+          .subscribe(responseTurno => {
+            this.dataCantidadAlumnosTurnos = {
+              labels: ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'],
               datasets: [
                 {
-                  backgroundColor: [],
+                  label: 'Cantidad de Alumnos',
+                  backgroundColor: '#3c4b64',
                   data: []
                 }
               ]
             };
-            responseClase.forEach(clase => {
-              let cantidadAlumnosPorClase = 0;
-              responseTurno.filter(x => x.clase.id == clase.id)?.forEach(x => cantidadAlumnosPorClase = cantidadAlumnosPorClase + x.usuarios?.filter(x => x.usuario.idRol == 3).length)
-              this.dataCantidadAlumnosClases?.labels.push(clase.nombre);
-              this.dataCantidadAlumnosClases?.datasets[0].backgroundColor.push('#'+(0x1000000+Math.random()*0xffffff).toString(16).substr(1,6));
-              this.dataCantidadAlumnosClases?.datasets[0].data.push(cantidadAlumnosPorClase);
-            })
-          }); 
-          this.loading = false;
-        },
-        error => {
-          this.loading = false;
-          this.alertService.error('Ocurrió un error estadisticas de los usuarios.',{ autoClose: true, keepAfterRouteChange: true, symbolAlert: 'exclamation-triangle-fill' })
-        });
+            
+            responseTurno.filter(x => new Date(x.fechaHora).toLocaleDateString('es-ES', { weekday: 'long' }) == 'lunes')?.forEach(x => this.totalAlumnosLunes = this.totalAlumnosLunes + x.usuarios?.filter(x => x.usuario.rol.id == 3).length);
+            responseTurno.filter(x => new Date(x.fechaHora).toLocaleDateString('es-ES', { weekday: 'long' }) == 'martes')?.forEach(x => this.totalAlumnosMartes = this.totalAlumnosMartes + x.usuarios?.filter(x => x.usuario.rol.id == 3).length);
+            responseTurno.filter(x => new Date(x.fechaHora).toLocaleDateString('es-ES', { weekday: 'long' }) == 'miércoles')?.forEach(x => this.totalAlumnosMiercoles = this.totalAlumnosMiercoles + x.usuarios?.filter(x => x.usuario.rol.id == 3).length);
+            responseTurno.filter(x => new Date(x.fechaHora).toLocaleDateString('es-ES', { weekday: 'long' }) == 'jueves')?.forEach(x => this.totalAlumnosJueves = this.totalAlumnosJueves + x.usuarios?.filter(x => x.usuario.rol.id == 3).length);
+            responseTurno.filter(x => new Date(x.fechaHora).toLocaleDateString('es-ES', { weekday: 'long' }) == 'viernes')?.forEach(x => this.totalAlumnosViernes = this.totalAlumnosViernes + x.usuarios?.filter(x => x.usuario.rol.id == 3).length);
+            responseTurno.filter(x => new Date(x.fechaHora).toLocaleDateString('es-ES', { weekday: 'long' }) == 'sábado')?.forEach(x => this.totalAlumnosSabado = this.totalAlumnosSabado + x.usuarios?.filter(x => x.usuario.rol.id == 3).length);
+            responseTurno.filter(x => new Date(x.fechaHora).toLocaleDateString('es-ES', { weekday: 'long' }) == 'domingo')?.forEach(x => this.totalAlumnosDomingo = this.totalAlumnosDomingo + x.usuarios?.filter(x => x.usuario.rol.id == 3).length);
+
+            this.dataCantidadAlumnosTurnos?.datasets[0].data.push(this.totalAlumnosLunes);
+            this.dataCantidadAlumnosTurnos?.datasets[0].data.push(this.totalAlumnosMartes);
+            this.dataCantidadAlumnosTurnos?.datasets[0].data.push(this.totalAlumnosMiercoles);
+            this.dataCantidadAlumnosTurnos?.datasets[0].data.push(this.totalAlumnosJueves);
+            this.dataCantidadAlumnosTurnos?.datasets[0].data.push(this.totalAlumnosViernes);
+            this.dataCantidadAlumnosTurnos?.datasets[0].data.push(this.totalAlumnosSabado);
+            this.dataCantidadAlumnosTurnos?.datasets[0].data.push(this.totalAlumnosDomingo);
+
+            this.claseService.getClases().subscribe(responseClase => {
+              this.dataCantidadAlumnosClases = {
+                labels: [],
+                datasets: [
+                  {
+                    backgroundColor: [],
+                    data: []
+                  }
+                ]
+              };
+              responseClase.forEach(clase => {
+                let cantidadAlumnosPorClase = 0;
+                responseTurno.filter(x => x.clase.id == clase.id)?.forEach(x => cantidadAlumnosPorClase = cantidadAlumnosPorClase + x.usuarios?.filter(x => x.usuario.idRol == 3).length)
+                this.dataCantidadAlumnosClases?.labels.push(clase.nombre);
+                this.dataCantidadAlumnosClases?.datasets[0].backgroundColor.push('#'+(0x1000000+Math.random()*0xffffff).toString(16).substr(1,6));
+                this.dataCantidadAlumnosClases?.datasets[0].data.push(cantidadAlumnosPorClase);
+              })
+              this.loading = false;
+            });
+      },
+      error => {
+        this.loading = false;
+        this.alertService.error('Ocurrió un error estadisticas de los usuarios.',{ autoClose: true, keepAfterRouteChange: true, symbolAlert: 'exclamation-triangle-fill' })
+      });
+    },
+    error => {
+      this.alertService.error('Ocurrió un error estadisticas de los usuarios.',{ autoClose: true, keepAfterRouteChange: true, symbolAlert: 'exclamation-triangle-fill' })
+    });
   }
+
 
   initCharts(usuarios: Array<Usuario>): void {
     const brandInfo = getStyle('--cui-info') ?? '#20a8d8';

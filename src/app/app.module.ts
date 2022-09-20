@@ -89,6 +89,7 @@ import { DlDateTimeDateModule, DlDateTimePickerModule } from 'angular-bootstrap-
 import { HistorialUsuarioComponent } from './usuarios/historial-usuario/historial-usuario.component';
 import { ClasesComponent } from './clases/clases.component';
 import { NuevaClaseComponent } from './clases/nueva-clase/nueva-clase.component';
+import { ModificarClaseComponent } from './clases/modificar-clase/modificar-clase.component';
 
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
@@ -132,7 +133,8 @@ FullCalendarModule.registerPlugins([
     DetalleNotificacionesComponent,
     HistorialUsuarioComponent,
     ClasesComponent,
-    NuevaClaseComponent
+    NuevaClaseComponent,
+    ModificarClaseComponent
   ],
   imports: [
     AccordionModule,

@@ -82,6 +82,11 @@
                     <button cButton (click)="onBack()" color="secondary" class="mt-2" type="reset">Atras</button>
                 </c-button-group>
             </div>
+            <div class="d-grid gap-2">
+                <button *ngIf="claims.role == '1'" cButton color="danger" cTooltip="Eliminar Turno" cTooltipPlacement="bottom" class="mt-2" (click)="deleteTurno(turno.id)">
+                    <svg cIcon name="cilTrash" size="xs" title="Eliminar Turno"></svg>
+                </button>
+            </div>
         </c-row>
     </c-card-body>
 </c-card>
