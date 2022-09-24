@@ -1,3 +1,18 @@
+<c-modal #verticallyCenteredModal alignment="center" id="verticallyCenteredModal">
+    <c-modal-header>
+        <h5 cModalTitle>Eliminar Turno</h5>
+        <button [cModalToggle]="verticallyCenteredModal.id" cButtonClose></button>
+    </c-modal-header>
+    <c-modal-body>
+        ¿Está seguro que desea eliminar el turno {{deletedTurno.id}}?
+    </c-modal-body>
+    <c-modal-footer>
+        <c-button-group aria-label="Basic example" role="group">
+            <button [cModalToggle]="verticallyCenteredModal.id" cButton color="primary" (click)="deleteTurno()">Confirmar</button>
+            <button [cModalToggle]="verticallyCenteredModal.id" cButton color="secondary">Cancelar</button>
+        </c-button-group>
+    </c-modal-footer>
+</c-modal>
 <c-widget-stat-b #widgetStatB1inv="cWidgetStatB" [title]="'Cupos Disponibles'" class="text-center mb-4" color="success" *ngIf="this.cuposDisponibles > 0" value="{{this.turno.usuarios.length}}/{{this.turno.cantidadAlumnos}}" @inOut></c-widget-stat-b>
 <c-widget-stat-b #widgetStatB1inv="cWidgetStatB" [title]="'Cupos Disponibles'" class="text-center mb-4" color="danger" *ngIf="this.cuposDisponibles == 0" value="{{this.turno.usuarios.length}}/{{this.turno.cantidadAlumnos}}" @inOut></c-widget-stat-b>
 <c-card [cBorder]="{top: {color: 'dark', width: 3}}" [textColor]="'primary'" class="mb-3" @inOut>
@@ -83,7 +98,7 @@
                 </c-button-group>
             </div>
             <div class="d-grid gap-2">
-                <button *ngIf="claims.role == '1'" cButton color="danger" cTooltip="Eliminar Turno" cTooltipPlacement="bottom" class="mt-2" (click)="deleteTurno(turno.id)">
+                <button *ngIf="claims.role == '1'" [cModalToggle]="verticallyCenteredModal.id" cButton color="danger" cTooltip="Eliminar Turno" cTooltipPlacement="bottom" class="mt-2" (click)="setDeleteTurno(turno)">
                     <svg cIcon name="cilTrash" size="xs" title="Eliminar Turno"></svg>
                 </button>
             </div>

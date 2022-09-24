@@ -59,7 +59,6 @@ export class LoginComponent implements OnInit {
               this.alertService.error('Ocurrió un error al loguearse.',{ autoClose: true, keepAfterRouteChange: true, symbolAlert: 'exclamation-triangle-fill' })
               this.loading = false;
             }
-            
           }
         );
     }

@@ -2,6 +2,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+import { DlDateTimePickerChange } from 'angular-bootstrap-datetimepicker';
 import * as moment from 'moment';
 import { forkJoin } from 'rxjs';
 import { Clase } from 'src/app/models/clase';
@@ -180,5 +181,9 @@ export class NuevoTurnoComponent implements OnInit {
 
   onBack() {
     this.router.navigateByUrl("main/gestion-turnos");
+  }
+
+  onCustomDateChange(event:any) {
+    console.log(event);
   }
 }

@@ -34,8 +34,7 @@ export class TurnoService {
   }
 
   asignarTurnoById(idTurno: number, idUsuario: number): Observable<Turno>{
-    let idUsuarios = new Array<number>(idUsuario).map(Number);
-    return this.httpClient.post<any>(`${this.url}/Asignar`, { idTurno: idTurno, idUsuarios:  idUsuarios });
+    return this.httpClient.post<any>(`${this.url}/Asignar/${idTurno}/${idUsuario}`, {});
   }
 
   desasignarAlumno(idTurno: number, idUsuario: number): Observable<Turno>{

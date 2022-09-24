@@ -173,7 +173,7 @@ export class InicioComponent implements OnInit {
         this.turnoService.getTurnos()
           .subscribe(responseTurno => {
             this.dataCantidadAlumnosTurnos = {
-              labels: ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'],
+              labels: ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes'],
               datasets: [
                 {
                   label: 'Cantidad de Alumnos',
@@ -188,8 +188,6 @@ export class InicioComponent implements OnInit {
             responseTurno.filter(x => new Date(x.fechaHora).toLocaleDateString('es-ES', { weekday: 'long' }) == 'miércoles')?.forEach(x => this.totalAlumnosMiercoles = this.totalAlumnosMiercoles + x.usuarios?.filter(x => x.usuario.rol.id == 3).length);
             responseTurno.filter(x => new Date(x.fechaHora).toLocaleDateString('es-ES', { weekday: 'long' }) == 'jueves')?.forEach(x => this.totalAlumnosJueves = this.totalAlumnosJueves + x.usuarios?.filter(x => x.usuario.rol.id == 3).length);
             responseTurno.filter(x => new Date(x.fechaHora).toLocaleDateString('es-ES', { weekday: 'long' }) == 'viernes')?.forEach(x => this.totalAlumnosViernes = this.totalAlumnosViernes + x.usuarios?.filter(x => x.usuario.rol.id == 3).length);
-            responseTurno.filter(x => new Date(x.fechaHora).toLocaleDateString('es-ES', { weekday: 'long' }) == 'sábado')?.forEach(x => this.totalAlumnosSabado = this.totalAlumnosSabado + x.usuarios?.filter(x => x.usuario.rol.id == 3).length);
-            responseTurno.filter(x => new Date(x.fechaHora).toLocaleDateString('es-ES', { weekday: 'long' }) == 'domingo')?.forEach(x => this.totalAlumnosDomingo = this.totalAlumnosDomingo + x.usuarios?.filter(x => x.usuario.rol.id == 3).length);
 
             this.dataCantidadAlumnosTurnos?.datasets[0].data.push(this.totalAlumnosLunes);
             this.dataCantidadAlumnosTurnos?.datasets[0].data.push(this.totalAlumnosMartes);

@@ -64,7 +64,13 @@ export class TurnosComponent implements OnInit {
     this.claims = this.authenticateService.getClaimsUsuario(); 
     this.turnoService.getTurnos()
         .subscribe(response => {
-          this.turnos = response;
+          if(this.claims.role != '1') {
+            this.turnos = response.filter(x => new Date(x.fechaHora) >= new Date());
+            console.log(this.turnos);
+            console.log(response);
+          } else {
+            this.turnos = response;
+          };
           this.turnos.forEach(turno => {
             this.calendarComponent.getApi().addEvent({ 
               title: turno.clase.nombre,
