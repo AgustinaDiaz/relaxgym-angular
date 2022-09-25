@@ -2,7 +2,6 @@ import { animate, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { DlDateTimePickerChange } from 'angular-bootstrap-datetimepicker';
 import * as moment from 'moment';
 import { forkJoin } from 'rxjs';
 import { Clase } from 'src/app/models/clase';
@@ -88,12 +87,13 @@ export class NuevoTurnoComponent implements OnInit {
       this.alertService.error('Debe seleccionar un entrenador a cargo.', { autoClose: true, keepAfterRouteChange: true, symbolAlert: 'exclamation-triangle-fill' });
       return;
     }
-    
-    let esFeriado = Constantes.Feriados.some(feriado => new Date(this.selectedDate).getFullYear() == new Date(feriado.fecha).getFullYear() &&
-                                                        new Date(this.selectedDate).getMonth() == new Date(feriado.fecha).getMonth() &&
-                                                        new Date(this.selectedDate).getDay() == new Date(feriado.fecha).getDay());
+  
 
-    if(esFeriado) {
+    let esFeriado = Constantes.Feriados.filter(feriado => new Date(this.selectedDate).getFullYear() == new Date(feriado.fecha).getFullYear() &&
+                                                          new Date(this.selectedDate).getMonth() == new Date(feriado.fecha).getMonth() &&
+                                                          new Date(this.selectedDate).getDate() == new Date(feriado.fecha).getDate());
+
+    if(esFeriado.length > 0) {
       this.alertService.error('No es posible crear el turno un dia feriado.', { autoClose: true, keepAfterRouteChange: true, symbolAlert: 'exclamation-triangle-fill' });
       return;
     }
@@ -102,6 +102,7 @@ export class NuevoTurnoComponent implements OnInit {
       this.turno.idClase = this.turno.clase.id;
       this.turno.fechaHora = this.selectedDate;
       this.turno.idEntrenadorAsignado = this.idEntrenadorSelected;
+
       if(this.checkAllDays == true) {
         let turnos = [];
         let fechaArray = new Date(this.turno.fechaHora);
@@ -109,7 +110,7 @@ export class NuevoTurnoComponent implements OnInit {
         while(fechaArray < new Date(2022,12,1)) {
           let esFeriado = Constantes.Feriados.some(feriado => fechaArray.getFullYear() == feriado.fecha.getFullYear() &&
                                                               fechaArray.getMonth() == feriado.fecha.getMonth() &&
-                                                              fechaArray.getDay() == feriado.fecha.getDay());
+                                                              fechaArray.getDate() == feriado.fecha.getDate());
 
           if(!esFeriado){
             let turno = new Turno();
@@ -181,9 +182,5 @@ export class NuevoTurnoComponent implements OnInit {
 
   onBack() {
     this.router.navigateByUrl("main/gestion-turnos");
-  }
-
-  onCustomDateChange(event:any) {
-    console.log(event);
   }
 }

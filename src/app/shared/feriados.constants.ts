@@ -19,6 +19,9 @@ export class Constantes {
         { fecha: new Date('2022-11-21 00:00:00'), nombre: 'Feriado con fines turísticos'},
         { fecha: new Date('2022-12-08 00:00:00'), nombre: 'Inmaculada Concepción de María'},
         { fecha: new Date('2022-12-09 00:00:00'), nombre: 'Feriado con fines turísticos'},
-        { fecha: new Date('2022-12-25 00:00:00'), nombre: 'Navidad'}
+        { fecha: new Date('2022-12-25 00:00:00'), nombre: 'Navidad'},
+        { fecha: new Date('2023-01-01 00:00:00'), nombre: 'Año Nuevo' },
+        { fecha: new Date('2023-02-20 00:00:00'), nombre: 'Carnaval'},
+        { fecha: new Date('2023-03-21 00:00:00'), nombre: 'Carnaval'}
     ];
 }
